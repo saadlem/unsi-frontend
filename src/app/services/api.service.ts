@@ -100,4 +100,8 @@ export class ApiService {
   adminDeleteOrder(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/admin/orders/${id}`, { headers: this.getAuthHeaders() });
   }
+
+  getSiteStatus(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/site-status`);
+  }
 }
