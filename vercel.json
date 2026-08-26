@@ -1,8 +1,18 @@
 {
   "buildCommand": "ng build --configuration production",
-  "outputDirectory": "dist/unsi-shop/browser",
+  "outputPath": "dist/unsi-shop/browser",
   "framework": "angular",
   "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "https://unsi-backend-production.up.railway.app/$1",
+      "has": [
+        {
+          "type": "host",
+          "value": "backend.unsi.ma"
+        }
+      ]
+    },
     {
       "source": "/api/:path*",
       "destination": "https://unsi-backend-production.up.railway.app/api/:path*"
@@ -10,6 +20,15 @@
     {
       "source": "/uploads/:path*",
       "destination": "https://unsi-backend-production.up.railway.app/uploads/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" }
+      ]
     }
   ]
 }
