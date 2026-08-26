@@ -1,0 +1,113 @@
+<div class="discounts-page">
+  <div class="page-header">
+    <div>
+      <h1>Gestion des réductions</h1>
+      <p>Créez et gérez vos codes promo</p>
+    </div>
+    <button class="btn-primary" (click)="openNew()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Nouveau code
+    </button>
+  </div>
+
+  @if (showForm()) {
+    <div class="form-card">
+      <h2>{{ editingDiscount() ? 'Modifier le code' : 'Nouveau code promo' }}</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Code</label>
+          <input type="text" [(ngModel)]="form.code" placeholder="EX: BIENVENUE10" style="text-transform:uppercase" />
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select [(ngModel)]="form.type">
+            <option value="percentage">Pourcentage (%)</option>
+            <option value="fixed">Montant fixe (MAD)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Valeur</label>
+          <input type="number" [(ngModel)]="form.value" min="0" step="0.01" />
+        </div>
+        <div class="form-group">
+          <label>Commande minimum (MAD)</label>
+          <input type="number" [(ngModel)]="form.min_order" min="0" />
+        </div>
+        <div class="form-group">
+          <label>Nombre max d'utilisations (0 = illimité)</label>
+          <input type="number" [(ngModel)]="form.max_uses" min="0" />
+        </div>
+        <div class="form-group">
+          <label>Date de début</label>
+          <input type="date" [(ngModel)]="form.start_date" />
+        </div>
+        <div class="form-group">
+          <label>Date de fin</label>
+          <input type="date" [(ngModel)]="form.end_date" />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-secondary" (click)="showForm.set(false)">Annuler</button>
+        <button class="btn-primary" (click)="save()">{{ editingDiscount() ? 'Mettre à jour' : 'Créer' }}</button>
+      </div>
+    </div>
+  }
+
+  <div class="discounts-grid">
+    @for (d of discounts(); track d.id) {
+      <div class="discount-card" [class.inactive]="!d.active">
+        <div class="discount-header">
+          <span class="discount-code">{{ d.code }}</span>
+          <span class="discount-badge" [class.active]="d.active">{{ d.active ? 'Actif' : 'Inactif' }}</span>
+        </div>
+        <div class="discount-value">
+          @if (d.type === 'percentage') {
+            <span class="big-value">-{{ d.value }}%</span>
+          } @else {
+            <span class="big-value">-{{ d.value | number:'1.2-2' }} MAD</span>
+          }
+        </div>
+        <div class="discount-meta">
+          @if (d.min_order > 0) {
+            <span>Min: {{ d.min_order | number:'1.2-2' }} MAD</span>
+          }
+          @if (d.max_uses > 0) {
+            <span>Utilisé: {{ d.used_count }}/{{ d.max_uses }}</span>
+          } @else {
+            <span>Utilisé: {{ d.used_count }}</span>
+          }
+          @if (d.end_date) {
+            <span>Expire: {{ d.end_date | date:'dd/MM/yyyy' }}</span>
+          }
+        </div>
+        <div class="discount-actions">
+          <button class="btn-icon" (click)="edit(d)" title="Modifier">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="btn-icon" (click)="toggle(d)" [title]="d.active ? 'Désactiver' : 'Activer'">
+            @if (d.active) {
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            } @else {
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            }
+          </button>
+          <button class="btn-icon" (click)="sendEmail(d)" [disabled]="sending() === d.id" title="Envoyer par email aux abonnés">
+            @if (sending() === d.id) {
+              <span class="spinner"></span>
+            } @else {
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            }
+          </button>
+          <button class="btn-icon btn-danger" (click)="deleteDiscount(d)" title="Supprimer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <div class="empty-state">
+        <p>Aucun code promo créé</p>
+        <button class="btn-primary" (click)="openNew()">Créer un code</button>
+      </div>
+    }
+  </div>
+</div>

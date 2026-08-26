@@ -1,0 +1,106 @@
+<div class="admin-instagram">
+  <div class="page-header">
+    <div>
+      <h1>Instagram</h1>
+      <p class="subtitle">Gérez les posts affichés sur la page d'accueil</p>
+    </div>
+    <button class="btn-primary" (click)="openAdd()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Ajouter un post
+    </button>
+  </div>
+
+  @if (loading) {
+    <div class="loading">Chargement...</div>
+  } @else if (posts.length === 0) {
+    <div class="empty-state">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      <h3>Aucun post Instagram</h3>
+      <p>Ajoutez des images pour les afficher sur la page d'accueil.</p>
+      <button class="btn-primary" (click)="openAdd()">Ajouter un post</button>
+    </div>
+  } @else {
+    <div class="posts-grid">
+      @for (post of posts; track post.id) {
+        <div class="post-card" [class.inactive]="!post.active">
+          <div class="post-image">
+            <img [src]="post.image_url" [alt]="post.caption || 'Instagram post'" />
+            @if (!post.active) {
+              <span class="inactive-badge">Inactif</span>
+            }
+          </div>
+          <div class="post-info">
+            <p class="post-caption">{{ post.caption || 'Pas de légende' }}</p>
+            <p class="post-link" *ngIf="post.link">{{ post.link }}</p>
+            <span class="post-order">Ordre: {{ post.sort_order }}</span>
+          </div>
+          <div class="post-actions">
+            <button class="btn-icon" (click)="toggleActive(post)" [title]="post.active ? 'Désactiver' : 'Activer'">
+              @if (post.active) {
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+              }
+            </button>
+            <button class="btn-icon" (click)="openEdit(post)" title="Modifier">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button class="btn-icon danger" (click)="deletePost(post)" title="Supprimer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+@if (showModal && editingPost) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>{{ editingPost.id ? 'Modifier' : 'Ajouter' }} un post Instagram</h2>
+        <button class="close-btn" (click)="closeModal()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Image</label>
+          <input type="file" accept="image/*" (change)="onFileSelected($event)" class="file-input" />
+          @if (imagePreview) {
+            <div class="image-preview">
+              <img [src]="imagePreview" alt="Preview" />
+            </div>
+          }
+          <small>Ou entrez une URL d'image :</small>
+          <input type="text" [(ngModel)]="editingPost.image_url" placeholder="https://..." class="form-input" (input)="onImageInput()" />
+        </div>
+        <div class="form-group">
+          <label>Légende</label>
+          <input type="text" [(ngModel)]="editingPost.caption" placeholder="Description du post..." class="form-input" />
+        </div>
+        <div class="form-group">
+          <label>Lien Instagram (optionnel)</label>
+          <input type="text" [(ngModel)]="editingPost.link" placeholder="https://www.instagram.com/p/..." class="form-input" />
+        </div>
+        <div class="form-group">
+          <label>Ordre d'affichage</label>
+          <input type="number" [(ngModel)]="editingPost.sort_order" class="form-input small" />
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" [checked]="editingPost.active === 1" (change)="editingPost.active = $any($event.target).checked ? 1 : 0" />
+            Actif
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="closeModal()">Annuler</button>
+        <button class="btn-primary" (click)="save()" [disabled]="saving || !editingPost.image_url">
+          {{ saving ? 'Enregistrement...' : 'Enregistrer' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

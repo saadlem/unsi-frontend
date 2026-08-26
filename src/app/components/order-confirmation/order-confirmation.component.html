@@ -1,0 +1,35 @@
+<section class="confirmation-section">
+  <div class="confirmation-card">
+    <div class="success-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    </div>
+    <h1>{{ 'oc.title' | t }}</h1>
+    <p class="success-text">{{ 'oc.thanks' | t }} {{ 'oc.msg' | t }}</p>
+
+    @if (order) {
+      <div class="order-details">
+        <div class="detail-row">
+          <span>{{ 'oc.number' | t }}</span>
+          <span class="order-id">{{ order.id }}</span>
+        </div>
+        <div class="detail-row">
+          <span>Status</span>
+          <span class="status-badge">{{ order.status }}</span>
+        </div>
+      </div>
+
+      <div class="cod-reminder">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e67e22" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <div>
+          <strong>{{ 'oc.payOnDelivery' | t }}</strong>
+          <span>{{ 'oc.payMsg' | t }}</span>
+        </div>
+      </div>
+    }
+
+    <div class="actions">
+      <a routerLink="/products" class="btn-primary">{{ 'oc.trackOrder' | t }}</a>
+      <a routerLink="/" class="btn-secondary">{{ 'oc.backHome' | t }}</a>
+    </div>
+  </div>
+</section>

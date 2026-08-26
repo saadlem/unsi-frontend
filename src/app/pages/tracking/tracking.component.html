@@ -1,0 +1,65 @@
+<div class="page-container">
+  <div class="tracking-form">
+    <h1>{{ 'tracking.title' | t }}</h1>
+    <p class="subtitle">{{ 'tracking.desc' | t }}</p>
+
+    <form (ngSubmit)="trackOrder()">
+      <div class="input-group">
+        <input
+          type="text"
+          [(ngModel)]="orderNumber"
+          name="orderNumber"
+          [placeholder]="'tracking.placeholder' | t"
+          class="order-input"
+        />
+        <button type="submit" class="track-btn" [disabled]="loading || !orderNumber.trim()">
+          {{ 'tracking.track' | t }}
+        </button>
+      </div>
+    </form>
+
+    <div *ngIf="loading" class="loading">
+      <div class="spinner"></div>
+    </div>
+
+    <div *ngIf="error" class="error-message">
+      {{ error | t }}
+    </div>
+  </div>
+
+  <div *ngIf="order" class="order-result">
+    <div class="timeline">
+      <div
+        *ngFor="let s of statuses; let i = index"
+        class="timeline-step"
+        [class.active]="i <= getStatusIndex()"
+        [class.current]="i === getStatusIndex()"
+      >
+        <div class="step-indicator">
+          <div class="dot"></div>
+          <div class="line" *ngIf="i < statuses.length - 1"></div>
+        </div>
+        <div class="step-content">
+          <span class="step-label">{{ 'tracking.status_' + s.key | t }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="order-details">
+      <div class="order-items">
+        <div *ngFor="let item of order.items" class="order-item">
+          <div class="item-info">
+            <span class="item-name">{{ item.productName }}</span>
+            <span class="item-qty">x{{ item.quantity }}</span>
+          </div>
+          <span class="item-price">{{ item.price | number:'1.2-2' }} MAD</span>
+        </div>
+      </div>
+
+      <div class="order-total">
+        <span class="total-label">{{ 'tracking.total' | t }}</span>
+        <span class="total-value">{{ order.total | number:'1.2-2' }} MAD</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,133 @@
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text, #1A1A1A);
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text, #1A1A1A);
+  margin-bottom: 20px;
+}
+
+/* Story */
+.story-section {
+  margin-bottom: 48px;
+}
+
+.story-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-light, #555);
+}
+
+/* Values */
+.values-section {
+  border-top: 1px solid var(--border, #E8E8E8);
+  padding-top: 40px;
+  margin-bottom: 48px;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.value-card {
+  text-align: center;
+  padding: 24px 16px;
+}
+
+.value-icon {
+  font-size: 14px;
+  color: var(--blue, #1565C0);
+  margin-bottom: 12px;
+}
+
+.value-card h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text, #1A1A1A);
+  margin-bottom: 8px;
+}
+
+.value-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-light, #555);
+}
+
+/* Contact */
+.contact-section {
+  border-top: 1px solid var(--border, #E8E8E8);
+  padding-top: 40px;
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.contact-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted, #999);
+  min-width: 80px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.contact-item a,
+.contact-item span:not(.contact-label) {
+  font-size: 15px;
+  color: var(--text, #1A1A1A);
+}
+
+.contact-item a {
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.contact-item a:hover {
+  color: var(--blue, #1565C0);
+}
+
+@media (max-width: 600px) {
+  .page-container {
+    padding: 40px 20px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .contact-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

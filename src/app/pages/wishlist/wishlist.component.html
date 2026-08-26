@@ -1,0 +1,19 @@
+<section class="wishlist-section">
+  <div class="wishlist-header">
+    <span class="section-tag">Mes Favoris</span>
+    <h2>{{ 'wishlist.title' | t }}</h2>
+    <p>Retrouvez tous les produits que vous avez aimés</p>
+  </div>
+
+  <div class="products-grid">
+    @for (product of products(); track product.id) {
+      <app-product-card [product]="product" />
+    } @empty {
+      <div class="empty-state">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--cream-dark)" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <p>{{ 'wishlist.empty' | t }}</p>
+        <a routerLink="/products" class="browse-btn">Parcourir les produits</a>
+      </div>
+    }
+  </div>
+</section>

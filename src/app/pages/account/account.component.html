@@ -1,0 +1,136 @@
+<div class="account-page">
+  @if (mode() === 'login' || mode() === 'register') {
+    <div class="login-brand">
+      <h2>UNSI</h2>
+      <p>Céramique Artisanale</p>
+    </div>
+  }
+  @if (mode() === 'login') {
+    <div class="auth-card">
+      <h1>Connexion</h1>
+      <p class="subtitle">Connectez-vous pour gérer votre profil et suivre vos commandes</p>
+
+      @if (error()) {
+        <div class="error-msg">{{ error() }}</div>
+      }
+
+      <form (ngSubmit)="onLogin()" class="auth-form">
+        <div class="field">
+          <label for="login-email">Email ou nom d'utilisateur</label>
+          <input id="login-email" type="text" [(ngModel)]="loginForm.email" name="email" placeholder="votre@email.com ou admin" required>
+        </div>
+        <div class="field">
+          <label for="login-password">Mot de passe</label>
+          <input id="login-password" type="password" [(ngModel)]="loginForm.password" name="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-primary" [disabled]="loading()">
+          @if (loading()) { Connexion... } @else { Se connecter }
+        </button>
+      </form>
+
+      <p class="toggle-text">
+        Pas encore de compte ?
+        <button class="link-btn" (click)="toggleMode()">Créer un compte</button>
+      </p>
+    </div>
+  }
+
+  @if (mode() === 'register') {
+    <div class="auth-card">
+      <h1>Créer un compte</h1>
+      <p class="subtitle">Rejoignez UNSI Céramique pour suivre vos commandes</p>
+
+      @if (error()) {
+        <div class="error-msg">{{ error() }}</div>
+      }
+
+      <form (ngSubmit)="onRegister()" class="auth-form">
+        <div class="field">
+          <label for="reg-name">Nom complet</label>
+          <input id="reg-name" type="text" [(ngModel)]="registerForm.name" name="name" placeholder="Votre nom" required>
+        </div>
+        <div class="field">
+          <label for="reg-email">Email</label>
+          <input id="reg-email" type="email" [(ngModel)]="registerForm.email" name="email" placeholder="votre@email.com" required>
+        </div>
+        <div class="field">
+          <label for="reg-password">Mot de passe</label>
+          <input id="reg-password" type="password" [(ngModel)]="registerForm.password" name="password" placeholder="••••••••" required>
+        </div>
+        <div class="field">
+          <label for="reg-confirm">Confirmer le mot de passe</label>
+          <input id="reg-confirm" type="password" [(ngModel)]="registerForm.confirmPassword" name="confirmPassword" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn-primary" [disabled]="loading()">
+          @if (loading()) { Inscription... } @else { Créer mon compte }
+        </button>
+      </form>
+
+      <p class="toggle-text">
+        Déjà un compte ?
+        <button class="link-btn" (click)="toggleMode()">Se connecter</button>
+      </p>
+    </div>
+  }
+
+  @if (mode() === 'profile') {
+    <div class="profile-section">
+      <div class="profile-header">
+        <h1>Mon Compte</h1>
+        <button class="btn-logout" (click)="logout()">Déconnexion</button>
+      </div>
+
+      <div class="profile-grid">
+        <div class="card">
+          <h2>Profil</h2>
+          @if (error()) {
+            <div class="error-msg">{{ error() }}</div>
+          }
+          <form (ngSubmit)="onUpdateProfile()" class="profile-form">
+            <div class="field">
+              <label>Nom</label>
+              <input type="text" [(ngModel)]="profileForm.name" name="name" required>
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input type="email" [(ngModel)]="profileForm.email" name="email" required>
+            </div>
+            <div class="field">
+              <label>Téléphone</label>
+              <input type="tel" [(ngModel)]="profileForm.phone" name="phone" placeholder="+212...">
+            </div>
+            <button type="submit" class="btn-primary" [disabled]="loading()">
+              @if (loading()) { Sauvegarde... } @else { Sauvegarder }
+            </button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Commandes</h2>
+          @if (orders().length === 0) {
+            <p class="empty-text">Aucune commande pour le moment.</p>
+            <a routerLink="/products" class="btn-secondary">Découvrir nos produits</a>
+          } @else {
+            <div class="orders-list">
+              @for (order of orders(); track order.id) {
+                <div class="order-item">
+                  <div class="order-top">
+                    <span class="order-id">{{ order.id }}</span>
+                    <span class="order-status" [class]="getStatusClass(order.status)">{{ getStatusLabel(order.status) }}</span>
+                  </div>
+                  <div class="order-mid">
+                    <span>{{ order.items?.length || 0 }} article(s)</span>
+                    <span class="order-date">{{ formatDate(order.created_at) }}</span>
+                  </div>
+                  <div class="order-bottom">
+                    <span class="order-total">{{ order.total | number:'1.2-2' }} MAD</span>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

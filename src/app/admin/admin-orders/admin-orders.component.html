@@ -1,0 +1,46 @@
+<div class="orders-admin">
+  <div class="page-header">
+    <h1>Orders</h1>
+  </div>
+
+  <div class="filter-tabs">
+    @for (status of statuses; track status) {
+      <button class="filter-tab" [class.active]="filterStatus === status" (click)="filterStatus = status; onFilterChange()">
+        {{ status | titlecase }}
+      </button>
+    }
+  </div>
+
+  <div class="orders-table">
+    <div class="table-header">
+      <span>Order ID</span>
+      <span>Customer</span>
+      <span>Items</span>
+      <span>Total</span>
+      <span>Status</span>
+      <span>Date</span>
+      <span>Actions</span>
+    </div>
+    @for (order of orders; track order.id) {
+      <div class="table-row">
+        <span class="order-id">{{ order.id }}</span>
+        <div class="customer-cell">
+          <span class="customer-name">{{ order.first_name }} {{ order.last_name }}</span>
+          <span class="customer-phone">{{ order.phone }}</span>
+        </div>
+        <span>{{ order.items?.length || 0 }}</span>
+        <span class="price">{{ order.total | number:'1.2-2' }} MAD</span>
+        <span>
+          <span class="status-badge" [class]="order.status">{{ order.status }}</span>
+        </span>
+        <span class="date">{{ order.created_at | date:'short' }}</span>
+        <a [routerLink]="['/admin/orders', order.id]" class="view-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          View
+        </a>
+      </div>
+    } @empty {
+      <div class="empty">No orders found</div>
+    }
+  </div>
+</div>

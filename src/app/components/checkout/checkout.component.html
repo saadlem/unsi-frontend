@@ -1,0 +1,138 @@
+<section class="checkout-section">
+  <div class="checkout-layout">
+    <div class="checkout-form">
+      <h1>{{ 'checkout.title' | t }}</h1>
+      <p class="subtitle">{{ 'checkout.info' | t }}</p>
+
+      <div class="form-section">
+        <h2>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          {{ 'checkout.info' | t }}
+        </h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label>{{ 'checkout.firstName' | t }} *</label>
+            <input type="text" [(ngModel)]="customer.firstName" placeholder="Mohamed" [class.error]="submitted && !customer.firstName.trim()" />
+          </div>
+          <div class="form-group">
+            <label>{{ 'checkout.lastName' | t }} *</label>
+            <input type="text" [(ngModel)]="customer.lastName" placeholder="Alami" [class.error]="submitted && !customer.lastName.trim()" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>{{ 'checkout.email' | t }} *</label>
+            <input type="email" [(ngModel)]="customer.email" placeholder="mohamed&#64;example.com" [class.error]="submitted && !customer.email.trim()" />
+          </div>
+          <div class="form-group">
+            <label>{{ 'checkout.phone' | t }} *</label>
+            <input type="tel" [(ngModel)]="customer.phone" placeholder="+212 6XX-XXXXXX" [class.error]="submitted && !customer.phone.trim()" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h2>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          {{ 'checkout.address' | t }}
+        </h2>
+        <div class="form-group full">
+          <label>{{ 'checkout.address' | t }} *</label>
+          <input type="text" [(ngModel)]="customer.address" placeholder="123 Avenue Mohammed V, Appartement 4" [class.error]="submitted && !customer.address.trim()" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>{{ 'checkout.city' | t }} *</label>
+            <input type="text" [(ngModel)]="customer.city" placeholder="Casablanca" [class.error]="submitted && !customer.city.trim()" />
+          </div>
+          <div class="form-group">
+            <label>{{ 'checkout.zip' | t }} *</label>
+            <input type="text" [(ngModel)]="customer.zipCode" placeholder="20000" [class.error]="submitted && !customer.zipCode.trim()" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section payment-section">
+        <h2>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          {{ 'checkout.payment' | t }}
+        </h2>
+        <div class="cod-badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M6 12h.01M18 12h.01"/></svg>
+          <div>
+            <strong>{{ 'checkout.cod' | t }}</strong>
+            <span>{{ 'checkout.codDesc' | t }}</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="submit-btn" (click)="onSubmit()" [disabled]="cartService.itemCount() === 0 || submitting">
+        @if (submitting) {
+          {{ 'checkout.processing' | t }}
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          {{ 'checkout.place' | t }} — {{ finalTotal | number:'1.2-2' }} {{ 'common.mad' | t }}
+        }
+      </button>
+    </div>
+
+    <div class="order-summary">
+      <h3>{{ 'cart.summary' | t }}</h3>
+      <div class="summary-items">
+        @for (item of cartService.items(); track item.product.id) {
+          <div class="summary-item">
+            <img [src]="item.product.image" [alt]="item.product.name" />
+            <div class="summary-item-info">
+              <span class="summary-item-name">{{ item.product.name }}</span>
+              <span class="summary-item-qty">{{ 'cart.qty' | t }}: {{ item.quantity }}</span>
+            </div>
+            <span class="summary-item-price">{{ (item.product.price * item.quantity) | number:'1.2-2' }} {{ 'common.mad' | t }}</span>
+          </div>
+        }
+      </div>
+
+      <div class="discount-section">
+        @if (!appliedDiscount()) {
+          <div class="discount-input-row">
+            <input type="text" [(ngModel)]="discountCode" [placeholder]="'cart.code' | t" class="discount-input" (keyup.enter)="applyDiscount()" />
+            <button class="discount-btn" (click)="applyDiscount()" [disabled]="applyingDiscount || !discountCode.trim()">
+              @if (applyingDiscount) { ... } @else { {{ 'cart.apply' | t }} }
+            </button>
+          </div>
+          @if (discountError()) {
+            <p class="discount-error">{{ discountError() }}</p>
+          }
+        } @else {
+          <div class="discount-applied">
+            <span class="discount-tag">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              {{ appliedDiscount()!.code }}
+            </span>
+            <button class="remove-discount" (click)="removeDiscount()">✕</button>
+          </div>
+        }
+      </div>
+
+      <div class="summary-totals">
+        <div class="summary-row">
+          <span>{{ 'cart.subtotal' | t }}</span>
+          <span>{{ subtotal | number:'1.2-2' }} {{ 'common.mad' | t }}</span>
+        </div>
+        <div class="summary-row">
+          <span>{{ 'cart.shipping' | t }}</span>
+          <span class="free">{{ 'cart.shippingFree' | t }}</span>
+        </div>
+        @if (discountAmount > 0) {
+          <div class="summary-row discount-row">
+            <span>{{ 'cart.discount' | t }} ({{ appliedDiscount()!.code }})</span>
+            <span class="discount-value">-{{ discountAmount | number:'1.2-2' }} {{ 'common.mad' | t }}</span>
+          </div>
+        }
+        <div class="summary-row total">
+          <span>{{ 'cart.total' | t }}</span>
+          <span>{{ finalTotal | number:'1.2-2' }} {{ 'common.mad' | t }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

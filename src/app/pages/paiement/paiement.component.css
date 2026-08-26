@@ -1,0 +1,133 @@
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text, #1A1A1A);
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text, #1A1A1A);
+  margin-bottom: 16px;
+}
+
+h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text, #1A1A1A);
+  margin-bottom: 4px;
+}
+
+.section {
+  border-top: 1px solid var(--border, #E8E8E8);
+  padding-top: 32px;
+  margin-bottom: 32px;
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.section p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text-light, #555);
+}
+
+/* Steps */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--blue-pale, #E3F2FD);
+  color: var(--blue, #1565C0);
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-content p {
+  font-size: 14px;
+  color: var(--text-light, #555);
+  line-height: 1.6;
+}
+
+/* Benefits */
+.benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--text-light, #555);
+}
+
+.benefit-item::before {
+  content: '✓';
+  color: var(--blue, #1565C0);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Payment badge */
+.payment-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: var(--blue-pale, #E3F2FD);
+  color: var(--blue, #1565C0);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.badge-sub {
+  font-size: 14px;
+  color: var(--text-muted, #999);
+}
+
+@media (max-width: 600px) {
+  .page-container {
+    padding: 40px 20px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+}

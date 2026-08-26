@@ -1,0 +1,153 @@
+<div class="admin-layout" [class.sidebar-open]="sidebarOpen" [class.sidebar-collapsed]="sidebarCollapsed">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <a routerLink="/admin" class="sidebar-logo">
+        <div class="logo-icon">U</div>
+        <span class="logo-text">UNSI</span>
+        @if (!sidebarCollapsed) {
+          <span class="admin-badge">Admin</span>
+        }
+      </a>
+    </div>
+
+    <nav class="sidebar-nav">
+      @if (!sidebarCollapsed) {
+        <span class="sidebar-nav-label">Menu</span>
+      }
+      <a routerLink="/admin/dashboard" routerLinkActive="active" (click)="sidebarOpen = false" title="Tableau de bord">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        @if (!sidebarCollapsed) {
+          <span class="nav-label">Tableau de bord</span>
+        }
+      </a>
+      <a routerLink="/admin/products" routerLinkActive="active" (click)="sidebarOpen = false" title="Produits">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        @if (!sidebarCollapsed) {
+          <span class="nav-label">Produits</span>
+        }
+      </a>
+      <a routerLink="/admin/categories" routerLinkActive="active" (click)="sidebarOpen = false" title="Catégories">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        @if (!sidebarCollapsed) {
+          <span class="nav-label">Catégories</span>
+        }
+      </a>
+      <a routerLink="/admin/orders" routerLinkActive="active" (click)="sidebarOpen = false" title="Commandes">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        @if (!sidebarCollapsed) {
+          <span class="nav-label">Commandes</span>
+        }
+      </a>
+      <a routerLink="/admin/discounts" routerLinkActive="active" (click)="sidebarOpen = false" title="Réductions">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        @if (!sidebarCollapsed) {
+          <span class="nav-label">Réductions</span>
+        }
+      </a>
+      <a routerLink="/admin/instagram" routerLinkActive="active" (click)="sidebarOpen = false" title="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        @if (!sidebarCollapsed) {
+          <span class="nav-label">Instagram</span>
+        }
+      </a>
+      <a routerLink="/admin/site-status" routerLinkActive="active" (click)="sidebarOpen = false" title="État du site">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        @if (!sidebarCollapsed) {
+          <span class="nav-label">État du site</span>
+        }
+      </a>
+
+      <a routerLink="/" class="nav-link-bottom" title="Voir la boutique">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        @if (!sidebarCollapsed) {
+          <span class="nav-label">Voir la boutique</span>
+        }
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      @if (!sidebarCollapsed) {
+        <div class="admin-info">
+          <div class="admin-avatar">{{ auth.admin()?.name?.charAt(0) || 'A' }}</div>
+          <div class="admin-details">
+            <span class="admin-name">{{ auth.admin()?.name }}</span>
+            <span class="admin-role">Administrateur</span>
+          </div>
+        </div>
+      } @else {
+        <div class="admin-info collapsed-info">
+          <div class="admin-avatar">{{ auth.admin()?.name?.charAt(0) || 'A' }}</div>
+        </div>
+      }
+      <button class="logout-btn" (click)="logout()" title="Déconnexion">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" (click)="sidebarOpen = !sidebarOpen">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <button class="collapse-toggle" (click)="sidebarCollapsed = !sidebarCollapsed" [title]="sidebarCollapsed ? 'Déplier le menu' : 'Replier le menu'">
+          @if (sidebarCollapsed) {
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="11 17 6 12 11 7"/><polyline points="18 17 13 12 18 7"/></svg>
+          }
+        </button>
+      </div>
+
+      <div class="topbar-spacer"></div>
+
+      <div class="notif-wrapper">
+        <button class="notif-btn" (click)="toggleNotifPanel()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          @if (unreadCount > 0) {
+            <span class="notif-badge">{{ unreadCount }}</span>
+          }
+        </button>
+
+        @if (notifPanelOpen) {
+          <div class="notif-panel" (click)="$event.stopPropagation()">
+            <div class="notif-panel-header">
+              <h3>Notifications</h3>
+              <button class="close-btn" (click)="notifPanelOpen = false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            <div class="notif-list">
+              @for (n of notifications; track n.id) {
+                <div class="notif-item" [class.unread]="!n.read">
+                  <div class="notif-icon" [class.order]="n.type === 'new_order'" [class.update]="n.type === 'order_updated'">
+                    @if (n.type === 'new_order') {
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+                    } @else {
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    }
+                  </div>
+                  <div class="notif-content">
+                    <p>{{ n.message }}</p>
+                    <span class="notif-time">{{ formatTime(n.time) }}</span>
+                  </div>
+                </div>
+              } @empty {
+                <div class="notif-empty">Aucune notification</div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <router-outlet />
+    </div>
+  </main>
+</div>
+
+@if (notifPanelOpen) {
+  <div class="notif-overlay" (click)="notifPanelOpen = false"></div>
+}

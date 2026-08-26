@@ -1,0 +1,25 @@
+<section class="testimonials">
+  <div class="testimonials-header">
+    <span class="section-tag">Avis Clients</span>
+    <h2>{{ 'testimonials.title' | t }}</h2>
+  </div>
+
+  <div class="testimonials-grid">
+    @for (t of testimonials; track t.name) {
+      <div class="testimonial-card">
+        <div class="stars">
+          @for (s of [1, 2, 3, 4, 5]; track s) {
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+          }
+        </div>
+        <p class="quote">"{{ t.quote }}"</p>
+        <div class="customer">
+          <div class="avatar">{{ t.name.charAt(0) }}</div>
+          <span class="name">{{ t.name }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</section>

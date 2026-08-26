@@ -1,0 +1,147 @@
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #0D47A1;
+  margin: 0;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.filter-tab {
+  padding: 8px 20px;
+  border: 1px solid #eee;
+  border-radius: 50px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-tab:hover { border-color: #0D47A1; color: #0D47A1; }
+
+.filter-tab.active {
+  background: #0D47A1;
+  color: #fff;
+  border-color: #0D47A1;
+}
+
+.orders-table {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+}
+
+.table-header, .table-row {
+  display: grid;
+  grid-template-columns: 1.3fr 1.5fr 0.6fr 1fr 1fr 1fr 80px;
+  padding: 14px 20px;
+  align-items: center;
+}
+
+.table-header {
+  font-size: 11px;
+  font-weight: 600;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.table-row {
+  border-bottom: 1px solid #f5f5f5;
+  font-size: 14px;
+  color: #555;
+  transition: background 0.2s;
+}
+
+.table-row:hover { background: #fafafa; }
+
+.order-id {
+  font-weight: 600;
+  color: #0D47A1;
+  font-size: 13px;
+}
+
+.customer-name {
+  display: block;
+  font-weight: 600;
+  color: #0D47A1;
+  font-size: 14px;
+}
+
+.customer-phone {
+  display: block;
+  font-size: 12px;
+  color: #999;
+}
+
+.price {
+  font-weight: 700;
+  color: #1565C0;
+}
+
+.date {
+  color: #999;
+  font-size: 13px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-badge.pending { background: #fff3e0; color: #e65100; }
+.status-badge.confirmed { background: #e3f2fd; color: #1565c0; }
+.status-badge.shipped { background: #f3e5f5; color: #7b1fa2; }
+.status-badge.delivered { background: #E3F2FD; color: #1565C0; }
+.status-badge.cancelled { background: #fce4ec; color: #c62828; }
+
+.view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #0D47A1;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #f5f5f5;
+  transition: background 0.2s;
+}
+
+.view-btn:hover { background: #eee; }
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #ccc;
+}
+
+@media (max-width: 1024px) {
+  .table-header, .table-row {
+    grid-template-columns: 1fr 1fr 1fr 80px;
+  }
+
+  .table-header span:nth-child(3),
+  .table-row span:nth-child(3),
+  .table-header span:nth-child(5),
+  .table-row .status-badge { display: none; }
+}

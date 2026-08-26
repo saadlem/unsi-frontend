@@ -1,0 +1,19 @@
+<div class="page-container">
+  <h1>Questions Fréquentes</h1>
+
+  <div class="faq-list">
+    @for (item of faqItems; track $index) {
+      <div class="faq-item" [class.open]="openIndex === $index">
+        <button class="faq-question" (click)="toggle($index)">
+          <span>{{ item.question }}</span>
+          <span class="faq-icon" [class.rotated]="openIndex === $index">+</span>
+        </button>
+        @if (openIndex === $index) {
+          <div class="faq-answer">
+            <p>{{ item.answer }}</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

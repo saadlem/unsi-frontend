@@ -1,0 +1,260 @@
+.page-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+.tracking-form {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text, #1A1A1A);
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: var(--text-light, #555);
+  margin-bottom: 32px;
+}
+
+.input-group {
+  display: flex;
+  gap: 12px;
+}
+
+.order-input {
+  flex: 1;
+  padding: 14px 16px;
+  border: 1px solid var(--border, #E8E8E8);
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text, #1A1A1A);
+  background: var(--bg, #fff);
+  transition: border-color 0.15s ease;
+}
+
+.order-input:focus {
+  outline: none;
+  border-color: var(--blue, #1565C0);
+}
+
+.track-btn {
+  padding: 14px 28px;
+  background: var(--text, #1A1A1A);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.track-btn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.track-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.loading {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border, #E8E8E8);
+  border-top-color: var(--text, #1A1A1A);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-message {
+  margin-top: 20px;
+  color: #c0392b;
+  font-size: 14px;
+}
+
+/* Timeline */
+.order-result {
+  border-top: 1px solid var(--border, #E8E8E8);
+  padding-top: 40px;
+}
+
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.timeline-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-indicator {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--border, #E8E8E8);
+  border: 2px solid var(--border, #E8E8E8);
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+.line {
+  position: absolute;
+  top: 50%;
+  left: calc(50% + 8px);
+  right: calc(-50% + 8px);
+  height: 2px;
+  background: var(--border, #E8E8E8);
+  transition: background 0.3s ease;
+}
+
+.timeline-step.active .dot {
+  background: var(--text, #1A1A1A);
+  border-color: var(--text, #1A1A1A);
+}
+
+.timeline-step.active .line {
+  background: var(--text, #1A1A1A);
+}
+
+.timeline-step.current .dot {
+  width: 20px;
+  height: 20px;
+  border-color: var(--blue, #1565C0);
+  background: #fff;
+  border-width: 3px;
+}
+
+.step-content {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.step-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted, #999);
+  transition: color 0.3s ease;
+}
+
+.timeline-step.active .step-label {
+  color: var(--text, #1A1A1A);
+}
+
+/* Order Details */
+.order-details {
+  background: var(--bg, #fafafa);
+  border: 1px solid var(--border, #E8E8E8);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.item-name {
+  font-size: 15px;
+  color: var(--text, #1A1A1A);
+}
+
+.item-qty {
+  font-size: 13px;
+  color: var(--text-muted, #999);
+}
+
+.item-price {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text, #1A1A1A);
+}
+
+.order-total {
+  border-top: 1px solid var(--border, #E8E8E8);
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted, #999);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.total-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text, #1A1A1A);
+}
+
+@media (max-width: 600px) {
+  .page-container {
+    padding: 40px 20px;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+
+  .track-btn {
+    width: 100%;
+  }
+
+  .step-label {
+    font-size: 11px;
+  }
+}
