@@ -30,21 +30,28 @@ import { HttpClient } from '@angular/common/http';
       }
     </div>
 
-    <div class="status-form" *ngIf="status.mode !== 'live'">
-      <h2>Message personnalisé</h2>
-      <div class="form-group">
-        <label>Titre (optionnel)</label>
-        <input [(ngModel)]="status.title" placeholder="Ex: Maintenance planifiée" class="form-input" />
-      </div>
-      <div class="form-group">
-        <label>Message (optionnel)</label>
-        <textarea [(ngModel)]="status.message" placeholder="Ex: Nous effectuons une mise à jour de nos serveurs..." class="form-textarea" rows="3"></textarea>
-      </div>
+    <div class="status-form">
+      @if (status.mode !== 'live') {
+        <h2>Message personnalisé</h2>
+        <div class="form-group">
+          <label>Titre (optionnel)</label>
+          <input [(ngModel)]="status.title" placeholder="Ex: Maintenance planifiée" class="form-input" />
+        </div>
+        <div class="form-group">
+          <label>Message (optionnel)</label>
+          <textarea [(ngModel)]="status.message" placeholder="Ex: Nous effectuons une mise à jour de nos serveurs..." class="form-textarea" rows="3"></textarea>
+        </div>
+      } @else {
+        <h2>Site en ligne</h2>
+        <p style="color:#8B90A0;font-size:14px;margin-bottom:16px">Le site est visible par tous les visiteurs. Cliquez sur Enregistrer pour confirmer le passage en mode live.</p>
+      }
       <div class="form-actions">
         <button class="btn-save" (click)="save()" [disabled]="saving">
           {{ saving ? 'Enregistrement...' : 'Enregistrer' }}
         </button>
-        <button class="btn-preview" (click)="preview()">Aperçu</button>
+        @if (status.mode !== 'live') {
+          <button class="btn-preview" (click)="preview()">Aperçu</button>
+        }
       </div>
       @if (saved) {
         <div class="save-success">✓ Enregistré avec succès</div>

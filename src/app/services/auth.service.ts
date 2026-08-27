@@ -25,8 +25,24 @@ export class AuthService {
     const token = localStorage.getItem('unsi_token');
     const admin = localStorage.getItem('unsi_admin');
     if (token && admin) {
-      this.currentAdmin.set(JSON.parse(admin));
+      try {
+        this.currentAdmin.set(JSON.parse(admin));
+      } catch {
+        this.currentAdmin.set(null);
+      }
+    } else {
+      this.currentAdmin.set(null);
     }
+  }
+
+  syncFromStorage(): void {
+    this.loadFromStorage();
+  }
+
+  setSession(token: string, admin: Admin): void {
+    localStorage.setItem('unsi_token', token);
+    localStorage.setItem('unsi_admin', JSON.stringify(admin));
+    this.currentAdmin.set(admin);
   }
 
   login(username: string, password: string) {

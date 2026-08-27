@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { SeoService } from '../../services/seo.service';
+import { AuthService } from '../../services/auth.service';
 
 interface Customer {
   id: number;
@@ -51,7 +52,7 @@ export class AccountComponent {
   registerForm = { name: '', email: '', password: '', confirmPassword: '' };
   profileForm = { name: '', email: '', phone: '' };
 
-  constructor(private http: HttpClient, private router: Router, private seo: SeoService) {
+  constructor(private http: HttpClient, private router: Router, private seo: SeoService, private authService: AuthService) {
     this.seo.updateTags({ title: 'Mon Compte', url: '/account' });
     this.checkAuth();
   }
@@ -59,6 +60,7 @@ export class AccountComponent {
   private checkAuth(): void {
     // Admin already logged in → redirect to admin
     if (localStorage.getItem('unsi_token')) {
+      this.authService.syncFromStorage();
       this.router.navigate(['/admin']);
       return;
     }
@@ -97,8 +99,7 @@ export class AccountComponent {
       password: this.loginForm.password
     }).subscribe({
       next: (res) => {
-        localStorage.setItem('unsi_token', res.token);
-        localStorage.setItem('unsi_admin', JSON.stringify(res.admin));
+        this.authService.setSession(res.token, res.admin);
         this.router.navigate(['/admin']);
       },
       error: () => {
@@ -160,6 +161,7 @@ export class AccountComponent {
     localStorage.removeItem('unsi_customer_token');
     localStorage.removeItem('unsi_token');
     localStorage.removeItem('unsi_admin');
+    this.authService.syncFromStorage();
     this.customer.set(null);
     this.orders.set([]);
     this.mode.set('login');
