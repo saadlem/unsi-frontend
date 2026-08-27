@@ -23,9 +23,14 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
   get unreadCount() { return this.notifService.unreadCount(); }
 
   ngOnInit(): void {
-    if (!this.auth.isLoggedIn()) {
+    const token = this.auth.getToken();
+    if (!token) {
       this.router.navigate(['/account']);
       return;
+    }
+    // Hydrate signal if it is stale (e.g. login just set localStorage but signal not yet updated)
+    if (!this.auth.isLoggedIn()) {
+      this.auth.syncFromStorage();
     }
     this.auth.checkAuth().subscribe();
     this.notifService.connect();
