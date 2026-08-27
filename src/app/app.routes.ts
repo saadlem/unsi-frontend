@@ -8,6 +8,7 @@ import { AdminDiscountsComponent } from './admin/admin-discounts/admin-discounts
 import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
 import { AdminInstagramComponent } from './admin/admin-instagram/admin-instagram.component';
 import { AdminSiteStatusComponent } from './admin/admin-site-status/admin-site-status.component';
+import { AdminBannerComponent } from './admin/admin-banner/admin-banner.component';
 import { authGuard } from './guards/auth.guard';
 import { siteStatusGuard } from './guards/site-status.guard';
 
@@ -39,6 +40,7 @@ export const routes: Routes = [
       { path: 'discounts', component: AdminDiscountsComponent },
       { path: 'instagram', component: AdminInstagramComponent },
       { path: 'site-status', component: AdminSiteStatusComponent },
+      { path: 'banner', component: AdminBannerComponent },
     ]
   },
   { path: '**', redirectTo: '' }
