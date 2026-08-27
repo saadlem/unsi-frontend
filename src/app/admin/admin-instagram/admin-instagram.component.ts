@@ -28,9 +28,38 @@ export class AdminInstagramComponent implements OnInit {
   editingPost: Partial<InstagramPost> | null = null;
   imagePreview = '';
   saving = false;
+  syncing = false;
+  syncMessage = '';
+  isConfigured = false;
+  checkingConfig = true;
 
   ngOnInit(): void {
     this.loadPosts();
+    this.checkConfig();
+  }
+
+  checkConfig(): void {
+    this.http.get<{configured: boolean}>('/api/admin/instagram/config').subscribe({
+      next: (c) => { this.isConfigured = c.configured; this.checkingConfig = false; },
+      error: () => this.checkingConfig = false
+    });
+  }
+
+  syncInstagram(): void {
+    this.syncing = true;
+    this.syncMessage = '';
+    this.http.post<any>('/api/admin/instagram/sync', {}).subscribe({
+      next: (res) => {
+        this.syncMessage = `✓ ${res.synced} nouveaux, ${res.updated} mis à jour sur ${res.total}`;
+        this.syncing = false;
+        this.loadPosts();
+        setTimeout(() => this.syncMessage = '', 5000);
+      },
+      error: (err) => {
+        this.syncMessage = `✗ ${err.error?.error || 'Erreur de synchronisation. Vérifiez IG_USER_ID / IG_ACCESS_TOKEN sur Railway.'}`;
+        this.syncing = false;
+      }
+    });
   }
 
   loadPosts(): void {

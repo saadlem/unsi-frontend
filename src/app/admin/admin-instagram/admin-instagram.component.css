@@ -297,6 +297,9 @@ small {
   border-top: 1px solid #E2DDD4;
 }
 
+.sync-msg { font-size:13px; font-weight:600; margin:6px 0 0; }
+.sync-warning { font-size:12px; color:#E65100; background:#FFF3E0; padding:6px 10px; border-radius:8px; margin:8px 0 0; display:inline-block; }
+
 @media (max-width: 768px) {
   .page-header {
     flex-direction: column;
