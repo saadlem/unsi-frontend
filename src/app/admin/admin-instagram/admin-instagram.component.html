@@ -3,11 +3,23 @@
     <div>
       <h1>Instagram</h1>
       <p class="subtitle">Gérez les posts affichés sur la page d'accueil</p>
+      @if (syncMessage) {
+        <p class="sync-msg" [style.color]="syncMessage.startsWith('✓') ? '#2E7D32' : '#C62828'">{{ syncMessage }}</p>
+      }
+      @if (!checkingConfig && !isConfigured) {
+        <p class="sync-warning">⚠️ Auto-sync non configuré: ajoutez IG_USER_ID et IG_ACCESS_TOKEN dans Railway → Variables</p>
+      }
     </div>
-    <button class="btn-primary" (click)="openAdd()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Ajouter un post
-    </button>
+    <div style="display:flex;gap:12px;align-items:center">
+      <button class="btn-secondary" (click)="syncInstagram()" [disabled]="syncing" title="Récupérer les 12 derniers posts depuis Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/><path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/></svg>
+        {{ syncing ? 'Sync...' : 'Sync Instagram' }}
+      </button>
+      <button class="btn-primary" (click)="openAdd()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Ajouter un post
+      </button>
+    </div>
   </div>
 
   @if (loading) {
