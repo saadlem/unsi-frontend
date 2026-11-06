@@ -36,11 +36,11 @@ export class FaqComponent implements OnInit {
     },
     {
       question: 'Puis-je retourner un produit ?',
-      answer: 'Oui, sous 14 jours si le produit est dans son état d\'origine. Contactez-nous à hello@unsi.store.'
+      answer: 'Oui, sous 14 jours si le produit est dans son état d\'origine. Contactez-nous à hello@unsi.ma.'
     },
     {
-      question: 'Les pièces sont-elles vraiment faites à la main ?',
-      answer: 'Oui, chaque pièce est façonnée et peinte à la main par nos artisans au Maroc.'
+      question: 'Que propose UNSI ?',
+      answer: 'Des objets pour un quotidien plus chaleureux — détails pensés, vie joyeuse. Bientôt disponible depuis le Maroc.'
     },
     {
       question: 'Livrez-vous en dehors du Maroc ?',

@@ -1,11 +1,16 @@
 <div class="admin-layout" [class.sidebar-open]="sidebarOpen" [class.sidebar-collapsed]="sidebarCollapsed">
   <aside class="sidebar">
     <div class="sidebar-header">
-      <a routerLink="/admin" class="sidebar-logo">
-        <div class="logo-icon">U</div>
-        <span class="logo-text">UNSI</span>
+      <a routerLink="/admin" class="sidebar-logo" aria-label="UNSI admin">
+        <img
+          class="logo-img"
+          src="assets/brand/unsi-logo-mark.png"
+          width="96"
+          height="44"
+          alt="UNSI"
+        />
         @if (!sidebarCollapsed) {
-          <span class="admin-badge">Admin</span>
+          <span class="admin-badge">Studio</span>
         }
       </a>
     </div>

@@ -16,12 +16,12 @@
   transition: color 0.2s;
 }
 
-.back-link:hover { color: #0D47A1; }
+.back-link:hover { color: #A00812; }
 
 .page-header h1 {
   font-size: 28px;
   font-weight: 800;
-  color: #0D47A1;
+  color: #A00812;
   margin: 0;
 }
 
@@ -43,7 +43,7 @@
 .status-badge.pending { background: #fff3e0; color: #e65100; }
 .status-badge.confirmed { background: #e3f2fd; color: #1565c0; }
 .status-badge.shipped { background: #f3e5f5; color: #7b1fa2; }
-.status-badge.delivered { background: #E3F2FD; color: #1565C0; }
+.status-badge.delivered { background: #FCE4EC; color: #A00812; }
 .status-badge.cancelled { background: #fce4ec; color: #c62828; }
 
 .btn-danger {
@@ -77,7 +77,7 @@
 .card h2 {
   font-size: 16px;
   font-weight: 700;
-  color: #0D47A1;
+  color: #A00812;
   margin: 0 0 16px;
 }
 
@@ -109,7 +109,7 @@
 .item-name {
   display: block;
   font-weight: 600;
-  color: #0D47A1;
+  color: #A00812;
   font-size: 14px;
 }
 
@@ -120,7 +120,7 @@
 
 .item-total {
   font-weight: 700;
-  color: #1565C0;
+  color: #A00812;
   font-size: 14px;
 }
 
@@ -132,7 +132,7 @@
   border-top: 2px solid #f0f0f0;
   font-size: 18px;
   font-weight: 800;
-  color: #0D47A1;
+  color: #A00812;
 }
 
 .status-options {
@@ -158,13 +158,13 @@
 .status-option.pending { color: #e65100; }
 .status-option.confirmed { color: #1565c0; }
 .status-option.shipped { color: #7b1fa2; }
-.status-option.delivered { color: #1565C0; }
+.status-option.delivered { color: #A00812; }
 .status-option.cancelled { color: #c62828; }
 
 .status-option.active.pending { background: #fff3e0; }
 .status-option.active.confirmed { background: #e3f2fd; }
 .status-option.active.shipped { background: #f3e5f5; }
-.status-option.active.delivered { background: #E3F2FD; }
+.status-option.active.delivered { background: #FCE4EC; }
 .status-option.active.cancelled { background: #fce4ec; }
 
 .form-group {
@@ -191,12 +191,12 @@
   box-sizing: border-box;
 }
 
-.form-group textarea:focus { border-color: #0D47A1; }
+.form-group textarea:focus { border-color: #A00812; }
 
 .btn-save {
   width: 100%;
   padding: 14px;
-  background: #1565C0;
+  background: #A00812;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -205,7 +205,7 @@
   cursor: pointer;
 }
 
-.btn-save:hover:not(:disabled) {   background: #0D47A1; }
+.btn-save:hover:not(:disabled) {   background: #A00812; }
 .btn-save:disabled { background: #ccc; cursor: not-allowed; }
 
 .info-list {
@@ -230,8 +230,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #E3F2FD;
-  border: 1px solid #BBDEFB;
+  background: #FCE4EC;
+  border: 1px solid #F7D9E6;
   border-radius: 10px;
   padding: 14px;
 }
@@ -239,7 +239,7 @@
 .cod-box strong {
   display: block;
   font-size: 14px;
-  color: #1565C0;
+  color: #A00812;
 }
 
 .cod-box span {

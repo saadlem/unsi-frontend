@@ -17,7 +17,7 @@ export class SeoService {
     type?: string;
     keywords?: string;
   }): void {
-    const siteName = 'UNSI Céramique';
+    const siteName = 'UNSI';
 
     if (config.title) {
       this.title.setTitle(config.title.includes(siteName) ? config.title : `${config.title} — ${siteName}`);

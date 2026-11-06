@@ -8,7 +8,7 @@
 .page-header h1 {
   font-size: 28px;
   font-weight: 800;
-  color: #0D47A1;
+  color: #A00812;
   margin: 0;
 }
 
@@ -17,7 +17,7 @@
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  background: #1565C0;
+  background: #A00812;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -27,7 +27,7 @@
   transition: background 0.2s;
 }
 
-.btn-primary:hover { background: #0D47A1; }
+.btn-primary:hover { background: #A00812; }
 
 .categories-grid {
   display: grid;
@@ -79,7 +79,7 @@
 .cat-name {
   font-size: 16px;
   font-weight: 700;
-  color: #0D47A1;
+  color: #A00812;
 }
 
 .cat-desc {
@@ -89,7 +89,7 @@
 
 .cat-count {
   font-size: 12px;
-  color: #1565C0;
+  color: #A00812;
   font-weight: 600;
   margin-top: 4px;
 }
@@ -171,8 +171,8 @@
 }
 
 .upload-label:hover {
-  border-color: #1565C0;
-  color: #1565C0;
+  border-color: #A00812;
+  color: #A00812;
   background: #F8FBFF;
 }
 
@@ -185,7 +185,7 @@
   width: 24px;
   height: 24px;
   border: 3px solid #e0e0e0;
-  border-top-color: #1565C0;
+  border-top-color: #A00812;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }

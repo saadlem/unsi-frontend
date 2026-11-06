@@ -1,60 +1,20 @@
 <section class="hero">
-  <div class="hero-content">
-    <div class="hero-text">
-      <span class="hero-tag">{{ 'hero.tag' | t }}</span>
-      <h1>{{ 'hero.title' | t }}<br><span class="accent">{{ 'hero.accent' | t }}</span><br>{{ 'hero.end' | t }}</h1>
-      <p>{{ 'hero.desc' | t }}</p>
-      <div class="hero-features">
-        <div class="feature">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          {{ 'hero.feat1' | t }}
-        </div>
-        <div class="feature">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          {{ 'hero.feat2' | t }}
-        </div>
-        <div class="feature">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-          {{ 'hero.feat3' | t }}
-        </div>
-      </div>
-      <div class="hero-actions">
-        <a routerLink="/products" class="btn-primary">{{ 'hero.cta' | t }}</a>
-        <a routerLink="/products" class="btn-secondary">{{ 'hero.cta2' | t }}</a>
-      </div>
-    </div>
-
-    <div class="hero-visual">
-      <div class="visual-circle">
-        <div class="visual-inner">
-          <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=500&h=500&fit=crop" alt="UNSI Céramique" />
-        </div>
-        <div class="floating-tag tag-1">
-          <span>4.9/5</span>
-          <small>{{ 'hero.reviews' | t }}</small>
-        </div>
-        <div class="floating-tag tag-2">
-          <span>{{ 'hero.madepiece' | t }}</span>
-          <small>{{ 'hero.eachpiece' | t }}</small>
-        </div>
-      </div>
-    </div>
+  <div class="hero-media" aria-hidden="true">
+    <img
+      class="hero-image"
+      src="assets/images/hero-bg.jpg"
+      alt=""
+    />
+    <div class="hero-overlay"></div>
   </div>
 
-  <div class="hero-bottom">
-    <div class="stat">
-      <strong>12+</strong>
-      <span>{{ 'hero.stat1l' | t }}</span>
-    </div>
-    <div class="stat-divider"></div>
-    <div class="stat">
-      <strong>5000+</strong>
-      <span>{{ 'hero.stat2l' | t }}</span>
-    </div>
-    <div class="stat-divider"></div>
-    <div class="stat">
-      <strong>100%</strong>
-      <span>{{ 'hero.stat3l' | t }}</span>
+  <div class="hero-content">
+    <p class="hero-brand">UNSI</p>
+    <h1 class="hero-title">{{ 'hero.title' | t }}</h1>
+    <p class="hero-subtitle">{{ 'hero.subtitle' | t }}</p>
+    <div class="hero-actions">
+      <a routerLink="/products" class="btn-primary">{{ 'hero.cta' | t }}</a>
+      <a routerLink="/infos" class="btn-ghost">{{ 'hero.cta2' | t }}</a>
     </div>
   </div>
 </section>

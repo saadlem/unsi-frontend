@@ -11,16 +11,17 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'nav.admin': 'Admin',
 
     // Hero
-    'hero.tag': 'Artisanal & Façonné à la Main',
-    'hero.title': 'La Céramique',
+    'hero.tag': 'Objets pour un quotidien plus chaleureux',
+    'hero.title': 'Objets pour un quotidien plus chaleureux',
+    'hero.subtitle': 'Des détails pensés, une vie plus joyeuse.',
     'hero.accent': 'Faite Main',
     'hero.end': 'avec Amour',
-    'hero.desc': 'Découvrez notre collection de céramiques artisanales, façonnées à la main avec des techniques traditionnelles au Maroc.',
-    'hero.cta': 'Découvrir nos Créations',
-    'hero.cta2': 'Voir la Collection',
-    'hero.feat1': 'Fait Main',
-    'hero.feat2': 'Pièces Uniques',
-    'hero.feat3': 'Livraison Rapide',
+    'hero.desc': 'Des objets pensés pour réchauffer le quotidien. Des détails soignés, une vie plus joyeuse. Bientôt au Maroc.',
+    'hero.cta': 'Découvrir',
+    'hero.cta2': 'À propos',
+    'hero.feat1': 'Détails soignés',
+    'hero.feat2': 'Quotidien chaleureux',
+    'hero.feat3': 'Bientôt au Maroc',
     'hero.stat1l': 'Pièces',
     'hero.stat2l': 'Clients Satisfaits',
     'hero.stat3l': 'Artisanal',
@@ -97,7 +98,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'oc.trackOrder': 'Suivre ma commande',
 
     // Footer
-    'footer.desc': 'Céramique artisanale, façonnée avec amour au Maroc. Des pièces uniques pour sublimer votre intérieur.',
+    'footer.desc': 'Objets pour un quotidien plus chaleureux. Des détails pensés, une vie plus joyeuse. Bientôt au Maroc.',
     'footer.shop': 'Boutique',
     'footer.allPieces': 'Toutes nos Pièces',
     'footer.coffrets': 'Les Coffrets',
@@ -113,7 +114,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
 
     // Infos
     'infos.title': 'À propos d\'UNSI',
-    'infos.p1': 'UNSI Céramique est née de la passion pour l\'artisanat marocain. Chaque pièce est façonnée à la main par nos artisans de Safi et Fès, perpétuant des traditions séculaires.',
+    'infos.p1': 'UNSI crée des objets pour un quotidien plus chaleureux. Des détails pensés, une vie plus joyeuse — bientôt au Maroc.',
     'infos.values': 'Nos Valeurs',
     'infos.auth': 'Authenticité',
     'infos.authDesc': 'Chaque pièce est unique, reflétant le savoir-faire de l\'artisan.',
@@ -164,9 +165,9 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'faq.q3': 'Comment puis-je payer ?',
     'faq.a3': 'Nous acceptons le paiement à la livraison uniquement. Payez en espèces lors de la réception.',
     'faq.q4': 'Puis-je retourner un produit ?',
-    'faq.a4': 'Oui, sous 14 jours si le produit est dans son état d\'origine. Contactez-nous à hello@unsi.store.',
-    'faq.q5': 'Les pièces sont-elles vraiment faites à la main ?',
-    'faq.a5': 'Oui, chaque pièce est façonnée et peinte à la main par nos artisans au Maroc.',
+    'faq.a4': 'Oui, sous 14 jours si le produit est dans son état d\'origine. Contactez-nous à hello@unsi.ma.',
+    'faq.q5': 'Que propose UNSI ?',
+    'faq.a5': 'UNSI propose des objets pensés pour réchauffer le quotidien — des détails soignés pour une vie plus joyeuse.',
     'faq.q6': 'Livrez-vous en dehors du Maroc ?',
     'faq.a6': 'Pour l\'instant, nous livrons uniquement au Maroc. Contactez-nous pour les commandes internationales.',
 
@@ -178,7 +179,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
 
     // Instagram
     'instagram.title': 'Suivez-nous sur Instagram',
-    'instagram.subtitle': '@unsi_off',
+    'instagram.subtitle': '@unsi.home',
 
     // Common
     'common.mad': 'MAD',
@@ -189,16 +190,17 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'nav.products': 'Our Creations',
     'nav.cart': 'Cart',
     'nav.admin': 'Admin',
-    'hero.tag': 'Handcrafted & Artisanal',
-    'hero.title': 'Ceramics',
+    'hero.tag': 'Objects for a warmer everyday',
+    'hero.title': 'Objects for a warmer everyday',
+    'hero.subtitle': 'Thoughtful details, joyful living.',
     'hero.accent': 'Handmade',
     'hero.end': 'with Love',
-    'hero.desc': 'Discover our collection of artisanal ceramics, handcrafted using traditional techniques in Morocco.',
-    'hero.cta': 'Discover Our Creations',
-    'hero.cta2': 'View Collection',
-    'hero.feat1': 'Handmade',
-    'hero.feat2': 'Unique Pieces',
-    'hero.feat3': 'Fast Delivery',
+    'hero.desc': 'Objects made to warm everyday life. Thoughtful details, joyful living. Coming soon in Morocco.',
+    'hero.cta': 'Discover',
+    'hero.cta2': 'About',
+    'hero.feat1': 'Thoughtful details',
+    'hero.feat2': 'Warmer everyday',
+    'hero.feat3': 'Coming soon',
     'hero.stat1l': 'Pieces',
     'hero.stat2l': 'Happy Customers',
     'hero.stat3l': 'Artisanal',
@@ -263,7 +265,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'oc.payMsg': 'Please prepare the total amount upon delivery.',
     'oc.backHome': 'Back to home',
     'oc.trackOrder': 'Track my order',
-    'footer.desc': 'Artisanal ceramics, crafted with love in Morocco. Unique pieces to elevate your interior.',
+    'footer.desc': 'Objects for a warmer everyday. Thoughtful details, joyful living. Coming soon in Morocco.',
     'footer.shop': 'Shop',
     'footer.allPieces': 'All Pieces',
     'footer.coffrets': 'Gift Sets',
@@ -279,7 +281,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
 
     // Infos
     'infos.title': 'About UNSI',
-    'infos.p1': 'UNSI Céramique was born from a passion for Moroccan craftsmanship. Each piece is handcrafted by our artisans in Safi and Fès, carrying on centuries-old traditions.',
+    'infos.p1': 'UNSI makes objects for a warmer everyday. Thoughtful details, joyful living — coming soon in Morocco.',
     'infos.values': 'Our Values',
     'infos.auth': 'Authenticity',
     'infos.authDesc': 'Each piece is unique, reflecting the artisan\'s expertise.',
@@ -330,9 +332,9 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'faq.q3': 'How can I pay?',
     'faq.a3': 'We accept cash on delivery only. Pay in cash upon receipt.',
     'faq.q4': 'Can I return a product?',
-    'faq.a4': 'Yes, within 14 days if the product is in its original condition. Contact us at hello@unsi.store.',
-    'faq.q5': 'Are the pieces really handmade?',
-    'faq.a5': 'Yes, each piece is shaped and painted by hand by our artisans in Morocco.',
+    'faq.a4': 'Yes, within 14 days if the product is in its original condition. Contact us at hello@unsi.ma.',
+    'faq.q5': 'What does UNSI offer?',
+    'faq.a5': 'UNSI offers objects made to warm everyday life — thoughtful details for joyful living.',
     'faq.q6': 'Do you deliver outside Morocco?',
     'faq.a6': 'For now, we only deliver within Morocco. Contact us for international orders.',
 
@@ -344,7 +346,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
 
     // Instagram
     'instagram.title': 'Follow us on Instagram',
-    'instagram.subtitle': '@unsi_off',
+    'instagram.subtitle': '@unsi.home',
 
     // Common
     'common.mad': 'MAD',
@@ -355,16 +357,17 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'nav.products': 'إبداعاتنا',
     'nav.cart': 'السلة',
     'nav.admin': 'الإدارة',
-    'hero.tag': 'يدوي وحرفي',
-    'hero.title': 'الخزف',
+    'hero.tag': 'أشياء ليوم أكثر دفئاً',
+    'hero.title': 'أشياء ليوم أكثر دفئاً',
+    'hero.subtitle': 'تفاصيل مدروسة، حياة مليئة بالفرح.',
     'hero.accent': 'محضّر يدوياً',
     'hero.end': 'بحب',
-    'hero.desc': 'اكتشف مجموعتنا من الخزف الحرفى، المصنوع يدوياً بتقنيات تقليدية في المغرب.',
-    'hero.cta': 'اكتشف إبداعاتنا',
-    'hero.cta2': 'عرض المجموعة',
-    'hero.feat1': 'محضّر يدوياً',
-    'hero.feat2': 'قطع فريدة',
-    'hero.feat3': 'توصيل سريع',
+    'hero.desc': 'أشياء مصممة لتدفئة الحياة اليومية. تفاصيل مدروسة، حياة أكثر فرحاً. قريباً في المغرب.',
+    'hero.cta': 'اكتشف',
+    'hero.cta2': 'من نحن',
+    'hero.feat1': 'تفاصيل مدروسة',
+    'hero.feat2': 'يوم أكثر دفئاً',
+    'hero.feat3': 'قريباً في المغرب',
     'hero.stat1l': 'قطع',
     'hero.stat2l': 'عميل سعيد',
     'hero.stat3l': 'حرفي',
@@ -429,7 +432,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'oc.payMsg': 'يرجى تجهيز المبلغ الإجمالي عند التوصيل.',
     'oc.backHome': 'العودة للرئيسية',
     'oc.trackOrder': 'تتبع طلبي',
-    'footer.desc': 'خزف حرفى، محضّر بحب في المغرب. قطع فريدة لتجميل منزلك.',
+    'footer.desc': 'أشياء ليوم أكثر دفئاً. تفاصيل مدروسة، حياة مليئة بالفرح. قريباً في المغرب.',
     'footer.shop': 'المتجر',
     'footer.allPieces': 'جميع القطع',
     'footer.coffrets': 'مجموعات الهدايا',
@@ -445,7 +448,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
 
     // Infos
     'infos.title': 'عن UNSI',
-    'infos.p1': 'ولدت UNSI سيراميك من شغف الحرف اليدوية المغربية. كل قطعة محضّرة يدوياً بواسطة حرفيينا في آسفي وفاس، م mantenient تقاليد عمرها قرون.',
+    'infos.p1': 'UNSI تصنع أشياء ليوم أكثر دفئاً. تفاصيل مدروسة، حياة مليئة بالفرح — قريباً في المغرب.',
     'infos.values': 'قيمنا',
     'infos.auth': 'الأصالة',
     'infos.authDesc': 'كل قطعة فريدة، تعكس خبرة الحرفى.',
@@ -496,9 +499,9 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'faq.q3': 'كيف يمكنني الدفع؟',
     'faq.a3': 'نقبل الدفع عند الاستلام فقط. ادفع نقداً عند الاستلام.',
     'faq.q4': 'هل يمكنني إرجاع منتج؟',
-    'faq.a4': 'نعم، خلال 14 يوماً إذا كان المنتج في حالته الأصلية. اتصل بنا على hello@unsi.store.',
-    'faq.q5': 'هل القطع محضّرة فعلاً يدوياً؟',
-    'faq.a5': 'نعم، كل قطعة محضّرة ومطلية يدوياً بواسطة حرفيينا في المغرب.',
+    'faq.a4': 'نعم، خلال 14 يوماً إذا كان المنتج في حالته الأصلية. اتصل بنا على hello@unsi.ma.',
+    'faq.q5': 'ماذا تقدّم UNSI؟',
+    'faq.a5': 'UNSI تقدّم أشياء مصممة لتدفئة الحياة اليومية — تفاصيل مدروسة لحياة أكثر فرحاً.',
     'faq.q6': 'هل توصّلون خارج المغرب؟',
     'faq.a6': 'حالياً، نوصّل فقط داخل المغرب. اتصل بنا للطلبات الدولية.',
 
@@ -510,7 +513,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
 
     // Instagram
     'instagram.title': 'تابعنا على إنستغرام',
-    'instagram.subtitle': '@unsi_off',
+    'instagram.subtitle': '@unsi.home',
 
     // Common
     'common.mad': 'درهم',
@@ -521,16 +524,17 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'nav.products': 'Nuestras Creaciones',
     'nav.cart': 'Carrito',
     'nav.admin': 'Admin',
-    'hero.tag': 'Artesanal & Hecho a Mano',
-    'hero.title': 'Cerámica',
+    'hero.tag': 'Objetos para un día a día más cálido',
+    'hero.title': 'Objetos para un día a día más cálido',
+    'hero.subtitle': 'Detalles pensados, vida alegre.',
     'hero.accent': 'Hecho a Mano',
     'hero.end': 'con Amor',
-    'hero.desc': 'Descubre nuestra colección de cerámicas artesanales, elaboradas a mano con técnicas tradicionales en Marruecos.',
-    'hero.cta': 'Descubrir Nuestras Creaciones',
-    'hero.cta2': 'Ver Colección',
-    'hero.feat1': 'Hecho a Mano',
-    'hero.feat2': 'Piezas Únicas',
-    'hero.feat3': 'Envío Rápido',
+    'hero.desc': 'Objetos pensados para calentar el día a día. Detalles cuidados, una vida más alegre. Pronto en Marruecos.',
+    'hero.cta': 'Descubrir',
+    'hero.cta2': 'Sobre nosotros',
+    'hero.feat1': 'Detalles cuidados',
+    'hero.feat2': 'Día a día más cálido',
+    'hero.feat3': 'Pronto en Marruecos',
     'hero.stat1l': 'Piezas',
     'hero.stat2l': 'Clientes Felices',
     'hero.stat3l': 'Artesanal',
@@ -595,7 +599,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'oc.payMsg': 'Por favor prepara el monto total al recibir.',
     'oc.backHome': 'Volver al inicio',
     'oc.trackOrder': 'Seguir mi pedido',
-    'footer.desc': 'Cerámica artesanal, elaborada con amor en Marruecos. Piezas únicas para embellecer tu hogar.',
+    'footer.desc': 'Objetos para un día a día más cálido. Detalles pensados, vida alegre. Pronto en Marruecos.',
     'footer.shop': 'Tienda',
     'footer.allPieces': 'Todas las Piezas',
     'footer.coffrets': 'Cajas de Regalo',
@@ -611,7 +615,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
 
     // Infos
     'infos.title': 'Sobre UNSI',
-    'infos.p1': 'UNSI Céramique nació de la pasión por la artesanía marroquí. Cada pieza está elaborada a mano por nuestros artesanos en Safi y Fès, perpetuando tradiciones centenarias.',
+    'infos.p1': 'UNSI crea objetos para un día a día más cálido. Detalles pensados, vida alegre — pronto en Marruecos.',
     'infos.values': 'Nuestros Valores',
     'infos.auth': 'Autenticidad',
     'infos.authDesc': 'Cada pieza es única, reflejando la experiencia del artesano.',
@@ -662,9 +666,9 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'faq.q3': '¿Cómo puedo pagar?',
     'faq.a3': 'Aceptamos solo pago contra reembolso. Paga en efectivo al recibir.',
     'faq.q4': '¿Puedo devolver un producto?',
-    'faq.a4': 'Sí, en 14 días si el producto está en su estado original. Contáctanos en hello@unsi.store.',
-    'faq.q5': '¿Las piezas son realmente hechas a mano?',
-    'faq.a5': 'Sí, cada pieza está moldeada y pintada a mano por nuestros artesanos en Marruecos.',
+    'faq.a4': 'Sí, en 14 días si el producto está en su estado original. Contáctanos en hello@unsi.ma.',
+    'faq.q5': '¿Qué ofrece UNSI?',
+    'faq.a5': 'UNSI ofrece objetos pensados para calentar el día a día — detalles cuidados para una vida más alegre.',
     'faq.q6': '¿Envían fuera de Marruecos?',
     'faq.a6': 'Por ahora, solo enviamos dentro de Marruecos. Contáctanos para pedidos internacionales.',
 
@@ -676,7 +680,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
 
     // Instagram
     'instagram.title': 'Síguenos en Instagram',
-    'instagram.subtitle': '@unsi_off',
+    'instagram.subtitle': '@unsi.home',
 
     // Common
     'common.mad': 'MAD',

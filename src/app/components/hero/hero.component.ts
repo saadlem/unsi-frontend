@@ -17,10 +17,10 @@ export class HeroComponent implements OnInit {
 
   ngOnInit(): void {
     this.seo.updateTags({
-      title: 'UNSI Céramique — Artisanat Marocain | Gobelets & Assiettes',
-      description: 'Céramique artisanale marocaine façonnée à la main. Gobelets, assiettes, bols et coffrets. Livraison au Maroc.',
+      title: 'UNSI — Objects for a warmer everyday',
+      description: 'Thoughtful details, joyful living. Objects for a warmer everyday. Coming soon from Morocco.',
       url: '/',
-      keywords: 'céramique marocaine, artisanat, gobelet, assiette, fait main'
+      keywords: 'UNSI, home objects, Morocco, warm everyday, thoughtful details'
     });
   }
 }

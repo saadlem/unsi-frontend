@@ -23,7 +23,7 @@ export class ProductListComponent implements OnInit {
   ngOnInit(): void {
     this.seo.updateTags({
       title: 'Nos Créations',
-      description: 'Découvrez notre collection de céramiques artisanales marocaines.',
+      description: 'Découvrez les objets UNSI pour un quotidien plus chaleureux.',
       url: '/products'
     });
     this.loadProducts();
