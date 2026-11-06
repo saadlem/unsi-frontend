@@ -1,6 +1,7 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "ng build --configuration production",
-  "outputPath": "dist/unsi-shop/browser",
+  "outputDirectory": "dist/unsi-shop/browser",
   "framework": "angular",
   "rewrites": [
     {
