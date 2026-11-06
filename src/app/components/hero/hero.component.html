@@ -1,10 +1,13 @@
 <section class="hero">
   <div class="hero-media" aria-hidden="true">
-    <img
-      class="hero-image"
-      src="assets/images/hero-bg.jpg"
-      alt=""
-    />
+    @for (slide of slides; track slide.src; let i = $index) {
+      <img
+        class="hero-image"
+        [class.is-active]="active() === i"
+        [src]="slide.src"
+        alt=""
+      />
+    }
     <div class="hero-overlay"></div>
   </div>
 
@@ -12,9 +15,22 @@
     <p class="hero-brand">UNSI</p>
     <h1 class="hero-title">{{ 'hero.title' | t }}</h1>
     <p class="hero-subtitle">{{ 'hero.subtitle' | t }}</p>
+    <p class="hero-story">{{ slides[active()].captionKey | t }}</p>
     <div class="hero-actions">
       <a routerLink="/products" class="btn-primary">{{ 'hero.cta' | t }}</a>
-      <a routerLink="/infos" class="btn-ghost">{{ 'hero.cta2' | t }}</a>
+    </div>
+
+    <div class="hero-dots" role="tablist" aria-label="Story">
+      @for (slide of slides; track slide.src; let i = $index) {
+        <button
+          type="button"
+          class="hero-dot"
+          [class.is-active]="active() === i"
+          [attr.aria-label]="'Scene ' + (i + 1)"
+          [attr.aria-selected]="active() === i"
+          (click)="goTo(i)"
+        ></button>
+      }
     </div>
   </div>
 </section>
