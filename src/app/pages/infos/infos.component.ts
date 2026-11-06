@@ -14,7 +14,7 @@ export class InfosComponent implements OnInit {
   ngOnInit(): void {
     this.seo.updateTags({
       title: 'À propos',
-      description: 'Découvrez UNSI Céramique, artisanat marocain depuis Safi et Fès.',
+      description: 'Découvrez UNSI — objets pour un quotidien plus chaleureux. Détails pensés, vie joyeuse.',
       url: '/infos'
     });
   }

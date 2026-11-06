@@ -2,13 +2,13 @@
   <div class="instagram-header">
     <span class="section-tag">Instagram</span>
     <h2>{{ 'instagram.title' | t }}</h2>
-    <a href="https://instagram.com/unsi_off" target="_blank" rel="noopener" class="handle">{{ 'instagram.subtitle' | t }}</a>
+    <a href="https://instagram.com/unsi.home" target="_blank" rel="noopener" class="handle">{{ 'instagram.subtitle' | t }}</a>
   </div>
 
   @if (images.length > 0) {
     <div class="instagram-grid">
       @for (img of images; track img.id) {
-        <a [href]="img.link || 'https://instagram.com/unsi_off'" target="_blank" rel="noopener" class="instagram-item">
+        <a [href]="img.link || 'https://instagram.com/unsi.home'" target="_blank" rel="noopener" class="instagram-item">
           <img [src]="img.image_url" [alt]="img.caption || 'Instagram post'" loading="lazy" />
           <div class="overlay">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

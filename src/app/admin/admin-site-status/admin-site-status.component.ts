@@ -69,7 +69,7 @@ import { HttpClient } from '@angular/common/http';
             <div class="preview-icon">{{ getModeIcon(status.mode) }}</div>
             <h1>{{ status.title || getModeTitle(status.mode) }}</h1>
             <p>{{ status.message || getModeSubtitle(status.mode) }}</p>
-            <div class="preview-logo">UNSI Céramique</div>
+            <div class="preview-logo">UNSI</div>
           </div>
         </div>
       </div>
@@ -95,11 +95,11 @@ import { HttpClient } from '@angular/common/http';
     .form-group { margin-bottom: 16px; }
     .form-group label { display: block; font-size: 13px; font-weight: 600; color: #4A4E5A; margin-bottom: 6px; }
     .form-input, .form-textarea { width: 100%; padding: 12px 16px; border: 1px solid #E4E7ED; border-radius: 10px; font-size: 14px; color: #1A1D26; outline: none; transition: border 0.2s; }
-    .form-input:focus, .form-textarea:focus { border-color: #1565C0; }
+    .form-input:focus, .form-textarea:focus { border-color: #A00812; }
     .form-textarea { resize: vertical; }
     .form-actions { display: flex; gap: 12px; margin-top: 20px; }
-    .btn-save { background: #1565C0; color: white; border: none; padding: 12px 28px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
-    .btn-save:hover { background: #0D47A1; }
+    .btn-save { background: #A00812; color: white; border: none; padding: 12px 28px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .btn-save:hover { background: #A00812; }
     .btn-save:disabled { opacity: 0.6; }
     .btn-preview { background: #F4F6F9; color: #4A4E5A; border: 1px solid #E4E7ED; padding: 12px 28px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; }
     .save-success { margin-top: 12px; color: #2E7D32; font-size: 14px; font-weight: 600; }
@@ -112,7 +112,7 @@ import { HttpClient } from '@angular/common/http';
     .preview-icon { font-size: 64px; margin-bottom: 20px; }
     .preview-content h1 { font-size: 28px; font-weight: 800; margin-bottom: 12px; }
     .preview-content p { font-size: 15px; color: #5E5A54; margin-bottom: 24px; }
-    .preview-logo { font-size: 16px; font-weight: 700; color: #0D47A1; letter-spacing: 2px; }
+    .preview-logo { font-size: 16px; font-weight: 700; color: #A00812; letter-spacing: 2px; }
     @media (max-width: 900px) { .status-grid { grid-template-columns: repeat(2, 1fr); } }
   `]
 })
@@ -127,7 +127,7 @@ export class AdminSiteStatusComponent implements OnInit {
   modes = [
     { value: 'live', label: 'En ligne', desc: 'Site visible et opérationnel', icon: '🟢', color: '#2E7D32', bg: '#E8F5E9' },
     { value: 'maintenance', label: 'Maintenance', desc: 'Site temporairement indisponible', icon: '🔧', color: '#F57F17', bg: '#FFF8E1' },
-    { value: 'coming_soon', label: 'Bientôt', desc: 'Page d\'attente pour un lancement', icon: '🚀', color: '#1565C0', bg: '#E3F2FD' },
+    { value: 'coming_soon', label: 'Bientôt', desc: 'Page d\'attente pour un lancement', icon: '🚀', color: '#A00812', bg: '#FCE4EC' },
     { value: 'vacation', label: 'Vacances', desc: 'Absence temporaire', icon: '🏖️', color: '#C4A265', bg: '#F5EFE0' },
   ];
 

@@ -1,8 +1,14 @@
 <div class="account-page">
   @if (mode() === 'login' || mode() === 'register') {
     <div class="login-brand">
-      <h2>UNSI</h2>
-      <p>Céramique Artisanale</p>
+      <img
+        class="login-logo"
+        src="assets/brand/unsi-logo-mark.png"
+        width="160"
+        height="72"
+        alt="UNSI"
+      />
+      <p>Objects for a warmer everyday</p>
     </div>
   }
   @if (mode() === 'login') {
@@ -17,11 +23,11 @@
       <form (ngSubmit)="onLogin()" class="auth-form">
         <div class="field">
           <label for="login-email">Email ou nom d'utilisateur</label>
-          <input id="login-email" type="text" [(ngModel)]="loginForm.email" name="email" placeholder="votre@email.com ou admin" required>
+          <input id="login-email" type="text" [(ngModel)]="loginForm.email" name="email" placeholder="admin" autocomplete="username">
         </div>
         <div class="field">
           <label for="login-password">Mot de passe</label>
-          <input id="login-password" type="password" [(ngModel)]="loginForm.password" name="password" placeholder="••••••••" required>
+          <input id="login-password" type="password" [(ngModel)]="loginForm.password" name="password" placeholder="admin123" autocomplete="current-password">
         </div>
         <button type="submit" class="btn-primary" [disabled]="loading()">
           @if (loading()) { Connexion... } @else { Se connecter }
@@ -38,7 +44,7 @@
   @if (mode() === 'register') {
     <div class="auth-card">
       <h1>Créer un compte</h1>
-      <p class="subtitle">Rejoignez UNSI Céramique pour suivre vos commandes</p>
+      <p class="subtitle">Rejoignez UNSI pour suivre vos commandes</p>
 
       @if (error()) {
         <div class="error-msg">{{ error() }}</div>

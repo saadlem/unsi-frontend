@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 *,
 *::before,
@@ -13,26 +13,27 @@ html {
 }
 
 :root {
-  --blue-dark: #0D47A1;
-  --blue: #1565C0;
-  --blue-light: #42A5F5;
-  --blue-pale: #E3F2FD;
-  --clay: #C4A265;
-  --clay-light: #DCC8A9;
-  --clay-pale: #F5EFE6;
-  --cream: #FFFFFF;
-  --cream-dark: #F5F5F5;
+  --blue-dark: #6A0610;
+  --blue: #A00812;
+  --blue-light: #C23A48;
+  --blue-pale: #F8DCE2;
+  --clay: #C4A48A;
+  --clay-light: #E2D0C0;
+  --clay-pale: #F5EBE4;
+  --cream: #FFF1F8;
+  --cream-dark: #F3DFE8;
   --brown: #5C4033;
-  --brown-dark: #1A1A1A;
-  --text: #1A1A1A;
-  --text-light: #555555;
-  --text-muted: #999999;
+  --brown-dark: #2A1F1C;
+  --text: #2A1216;
+  --text-light: #5C3A42;
+  --text-muted: #8A6A72;
   --white: #FFFFFF;
-  --border: #E8E8E8;
+  --border: #EFD5DE;
+  --bg: var(--cream);
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Outfit', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--text);
@@ -41,7 +42,7 @@ body {
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   color: var(--text);
 }
 
@@ -59,7 +60,7 @@ button {
 }
 
 ::selection {
-  background: rgba(21, 101, 192, 0.15);
+  background: rgba(107, 28, 42, 0.15);
   color: var(--blue-dark);
 }
 
@@ -68,63 +69,16 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-  background: #fff;
+  background: var(--cream);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ddd;
+  background: #d4c4bc;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #bbb;
-}
-
-/* ─── RTL Support ─── */
-[dir="rtl"] {
-  text-align: right;
-}
-
-[dir="rtl"] .sidebar-nav a.active::before {
-  left: auto;
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
-
-/* ─── Global Modal System ─── */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 20px;
-  animation: overlayIn 0.2s ease;
-}
-
-@keyframes overlayIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.modal {
-  background: #fff;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 580px;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-  animation: modalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes modalIn {
-  from { opacity: 0; transform: translateY(12px) scale(0.97); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  background: #c0aea6;
 }
 
 .modal-header {
@@ -156,7 +110,7 @@ button {
 }
 
 .modal .close-btn:hover {
-  background: #f5f5f5;
+  background: var(--cream-dark);
   color: var(--text);
 }
 
@@ -184,7 +138,7 @@ button {
   border: 1.5px solid var(--border);
   border-radius: 8px;
   font-size: 14px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Outfit', system-ui, sans-serif;
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   box-sizing: border-box;
@@ -201,7 +155,7 @@ button {
 .form-group select:focus,
 .form-group textarea:focus {
   border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.06);
+  box-shadow: 0 0 0 3px rgba(107, 28, 42, 0.1);
 }
 
 .modal-actions {
@@ -210,7 +164,7 @@ button {
   gap: 10px;
   padding: 16px 24px;
   border-top: 1px solid var(--border);
-  background: #fafafa;
+  background: var(--cream-dark);
   border-radius: 0 0 16px 16px;
 }
 
@@ -223,12 +177,12 @@ button {
   font-weight: 600;
   cursor: pointer;
   color: var(--text-light);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Outfit', system-ui, sans-serif;
   transition: all 0.15s ease;
 }
 
 .btn-cancel:hover {
-  background: #f5f5f5;
+  background: var(--cream-dark);
 }
 
 .btn-save {
@@ -240,7 +194,7 @@ button {
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Outfit', system-ui, sans-serif;
   transition: all 0.15s ease;
 }
 

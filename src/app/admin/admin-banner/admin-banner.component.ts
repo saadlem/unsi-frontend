@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class AdminBannerComponent implements OnInit {
   private http = inject(HttpClient);
 
-  banner: any = { enabled: 1, message: '', link: '', text_color: '#FFFFFF', background: '#0D47A1' };
+  banner: any = { enabled: 1, message: '', link: '', text_color: '#FFFFFF', background: '#A00812' };
   saving = false;
   saved = false;
 

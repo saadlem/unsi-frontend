@@ -31,8 +31,8 @@ const MODE_CONFIG: Record<string, { title: string; subtitle: string; icon: strin
           <div class="status-icon">{{ status()!.icon }}</div>
           <h1 class="status-title" [style.color]="status()!.color">{{ status()!.title }}</h1>
           <p class="status-message">{{ status()!.message }}</p>
-          <div class="status-brand">UNSI Céramique</div>
-          <div class="status-social">Suivez-nous : <a href="https://instagram.com/unsi_off" [style.color]="status()!.color">&#64;unsi_off</a></div>
+          <div class="status-brand">UNSI</div>
+          <div class="status-social">Suivez-nous : <a href="https://instagram.com/unsi.home" [style.color]="status()!.color">&#64;unsi.home</a></div>
         </div>
       </div>
     }

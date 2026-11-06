@@ -5,7 +5,7 @@
 .page-header h1 {
   font-size: 28px;
   font-weight: 800;
-  color: #0D47A1;
+  color: #A00812;
   margin: 0;
 }
 
@@ -28,12 +28,12 @@
   transition: all 0.2s;
 }
 
-.filter-tab:hover { border-color: #0D47A1; color: #0D47A1; }
+.filter-tab:hover { border-color: #A00812; color: #A00812; }
 
 .filter-tab.active {
-  background: #0D47A1;
+  background: #A00812;
   color: #fff;
-  border-color: #0D47A1;
+  border-color: #A00812;
 }
 
 .orders-table {
@@ -71,14 +71,14 @@
 
 .order-id {
   font-weight: 600;
-  color: #0D47A1;
+  color: #A00812;
   font-size: 13px;
 }
 
 .customer-name {
   display: block;
   font-weight: 600;
-  color: #0D47A1;
+  color: #A00812;
   font-size: 14px;
 }
 
@@ -90,7 +90,7 @@
 
 .price {
   font-weight: 700;
-  color: #1565C0;
+  color: #A00812;
 }
 
 .date {
@@ -110,14 +110,14 @@
 .status-badge.pending { background: #fff3e0; color: #e65100; }
 .status-badge.confirmed { background: #e3f2fd; color: #1565c0; }
 .status-badge.shipped { background: #f3e5f5; color: #7b1fa2; }
-.status-badge.delivered { background: #E3F2FD; color: #1565C0; }
+.status-badge.delivered { background: #FCE4EC; color: #A00812; }
 .status-badge.cancelled { background: #fce4ec; color: #c62828; }
 
 .view-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #0D47A1;
+  color: #A00812;
   text-decoration: none;
   font-size: 13px;
   font-weight: 500;

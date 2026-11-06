@@ -8,8 +8,8 @@
 .page-header h1 {
   font-size: 28px;
   font-weight: 800;
-  font-family: 'Playfair Display', Georgia, serif;
-  color: #0D47A1;
+  font-family: 'Fraunces', Georgia, serif;
+  color: #A00812;
   margin: 0 0 4px;
 }
 
@@ -24,7 +24,7 @@
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  background: #1565C0;
+  background: #A00812;
   color: #FFFEFA;
   border: none;
   border-radius: 10px;
@@ -34,7 +34,7 @@
   transition: all 0.2s;
 }
 
-.btn-primary:hover { background: #0D47A1; }
+.btn-primary:hover { background: #A00812; }
 .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .btn-secondary {
@@ -137,7 +137,7 @@
 
 .post-link {
   font-size: 11px;
-  color: #1565C0;
+  color: #A00812;
   margin: 0 0 6px;
   white-space: nowrap;
   overflow: hidden;
@@ -171,8 +171,8 @@
 
 .btn-icon:hover {
   background: #F9F7F2;
-  border-color: #1565C0;
-  color: #1565C0;
+  border-color: #A00812;
+  color: #A00812;
 }
 
 .btn-icon.danger:hover {
@@ -213,7 +213,7 @@
 .modal-header h2 {
   font-size: 18px;
   font-weight: 700;
-  color: #0D47A1;
+  color: #A00812;
   margin: 0;
 }
 
@@ -251,7 +251,7 @@
   box-sizing: border-box;
 }
 
-.form-input:focus { border-color: #1565C0; }
+.form-input:focus { border-color: #A00812; }
 .form-input.small { max-width: 120px; }
 
 .file-input {

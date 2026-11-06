@@ -2,6 +2,7 @@ import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap, catchError, of } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Admin {
   id: string;
@@ -70,6 +71,10 @@ export class AuthService {
     return this.http.get<{ admin: Admin }>(`${this.apiUrl}/me`).pipe(
       tap(res => this.currentAdmin.set(res.admin)),
       catchError(() => {
+        // Dev: keep local session if already hydrated (avoid bounce to login)
+        if (!environment.production && environment.skipAuth && this.currentAdmin()) {
+          return of({ admin: this.currentAdmin()! });
+        }
         this.logout();
         return of(null);
       })

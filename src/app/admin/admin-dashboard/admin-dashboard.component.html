@@ -1,141 +1,132 @@
-@if (stats) {
-  <div class="dashboard">
-    <div class="dashboard-header">
-      <h1>Tableau de bord</h1>
-      <p>Vue d'ensemble de votre boutique</p>
+<div class="dashboard">
+  <header class="dash-hero">
+    <div class="dash-hero-copy">
+      <p class="dash-kicker">Studio UNSI</p>
+      <h1>Bonjour, belle journée</h1>
+      <p class="dash-lead">Un aperçu doux de ta boutique — commandes, pièces et rythme du jour.</p>
     </div>
+    <a routerLink="/admin/orders" class="dash-cta">Voir les commandes</a>
+  </header>
 
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-icon revenue">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-value">{{ stats.totalRevenue | number:'1.2-2' }}</span>
-          <span class="stat-label">Revenu total</span>
-        </div>
-        <span class="stat-currency">MAD</span>
+  <section class="pulse-grid" aria-label="Indicateurs">
+    <article class="pulse-card pulse-rose">
+      <span class="pulse-label">Revenu</span>
+      <strong class="pulse-value">{{ stats().totalRevenue | number:'1.2-2' }}</strong>
+      <span class="pulse-meta">MAD · total</span>
+    </article>
+
+    <article class="pulse-card pulse-blush">
+      <span class="pulse-label">Commandes</span>
+      <strong class="pulse-value">{{ stats().totalOrders || 0 }}</strong>
+      <span class="pulse-meta">toutes périodes</span>
+    </article>
+
+    <article class="pulse-card pulse-cream">
+      <span class="pulse-label">En attente</span>
+      <strong class="pulse-value">{{ stats().pendingOrders || 0 }}</strong>
+      <span class="pulse-meta">à préparer avec soin</span>
+    </article>
+
+    <article class="pulse-card pulse-soft">
+      <span class="pulse-label">Livrées</span>
+      <strong class="pulse-value">{{ stats().deliveredOrders || 0 }}</strong>
+      <span class="pulse-meta">chez elles</span>
+    </article>
+
+    <article class="pulse-card pulse-petal">
+      <span class="pulse-label">Pièces</span>
+      <strong class="pulse-value">{{ stats().totalProducts || 0 }}</strong>
+      <span class="pulse-meta">au catalogue</span>
+    </article>
+
+    <article class="pulse-card pulse-alert">
+      <span class="pulse-label">Stock bas</span>
+      <strong class="pulse-value">{{ stats().lowStock || 0 }}</strong>
+      <span class="pulse-meta">à réapprovisionner</span>
+    </article>
+  </section>
+
+  <section class="atelier-row">
+    <div class="atelier-panel">
+      <div class="panel-head">
+        <h2>Rythme de la semaine</h2>
+        <p>Revenus des 7 derniers jours</p>
       </div>
-
-      <div class="stat-card">
-        <div class="stat-icon orders">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-value">{{ stats.totalOrders }}</span>
-          <span class="stat-label">Commandes</span>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon pending">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-value">{{ stats.pendingOrders }}</span>
-          <span class="stat-label">En attente</span>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon delivered">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-value">{{ stats.deliveredOrders }}</span>
-          <span class="stat-label">Livrées</span>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon products">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-value">{{ stats.totalProducts }}</span>
-          <span class="stat-label">Produits</span>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <div class="stat-icon stock-warning">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        </div>
-        <div class="stat-content">
-          <span class="stat-value">{{ stats.lowStock }}</span>
-          <span class="stat-label">Stock bas</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="charts-row">
-      @if (stats.revenueByDay?.length) {
-        <div class="chart-card">
-          <h3>Revenus (7 derniers jours)</h3>
-          <div class="bar-chart">
-            @for (day of stats.revenueByDay; track day.date) {
-              <div class="bar-wrapper">
-                <span class="bar-value">{{ +day.revenue | number:'1.0-0' }} MAD</span>
-                <div class="bar" [style.height.%]="getBarHeight(day.revenue)"></div>
-                <span class="bar-label">{{ day.date | date:'dd/MM' }}</span>
-                <span class="bar-orders">{{ day.orders }} cmd</span>
-              </div>
-            }
+      <div class="soft-chart">
+        @for (day of stats().revenueByDay; track $index) {
+          <div class="soft-col">
+            <span class="soft-tip">{{ +day.revenue | number:'1.0-0' }}</span>
+            <div class="soft-stem">
+              <div class="soft-fill" [style.height.%]="getBarHeight(day.revenue)"></div>
+            </div>
+            <span class="soft-day">{{ day.date | date:'EE' }}</span>
           </div>
-        </div>
-      }
-
-      @if (stats.topProducts?.length) {
-        <div class="chart-card">
-          <h3>Produits les plus vendus</h3>
-          <div class="top-products">
-            @for (p of stats.topProducts; track p.product_name; let i = $index) {
-              <div class="product-rank">
-                <span class="rank">#{{ i + 1 }}</span>
-                <div class="product-bar-wrapper">
-                  <div class="product-info">
-                    <span class="product-name">{{ p.product_name }}</span>
-                    <span class="product-stats">{{ p.total_sold }} vendus · {{ +p.revenue | number:'1.0-0' }} MAD</span>
-                  </div>
-                  <div class="product-bar-bg">
-                    <div class="product-bar-fill" [style.width.%]="(+p.total_sold / getMaxSold()) * 100"></div>
-                  </div>
-                </div>
-              </div>
-            }
-          </div>
-        </div>
-      }
-    </div>
-
-    <div class="recent-section">
-      <div class="section-header">
-        <h2>Commandes récentes</h2>
-        <a routerLink="/admin/orders" class="view-all">Voir tout →</a>
-      </div>
-
-      <div class="orders-table">
-        <div class="table-header">
-          <span>Commande</span>
-          <span>Client</span>
-          <span>Total</span>
-          <span>Statut</span>
-          <span>Date</span>
-        </div>
-        @for (order of stats.recentOrders; track order.id) {
-          <a [routerLink]="['/admin/orders', order.id]" class="table-row">
-            <span class="order-id">{{ order.id }}</span>
-            <span>{{ order.first_name }} {{ order.last_name }}</span>
-            <span class="price">{{ order.total | number:'1.2-2' }} MAD</span>
-            <span>
-              <span class="status-badge" [class]="getStatusClass(order.status)">{{ order.status }}</span>
-            </span>
-            <span class="date">{{ order.created_at | date:'short' }}</span>
-          </a>
-        } @empty {
-          <div class="empty">Aucune commande pour le moment</div>
         }
       </div>
     </div>
-  </div>
-}
+
+    <div class="atelier-panel">
+      <div class="panel-head">
+        <h2>Pièces chéries</h2>
+        <p>Les plus demandées</p>
+      </div>
+      @if (stats().topProducts?.length) {
+        <ul class="cherish-list">
+          @for (p of stats().topProducts; track $index; let i = $index) {
+            <li class="cherish-item">
+              <span class="cherish-rank">{{ i + 1 }}</span>
+              <div class="cherish-body">
+                <div class="cherish-top">
+                  <span class="cherish-name">{{ p.product_name || p.name }}</span>
+                  <span class="cherish-sold">{{ p.total_sold || 0 }} vendues</span>
+                </div>
+                <div class="cherish-track">
+                  <div
+                    class="cherish-fill"
+                    [style.width.%]="((+p.total_sold || 0) / getMaxSold()) * 100"
+                  ></div>
+                </div>
+              </div>
+            </li>
+          }
+        </ul>
+      } @else {
+        <div class="empty-soft compact">
+          <p class="empty-title">Encore aucune vente</p>
+          <p class="empty-text">Les pièces préférées apparaîtront ici.</p>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="orders-atelier">
+    <div class="panel-head inline">
+      <div>
+        <h2>Commandes récentes</h2>
+        <p>Les dernières attentions clients</p>
+      </div>
+      <a routerLink="/admin/orders" class="text-link">Tout voir</a>
+    </div>
+
+    <div class="order-list">
+      @for (order of stats().recentOrders; track order.id) {
+        <a [routerLink]="['/admin/orders', order.id]" class="order-card">
+          <div class="order-main">
+            <span class="order-id">{{ order.order_number || order.id }}</span>
+            <span class="order-client">{{ order.first_name }} {{ order.last_name }}</span>
+          </div>
+          <div class="order-side">
+            <span class="order-total">{{ order.total | number:'1.2-2' }} MAD</span>
+            <span class="status-chip" [class]="getStatusClass(order.status)">{{ order.status }}</span>
+            <span class="order-date">{{ order.created_at | date:'dd MMM' }}</span>
+          </div>
+        </a>
+      } @empty {
+        <div class="empty-soft">
+          <p class="empty-title">Pas encore de commandes</p>
+          <p class="empty-text">Quand les premières arriveront, elles s’afficheront ici avec douceur.</p>
+        </div>
+      }
+    </div>
+  </section>
+</div>
