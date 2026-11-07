@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeroComponent } from '../../components/hero/hero.component';
 import { PromoBannerComponent } from '../../components/promo-banner/promo-banner.component';
+import { ProductListComponent } from '../../components/product-list/product-list.component';
 import { TestimonialsComponent } from '../../components/testimonials/testimonials.component';
 import { InstagramFeedComponent } from '../../components/instagram-feed/instagram-feed.component';
 import { ApiService } from '../../services/api.service';
@@ -23,7 +24,7 @@ const MODE_CONFIG: Record<string, { title: string; subtitle: string; icon: strin
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HeroComponent, PromoBannerComponent, TestimonialsComponent, InstagramFeedComponent],
+  imports: [CommonModule, HeroComponent, PromoBannerComponent, ProductListComponent, TestimonialsComponent, InstagramFeedComponent],
   template: `
     @if (status()) {
       <div class="status-overlay" [style.background]="getStatusBg()">
@@ -38,8 +39,15 @@ const MODE_CONFIG: Record<string, { title: string; subtitle: string; icon: strin
     }
     <app-promo-banner />
     <app-hero />
-    <app-testimonials />
-    <app-instagram-feed />
+    <section id="creations">
+      <app-product-list />
+    </section>
+    <section id="avis">
+      <app-testimonials />
+    </section>
+    <section id="instagram">
+      <app-instagram-feed />
+    </section>
   `,
   styles: [`
     .status-overlay {

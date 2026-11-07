@@ -1,12 +1,12 @@
 <section class="testimonials">
-  <div class="testimonials-header">
+  <div class="testimonials-header" appReveal>
     <span class="section-tag">Avis Clients</span>
     <h2>{{ 'testimonials.title' | t }}</h2>
   </div>
 
   <div class="testimonials-grid">
-    @for (t of testimonials; track t.name) {
-      <div class="testimonial-card">
+    @for (t of testimonials; track t.name; let i = $index) {
+      <div class="testimonial-card" appReveal [appRevealDelay]="(i * 100) + 'ms'" appTilt3d [appTilt3dMax]="7">
         <div class="stars">
           @for (s of [1, 2, 3, 4, 5]; track s) {
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none">

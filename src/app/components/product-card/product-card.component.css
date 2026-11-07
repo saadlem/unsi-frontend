@@ -1,17 +1,19 @@
 .card {
   display: flex;
   flex-direction: column;
-  background: transparent;
-  border-radius: 0;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.78);
+  border-radius: 24px;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  border: none;
-  transition: opacity 0.2s;
+  border: 1px solid rgba(245, 208, 220, 0.95);
+  box-shadow: 0 14px 34px rgba(184, 50, 88, 0.08);
+  backdrop-filter: blur(8px);
 }
 
-.card:hover {
-  opacity: 0.96;
+.card.tilt-3d:hover {
+  box-shadow: 0 28px 54px rgba(184, 50, 88, 0.16);
 }
 
 .card-image {
@@ -19,26 +21,41 @@
   aspect-ratio: 1;
   overflow: hidden;
   background: var(--blue-pale);
+  transform: translateZ(26px);
+}
+
+.card-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 65%, rgba(184, 50, 88, 0.12) 100%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.card:hover .card-image::after {
+  opacity: 1;
 }
 
 .card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .card:hover .card-image img {
-  transform: scale(1.045);
+  transform: scale(1.07);
 }
 
 .card-category {
   position: absolute;
   top: 12px;
   left: 12px;
-  background: rgba(248, 241, 237, 0.92);
+  background: rgba(255, 247, 251, 0.92);
   padding: 5px 12px;
-  border-radius: 4px;
+  border-radius: 999px;
   font-size: 10px;
   font-weight: 600;
   font-family: 'Outfit', sans-serif;
@@ -53,22 +70,24 @@
   top: 48px;
   right: 12px;
   background: var(--blue);
-  color: #F8F1ED;
+  color: #FFF7FB;
   padding: 4px 10px;
-  border-radius: 4px;
+  border-radius: 999px;
   font-size: 10px;
   font-weight: 700;
   font-family: 'Outfit', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  animation: motionPulseSoft 2.4s ease-in-out infinite;
 }
 
 .card-body {
-  padding: 16px 2px 4px;
+  padding: 16px 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 6px;
   flex: 1;
+  transform: translateZ(18px);
 }
 
 .card-body h3 {
@@ -78,6 +97,10 @@
   color: var(--text);
   margin: 0;
   line-height: 1.3;
+}
+
+.card:hover .card-body h3 {
+  color: var(--blue-dark);
 }
 
 .card-desc {
@@ -104,7 +127,6 @@
   font-weight: 600;
   color: var(--blue-dark);
   font-family: 'Outfit', sans-serif;
-  letter-spacing: 0.02em;
 }
 
 .card-rating {
@@ -124,55 +146,95 @@
   gap: 6px;
   width: 100%;
   padding: 12px;
-  background: var(--blue-dark);
-  color: #F8F1ED;
+  background: linear-gradient(135deg, #E85A7A, #B83258);
+  color: #FFF7FB;
   border: none;
-  border-radius: 8px;
+  border-radius: 999px;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   margin-top: 10px;
   font-family: 'Outfit', sans-serif;
-  letter-spacing: 0.04em;
+  box-shadow: 0 10px 22px rgba(232, 90, 122, 0.24);
 }
 
 .add-btn:hover {
-  background: var(--blue);
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(232, 90, 122, 0.3);
 }
 
 .add-btn.added {
-  background: var(--blue-light);
+  background: linear-gradient(135deg, #F08BA3, #E85A7A);
 }
 
 .wishlist-btn {
   position: absolute;
   top: 12px;
   right: 12px;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: none;
-  background: rgba(42, 31, 28, 0.35);
+  background: rgba(255, 247, 251, 0.88);
+  color: var(--blue);
   backdrop-filter: blur(4px);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s, transform 0.2s;
+  transition: transform 0.25s ease, background 0.2s ease;
   z-index: 2;
   padding: 0;
+  box-shadow: 0 8px 18px rgba(184, 50, 88, 0.12);
 }
 
 .wishlist-btn:hover {
-  background: rgba(42, 31, 28, 0.55);
   transform: scale(1.08);
 }
 
 .wishlist-btn.wishlisted {
-  background: rgba(107, 28, 42, 0.85);
+  background: var(--blue);
+  animation: motionPulseSoft 0.45s ease;
 }
 
-.wishlist-btn.wishlisted:hover {
-  background: rgba(107, 28, 42, 1);
+@media (max-width: 768px) {
+  .card {
+    border-radius: 18px;
+  }
+
+  .card-body {
+    padding: 12px;
+  }
+
+  .card-body h3 {
+    font-size: 14px;
+  }
+
+  .card-desc {
+    display: none;
+  }
+
+  .card-price {
+    font-size: 14px;
+  }
+
+  .add-btn {
+    min-height: 42px;
+    font-size: 12px;
+  }
+
+  .stock-badge {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-image img,
+  .add-btn,
+  .wishlist-btn,
+  .stock-badge {
+    transition: none !important;
+    animation: none !important;
+  }
 }

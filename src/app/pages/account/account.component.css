@@ -201,6 +201,12 @@
 }
 
 @media (max-width: 768px) {
+  .account-page {
+    padding: 24px 16px calc(32px + env(safe-area-inset-bottom));
+    justify-content: flex-start;
+    min-height: calc(100svh - 60px);
+  }
+
   .profile-grid {
     grid-template-columns: 1fr;
   }
@@ -210,7 +216,25 @@
   }
 
   .auth-card {
-    padding: 32px 24px;
+    padding: 28px 20px;
+    border-radius: 18px;
+  }
+
+  .field input {
+    min-height: 48px;
+    font-size: 16px;
+    border-radius: 12px;
+  }
+
+  .btn-primary {
+    min-height: 48px;
+    border-radius: 12px;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }
 

@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { RevealDirective } from '../../directives/reveal.directive';
+import { Tilt3dDirective } from '../../directives/tilt-3d.directive';
 
 @Component({
   selector: 'app-testimonials',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, RevealDirective, Tilt3dDirective],
   templateUrl: './testimonials.component.html',
   styleUrl: './testimonials.component.css'
 })
