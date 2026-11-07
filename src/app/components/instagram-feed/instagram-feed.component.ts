@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { RevealDirective } from '../../directives/reveal.directive';
 
 interface InstagramPost {
   id: number;
@@ -12,7 +13,7 @@ interface InstagramPost {
 @Component({
   selector: 'app-instagram-feed',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TranslatePipe, RevealDirective],
   templateUrl: './instagram-feed.component.html',
   styleUrl: './instagram-feed.component.css'
 })

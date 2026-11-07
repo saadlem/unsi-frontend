@@ -1,32 +1,71 @@
-<section class="hero">
-  <div class="hero-media" aria-hidden="true">
-    @for (slide of slides; track slide.src; let i = $index) {
-      <img
-        class="hero-image"
-        [class.is-active]="active() === i"
-        [src]="slide.src"
-        alt=""
-      />
-    }
-    <div class="hero-overlay"></div>
+<section class="hero" aria-roledescription="carousel" aria-label="L’âme d’UNSI">
+  <div class="hero-media depth-stage">
+    <div class="hero-frame" appTilt3d [appTilt3dMax]="8" [appTilt3dGlare]="true">
+      <div class="hero-track" [style.transform]="'translateX(-' + (active() * 100) + '%)'">
+        @for (slide of slides; track slide.src; let i = $index) {
+          <figure class="hero-slide" [attr.aria-hidden]="active() !== i">
+            <img class="hero-image" [src]="slide.src" [alt]="slide.titleKey | t" />
+          </figure>
+        }
+      </div>
+      <div class="hero-veil"></div>
+
+      <div class="hero-stamp" aria-label="UNSI 2026">
+        <span class="stamp-ring" aria-hidden="true"></span>
+        <div class="stamp-inner">
+          <img
+            class="stamp-logo"
+            src="assets/brand/unsi-logo-mark.png"
+            width="88"
+            height="40"
+            alt="UNSI"
+          />
+          <span class="stamp-year">2026</span>
+        </div>
+      </div>
+    </div>
+
+    <button type="button" class="nav-btn prev" (click)="prev()" aria-label="Précédent">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <button type="button" class="nav-btn next" (click)="next()" aria-label="Suivant">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
   </div>
 
-  <div class="hero-content">
-    <p class="hero-brand">UNSI</p>
-    <h1 class="hero-title">{{ 'hero.title' | t }}</h1>
-    <p class="hero-subtitle">{{ 'hero.subtitle' | t }}</p>
-    <p class="hero-story">{{ slides[active()].captionKey | t }}</p>
+  <div class="hero-copy">
+    <div class="story">
+      <div class="story-meta">
+        <span class="story-index">{{ slides[active()].label }}</span>
+        <span class="story-sep" aria-hidden="true"></span>
+        <span class="story-total">05</span>
+      </div>
+
+      @for (slide of slides; track slide.src; let i = $index) {
+        @if (active() === i) {
+          <div class="story-block">
+            <h1 class="story-title">{{ slide.titleKey | t }}</h1>
+            <p class="story-text">{{ slide.captionKey | t }}</p>
+          </div>
+        }
+      }
+
+      <div class="story-progress" aria-hidden="true">
+        <div class="story-progress-bar" [style.width.%]="((active() + 1) / slides.length) * 100"></div>
+      </div>
+    </div>
+
     <div class="hero-actions">
       <a routerLink="/products" class="btn-primary">{{ 'hero.cta' | t }}</a>
     </div>
 
-    <div class="hero-dots" role="tablist" aria-label="Story">
+    <div class="hero-dots" role="tablist" aria-label="L’âme d’UNSI">
       @for (slide of slides; track slide.src; let i = $index) {
         <button
           type="button"
           class="hero-dot"
           [class.is-active]="active() === i"
-          [attr.aria-label]="'Scene ' + (i + 1)"
+          [attr.aria-label]="slide.titleKey | t"
           [attr.aria-selected]="active() === i"
           (click)="goTo(i)"
         ></button>

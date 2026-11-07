@@ -24,31 +24,156 @@ let banner = { enabled: false, text: 'Welcome to UNSI', link: '/products' };
 let products = [
   {
     id: 1,
-    name: 'Bol céramique',
-    description: 'Bol artisanal pour un quotidien plus chaleureux',
-    price: 189,
-    category: 'Home',
-    stock: 12,
-    image_url: '',
-    rating: 4.8,
+    name: 'Mug blush',
+    description: 'Mug en céramique rose doux pour les matins lents et les cafés partagés.',
+    price: 129,
+    category: 'Table',
+    stock: 24,
+    image: 'assets/products/mug.jpg',
+    image_url: 'assets/products/mug.jpg',
+    rating: 4.9,
     active: 1
   },
   {
     id: 2,
-    name: 'Tasse saucer',
-    description: 'Tasse et soucoupe, détails pensés',
+    name: 'Bol céramique crème',
+    description: 'Bol artisanal à bord rose, parfait pour un petit-déjeuner plus chaleureux.',
+    price: 159,
+    category: 'Table',
+    stock: 18,
+    image: 'assets/products/bowl.jpg',
+    image_url: 'assets/products/bowl.jpg',
+    rating: 4.8,
+    active: 1
+  },
+  {
+    id: 3,
+    name: 'Vase solitaire',
+    description: 'Petit vase en grès rose pour une fleur, ou simplement pour la beauté du geste.',
+    price: 189,
+    category: 'Déco',
+    stock: 14,
+    image: 'assets/products/vase.jpg',
+    image_url: 'assets/products/vase.jpg',
+    rating: 4.7,
+    active: 1
+  },
+  {
+    id: 4,
+    name: 'Bougie céramique',
+    description: 'Bougie soja dans un pot céramique blush, à réutiliser ensuite comme joli objet.',
     price: 149,
-    category: 'Home',
-    stock: 8,
-    image_url: '',
+    category: 'Ambiance',
+    stock: 30,
+    image: 'assets/products/candle.jpg',
+    image_url: 'assets/products/candle.jpg',
     rating: 4.9,
+    active: 1
+  },
+  {
+    id: 5,
+    name: 'Assiettes duo',
+    description: 'Deux assiettes crème et rose pour célébrer la table du quotidien.',
+    price: 249,
+    category: 'Table',
+    stock: 12,
+    image: 'assets/products/plates.jpg',
+    image_url: 'assets/products/plates.jpg',
+    rating: 4.8,
+    active: 1
+  },
+  {
+    id: 6,
+    name: 'Plaid lin blush',
+    description: 'Plaid en lin doux, à poser sur le canapé ou le lit pour un coin plus personnel.',
+    price: 329,
+    category: 'Textile',
+    stock: 9,
+    image: 'assets/products/throw.jpg',
+    image_url: 'assets/products/throw.jpg',
+    rating: 4.6,
+    active: 1
+  },
+  {
+    id: 7,
+    name: 'Plateau service',
+    description: 'Plateau bois clair avec tasses céramique pour les pauses thé improvisées.',
+    price: 279,
+    category: 'Table',
+    stock: 11,
+    image: 'assets/products/tray.jpg',
+    image_url: 'assets/products/tray.jpg',
+    rating: 4.7,
+    active: 1
+  },
+  {
+    id: 8,
+    name: 'Pichet rose',
+    description: 'Pichet céramique pour l’eau, le jus ou simplement comme pièce déco.',
+    price: 219,
+    category: 'Table',
+    stock: 10,
+    image: 'assets/products/pitcher.jpg',
+    image_url: 'assets/products/pitcher.jpg',
+    rating: 4.8,
+    active: 1
+  },
+  {
+    id: 9,
+    name: 'Tasse espresso & soucoupe',
+    description: 'Duo espresso blush pour les moments courts mais précieux.',
+    price: 119,
+    category: 'Table',
+    stock: 22,
+    image: 'assets/products/espresso.jpg',
+    image_url: 'assets/products/espresso.jpg',
+    rating: 4.9,
+    active: 1
+  },
+  {
+    id: 10,
+    name: 'Bocal cuisine',
+    description: 'Bocal céramique à couvercle pour le sucre, le café, ou ce que vous aimez.',
+    price: 169,
+    category: 'Cuisine',
+    stock: 16,
+    image: 'assets/products/jar.jpg',
+    image_url: 'assets/products/jar.jpg',
+    rating: 4.7,
+    active: 1
+  },
+  {
+    id: 11,
+    name: 'Mug édition limitée',
+    description: 'Petite série du mug blush — stock volontairement limité.',
+    price: 139,
+    category: 'Table',
+    stock: 4,
+    image: 'assets/products/mug.jpg',
+    image_url: 'assets/products/mug.jpg',
+    rating: 5,
+    active: 1
+  },
+  {
+    id: 12,
+    name: 'Vase & bougie duo',
+    description: 'Ambiance douce : vase solitaire et bougie céramique pour un coin plus vivant.',
+    price: 299,
+    category: 'Ambiance',
+    stock: 7,
+    image: 'assets/products/candle.jpg',
+    image_url: 'assets/products/candle.jpg',
+    rating: 4.8,
     active: 1
   }
 ];
 
 let categories = [
-  { id: 1, name: 'Home', slug: 'home' },
-  { id: 2, name: 'Table', slug: 'table' }
+  { id: 1, name: 'Table', slug: 'table' },
+  { id: 2, name: 'Déco', slug: 'deco' },
+  { id: 3, name: 'Ambiance', slug: 'ambiance' },
+  { id: 4, name: 'Textile', slug: 'textile' },
+  { id: 5, name: 'Cuisine', slug: 'cuisine' }
 ];
 
 let orders = [];
@@ -64,8 +189,8 @@ let customers = [
 ];
 let discounts = [];
 let instagramPosts = [];
-let nextProductId = 3;
-let nextCategoryId = 3;
+let nextProductId = 13;
+let nextCategoryId = 6;
 let nextCustomerId = 2;
 let nextDiscountId = 1;
 let nextIgId = 1;
@@ -198,9 +323,22 @@ app.get('/api/customers/orders', (req, res) => {
   return res.json(list);
 });
 
+function mapProduct(p) {
+  const image = p.image || p.image_url || '';
+  const stock = Number(p.stock) || 0;
+  return {
+    ...p,
+    image,
+    image_url: p.image_url || image,
+    stock,
+    inStock: stock > 0,
+    rating: Number(p.rating) || 0
+  };
+}
+
 // Public catalog
 app.get('/api/products', (req, res) => {
-  let list = products.filter((p) => p.active !== 0);
+  let list = products.filter((p) => p.active !== 0).map(mapProduct);
   if (req.query.category && req.query.category !== 'All') {
     list = list.filter((p) => p.category === req.query.category);
   }
@@ -222,7 +360,7 @@ app.get('/api/products/categories', (_req, res) => {
 app.get('/api/products/:id', (req, res) => {
   const product = products.find((p) => String(p.id) === String(req.params.id));
   if (!product) return res.status(404).json({ error: 'Produit introuvable' });
-  res.json(product);
+  res.json(mapProduct(product));
 });
 
 app.get('/api/categories', (_req, res) => res.json(categories));

@@ -4,11 +4,12 @@ import { ProductService, Product } from '../../services/product.service';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { SeoService } from '../../services/seo.service';
+import { RevealDirective } from '../../directives/reveal.directive';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [RouterLink, ProductCardComponent, TranslatePipe],
+  imports: [RouterLink, ProductCardComponent, TranslatePipe, RevealDirective],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css'
 })
@@ -21,11 +22,14 @@ export class ProductListComponent implements OnInit {
   searchTerm = '';
 
   ngOnInit(): void {
-    this.seo.updateTags({
-      title: 'Nos Créations',
-      description: 'Découvrez les objets UNSI pour un quotidien plus chaleureux.',
-      url: '/products'
-    });
+    // SEO only when this page is the primary products route
+    if (typeof window !== 'undefined' && window.location.pathname.includes('/products')) {
+      this.seo.updateTags({
+        title: 'Nos Créations',
+        description: 'Découvrez les objets UNSI pour un quotidien plus chaleureux.',
+        url: '/products'
+      });
+    }
     this.loadProducts();
     this.productService.getCategories().subscribe(c => this.categories = ['All', ...c]);
   }

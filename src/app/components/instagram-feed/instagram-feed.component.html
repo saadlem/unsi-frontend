@@ -1,5 +1,5 @@
 <section class="instagram-feed">
-  <div class="instagram-header">
+  <div class="instagram-header" appReveal>
     <span class="section-tag">Instagram</span>
     <h2>{{ 'instagram.title' | t }}</h2>
     <a href="https://instagram.com/unsi.home" target="_blank" rel="noopener" class="handle">{{ 'instagram.subtitle' | t }}</a>
@@ -7,8 +7,15 @@
 
   @if (images.length > 0) {
     <div class="instagram-grid">
-      @for (img of images; track img.id) {
-        <a [href]="img.link || 'https://instagram.com/unsi.home'" target="_blank" rel="noopener" class="instagram-item">
+      @for (img of images; track img.id; let i = $index) {
+        <a
+          [href]="img.link || 'https://instagram.com/unsi.home'"
+          target="_blank"
+          rel="noopener"
+          class="instagram-item"
+          appReveal
+          [appRevealDelay]="(i * 60) + 'ms'"
+        >
           <img [src]="img.image_url" [alt]="img.caption || 'Instagram post'" loading="lazy" />
           <div class="overlay">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

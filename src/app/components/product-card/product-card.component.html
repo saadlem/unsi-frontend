@@ -1,4 +1,4 @@
-<a [routerLink]="['/product', product.id]" class="card">
+<a [routerLink]="['/product', product.id]" class="card" appTilt3d [appTilt3dMax]="9">
   <div class="card-image">
     <img [src]="product.image" [alt]="product.name" loading="lazy" />
     <span class="card-category">{{ product.category }}</span>
