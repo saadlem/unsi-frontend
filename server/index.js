@@ -189,11 +189,57 @@ let customers = [
 ];
 let discounts = [];
 let instagramPosts = [];
+let blogPosts = require('./blog-seed.json').map((p, i) => ({
+  id: i + 1,
+  ...p,
+  featured: !!p.featured
+}));
 let nextProductId = 13;
 let nextCategoryId = 6;
 let nextCustomerId = 2;
 let nextDiscountId = 1;
 let nextIgId = 1;
+let nextBlogId = blogPosts.length + 1;
+
+function slugify(text) {
+  return String(text || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80);
+}
+
+function normalizeBlogPost(body, existing = {}) {
+  const title = String(body.title || existing.title || '').trim();
+  let content = body.content ?? existing.content ?? [];
+  if (typeof content === 'string') {
+    content = content
+      .split(/\n\s*\n/)
+      .map((p) => p.trim())
+      .filter(Boolean);
+  }
+  if (!Array.isArray(content)) content = [];
+  const words = content.join(' ').split(/\s+/).filter(Boolean).length;
+  const readMinutes =
+    Number(body.readMinutes) > 0
+      ? Number(body.readMinutes)
+      : Math.max(1, Math.ceil(words / 180));
+  const slug =
+    slugify(body.slug || existing.slug || title) || `article-${Date.now()}`;
+  return {
+    title,
+    slug,
+    excerpt: String(body.excerpt ?? existing.excerpt ?? '').trim(),
+    content,
+    cover: String(body.cover ?? existing.cover ?? '').trim(),
+    category: String(body.category ?? existing.category ?? 'Inspiration').trim(),
+    date: String(body.date ?? existing.date ?? new Date().toISOString().slice(0, 10)),
+    readMinutes,
+    featured: !!(body.featured ?? existing.featured)
+  };
+}
 
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
@@ -365,6 +411,17 @@ app.get('/api/products/:id', (req, res) => {
 
 app.get('/api/categories', (_req, res) => res.json(categories));
 
+app.get('/api/blog', (_req, res) => {
+  const list = [...blogPosts].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  res.json(list);
+});
+
+app.get('/api/blog/:slug', (req, res) => {
+  const post = blogPosts.find((p) => p.slug === req.params.slug);
+  if (!post) return res.status(404).json({ error: 'Article introuvable' });
+  res.json(post);
+});
+
 app.get('/api/site-status', (_req, res) => res.json(siteStatus));
 app.get('/api/banner', (_req, res) => res.json(banner));
 app.get('/api/instagram-posts', (_req, res) =>
@@ -467,6 +524,52 @@ app.put('/api/admin/categories/:id', (req, res) => {
 });
 app.delete('/api/admin/categories/:id', (req, res) => {
   categories = categories.filter((c) => String(c.id) !== String(req.params.id));
+  res.json({ success: true });
+});
+
+app.get('/api/admin/blog', (_req, res) => {
+  const list = [...blogPosts].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  res.json(list);
+});
+
+function setExclusiveFeatured(postId, featured) {
+  if (!featured) return;
+  blogPosts = blogPosts.map((p) => ({
+    ...p,
+    featured: String(p.id) === String(postId)
+  }));
+}
+
+app.post('/api/admin/blog', (req, res) => {
+  const data = normalizeBlogPost(req.body);
+  if (!data.title) return res.status(400).json({ error: 'Titre requis' });
+  if (blogPosts.some((p) => p.slug === data.slug)) {
+    data.slug = `${data.slug}-${nextBlogId}`;
+  }
+  const post = { id: nextBlogId++, ...data };
+  blogPosts.unshift(post);
+  if (post.featured) setExclusiveFeatured(post.id, true);
+  res.status(201).json(blogPosts.find((p) => p.id === post.id));
+});
+
+app.put('/api/admin/blog/:id', (req, res) => {
+  const idx = blogPosts.findIndex((p) => String(p.id) === String(req.params.id));
+  if (idx < 0) return res.status(404).json({ error: 'Article introuvable' });
+  const data = normalizeBlogPost(req.body, blogPosts[idx]);
+  if (!data.title) return res.status(400).json({ error: 'Titre requis' });
+  if (blogPosts.some((p) => p.slug === data.slug && String(p.id) !== String(req.params.id))) {
+    return res.status(400).json({ error: 'Ce slug existe déjà' });
+  }
+  blogPosts[idx] = { ...blogPosts[idx], ...data, id: blogPosts[idx].id };
+  if (data.featured) setExclusiveFeatured(blogPosts[idx].id, true);
+  const updated = blogPosts.find((p) => String(p.id) === String(req.params.id));
+  res.json(updated);
+});
+
+app.delete('/api/admin/blog/:id', (req, res) => {
+  const before = blogPosts.length;
+  blogPosts = blogPosts.filter((p) => String(p.id) !== String(req.params.id));
+  if (blogPosts.length === before) return res.status(404).json({ error: 'Article introuvable' });
   res.json({ success: true });
 });
 
@@ -573,6 +676,58 @@ app.put('/api/admin/instagram-posts/:id', (req, res) => {
 app.delete('/api/admin/instagram-posts/:id', (req, res) => {
   instagramPosts = instagramPosts.filter((p) => String(p.id) !== String(req.params.id));
   res.json({ success: true });
+});
+
+app.get('/robots.txt', (_req, res) => {
+  res.type('text/plain').send(`User-agent: *
+Allow: /
+
+Disallow: /admin
+Disallow: /admin/
+Disallow: /account
+Disallow: /cart
+Disallow: /checkout
+Disallow: /wishlist
+Disallow: /order-confirmation
+
+Sitemap: https://unsi.ma/sitemap.xml
+`);
+});
+
+app.get('/sitemap.xml', (_req, res) => {
+  const base = 'https://unsi.ma';
+  const today = new Date().toISOString().slice(0, 10);
+  const urls = [
+    { loc: '/', priority: '1.0', changefreq: 'weekly' },
+    { loc: '/products', priority: '0.9', changefreq: 'weekly' },
+    { loc: '/blog', priority: '0.9', changefreq: 'weekly' },
+    { loc: '/infos', priority: '0.6', changefreq: 'monthly' },
+    { loc: '/livraison', priority: '0.5', changefreq: 'monthly' },
+    { loc: '/paiement', priority: '0.5', changefreq: 'monthly' },
+    { loc: '/faq', priority: '0.5', changefreq: 'monthly' },
+    ...products
+      .filter((p) => p.active !== 0)
+      .map((p) => ({ loc: `/product/${p.id}`, priority: '0.8', changefreq: 'weekly' })),
+    ...blogPosts.map((p) => ({
+      loc: `/blog/${p.slug}`,
+      priority: p.featured ? '0.85' : '0.7',
+      changefreq: 'monthly'
+    }))
+  ];
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls
+  .map(
+    (u) => `  <url>
+    <loc>${base}${u.loc}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`
+  )
+  .join('\n')}
+</urlset>`;
+  res.type('application/xml').send(xml);
 });
 
 app.get('/api/health', (_req, res) =>

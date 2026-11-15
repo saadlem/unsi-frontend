@@ -4,6 +4,7 @@ import { TranslateService } from '../../services/translate.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 import { SeoService } from '../../services/seo.service';
 import { Tilt3dDirective } from '../../directives/tilt-3d.directive';
+import { RevealDirective } from '../../directives/reveal.directive';
 
 interface StorySlide {
   src: string;
@@ -15,7 +16,7 @@ interface StorySlide {
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, Tilt3dDirective],
+  imports: [RouterLink, TranslatePipe, Tilt3dDirective, RevealDirective],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.css'
 })
@@ -64,13 +65,19 @@ export class HeroComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.seo.updateTags({
       title: 'UNSI — L’âme d’UNSI',
-      description: 'La vie est faite de petits moments. Rendons-les beaux.',
+      description: 'La vie est faite de petits moments. Rendons-les beaux. Objets pour un quotidien plus chaleureux, bientôt au Maroc.',
       url: '/',
-      keywords: 'UNSI, L’âme d’UNSI, home objects, warmer everyday'
+      keywords: 'UNSI, objets déco, maison, Maroc, quotidien chaleureux',
+      image: 'assets/brand/unsi-logo.png'
     });
-    this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!this.reducedMotion) {
-      this.startAutoplay();
+    this.seo.setOrganizationSchema();
+    if (typeof window !== 'undefined') {
+      this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!this.reducedMotion) {
+        this.startAutoplay();
+      }
+    } else {
+      this.reducedMotion = true;
     }
   }
 
@@ -97,7 +104,7 @@ export class HeroComponent implements OnInit, OnDestroy {
     this.stopAutoplay();
     this.timer = setInterval(() => {
       this.active.update((i) => (i + 1) % this.slides.length);
-    }, 7000);
+    }, 6500);
   }
 
   private stopAutoplay(): void {

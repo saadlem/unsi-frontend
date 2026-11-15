@@ -31,12 +31,41 @@ export class ProductDetailComponent implements OnInit {
         this.product = p as any;
         this.loading = false;
         if (this.product) {
+          const p = this.product;
           this.seo.updateTags({
-            title: this.product.name + ' — ' + this.product.price + ' MAD',
-            description: this.product.description,
-            image: this.product.image,
-            url: '/product/' + this.product.id,
-            type: 'product'
+            title: `${p.name} — ${p.price} MAD`,
+            description: p.description,
+            image: p.image,
+            url: `/product/${p.id}`,
+            type: 'product',
+            keywords: `${p.name}, ${p.category}, UNSI, Maroc`,
+            jsonLd: {
+              '@context': 'https://schema.org',
+              '@type': 'Product',
+              name: p.name,
+              description: p.description,
+              image: p.image?.startsWith('http') ? p.image : `https://unsi.ma/${p.image}`,
+              sku: String(p.id),
+              brand: { '@type': 'Brand', name: 'UNSI' },
+              category: p.category,
+              offers: {
+                '@type': 'Offer',
+                url: `https://unsi.ma/product/${p.id}`,
+                priceCurrency: 'MAD',
+                price: p.price,
+                availability: p.inStock
+                  ? 'https://schema.org/InStock'
+                  : 'https://schema.org/OutOfStock',
+                itemCondition: 'https://schema.org/NewCondition'
+              },
+              aggregateRating: p.rating
+                ? {
+                    '@type': 'AggregateRating',
+                    ratingValue: p.rating,
+                    reviewCount: 1
+                  }
+                : undefined
+            }
           });
         }
       },

@@ -23,6 +23,10 @@ export class AuthService {
   }
 
   private loadFromStorage(): void {
+    if (typeof localStorage === 'undefined') {
+      this.currentAdmin.set(null);
+      return;
+    }
     const token = localStorage.getItem('unsi_token');
     const admin = localStorage.getItem('unsi_admin');
     if (token && admin) {
@@ -41,29 +45,36 @@ export class AuthService {
   }
 
   setSession(token: string, admin: Admin): void {
-    localStorage.setItem('unsi_token', token);
-    localStorage.setItem('unsi_admin', JSON.stringify(admin));
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('unsi_token', token);
+      localStorage.setItem('unsi_admin', JSON.stringify(admin));
+    }
     this.currentAdmin.set(admin);
   }
 
   login(username: string, password: string) {
     return this.http.post<{ token: string; admin: Admin }>(`${this.apiUrl}/login`, { username, password }).pipe(
       tap(res => {
-        localStorage.setItem('unsi_token', res.token);
-        localStorage.setItem('unsi_admin', JSON.stringify(res.admin));
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('unsi_token', res.token);
+          localStorage.setItem('unsi_admin', JSON.stringify(res.admin));
+        }
         this.currentAdmin.set(res.admin);
       })
     );
   }
 
   logout(): void {
-    localStorage.removeItem('unsi_token');
-    localStorage.removeItem('unsi_admin');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('unsi_token');
+      localStorage.removeItem('unsi_admin');
+    }
     this.currentAdmin.set(null);
     this.router.navigate(['/account']);
   }
 
   getToken(): string | null {
+    if (typeof localStorage === 'undefined') return null;
     return localStorage.getItem('unsi_token');
   }
 

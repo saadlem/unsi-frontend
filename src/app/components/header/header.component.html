@@ -13,6 +13,7 @@
     <nav class="nav-links" aria-label="Navigation principale">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'nav.home' | t }}</a>
       <a routerLink="/products" routerLinkActive="active">{{ 'nav.products' | t }}</a>
+      <a routerLink="/blog" routerLinkActive="active">{{ 'nav.blog' | t }}</a>
     </nav>
 
     <div class="nav-tools">
@@ -61,6 +62,7 @@
     <nav class="sheet-nav" aria-label="Menu mobile">
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMenu()">{{ 'nav.home' | t }}</a>
       <a routerLink="/products" routerLinkActive="active" (click)="closeMenu()">{{ 'nav.products' | t }}</a>
+      <a routerLink="/blog" routerLinkActive="active" (click)="closeMenu()">{{ 'nav.blog' | t }}</a>
       <a routerLink="/wishlist" (click)="closeMenu()">
         {{ 'nav.wishlist' | t }}
         @if (wishlistService.count() > 0) {

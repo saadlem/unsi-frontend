@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DecimalPipe, SlicePipe } from '@angular/common';
 import { ApiService } from '../../services/api.service';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-admin-products',
@@ -12,6 +13,7 @@ import { ApiService } from '../../services/api.service';
 })
 export class AdminProductsComponent implements OnInit {
   private api = inject(ApiService);
+  private productService = inject(ProductService);
   products: any[] = [];
   categories: any[] = [];
   showModal = false;
@@ -29,6 +31,7 @@ export class AdminProductsComponent implements OnInit {
   }
 
   loadProducts(): void {
+    this.productService.invalidate();
     this.api.adminGetProducts().subscribe(p => this.products = p);
   }
 

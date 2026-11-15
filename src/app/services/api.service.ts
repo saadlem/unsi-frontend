@@ -79,6 +79,31 @@ export class ApiService {
     return this.http.delete(`${this.apiUrl}/admin/categories/${id}`, { headers: this.getAuthHeaders() });
   }
 
+  // Blog
+  getBlogPosts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/blog`);
+  }
+
+  getBlogPost(slug: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/blog/${slug}`);
+  }
+
+  adminGetBlogPosts(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/admin/blog`, { headers: this.getAuthHeaders() });
+  }
+
+  adminCreateBlogPost(post: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/admin/blog`, post, { headers: this.getAuthHeaders() });
+  }
+
+  adminUpdateBlogPost(id: number, post: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/admin/blog/${id}`, post, { headers: this.getAuthHeaders() });
+  }
+
+  adminDeleteBlogPost(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/admin/blog/${id}`, { headers: this.getAuthHeaders() });
+  }
+
   // Admin - Orders
   adminGetOrders(status?: string): Observable<any[]> {
     let params: any = {};

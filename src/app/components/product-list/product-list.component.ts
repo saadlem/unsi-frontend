@@ -1,5 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ProductService, Product } from '../../services/product.service';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { TranslatePipe } from '../../pipes/translate.pipe';
@@ -9,52 +8,63 @@ import { RevealDirective } from '../../directives/reveal.directive';
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [RouterLink, ProductCardComponent, TranslatePipe, RevealDirective],
+  imports: [ProductCardComponent, TranslatePipe, RevealDirective],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css'
 })
 export class ProductListComponent implements OnInit {
   private productService = inject(ProductService);
   private seo = inject(SeoService);
-  products: Product[] = [];
-  categories: string[] = ['All'];
-  selectedCategory = 'All';
-  searchTerm = '';
+
+  private allProducts = signal<Product[]>([]);
+  categories = signal<string[]>(['All']);
+  selectedCategory = signal('All');
+  searchTerm = signal('');
+  loaded = signal(false);
+
+  products = computed(() => {
+    const q = this.searchTerm().trim().toLowerCase();
+    const cat = this.selectedCategory();
+    return this.allProducts().filter((p) => {
+      const matchCat = cat === 'All' || p.category === cat;
+      const matchSearch =
+        !q ||
+        p.name.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q);
+      return matchCat && matchSearch;
+    });
+  });
 
   ngOnInit(): void {
-    // SEO only when this page is the primary products route
     if (typeof window !== 'undefined' && window.location.pathname.includes('/products')) {
       this.seo.updateTags({
         title: 'Nos Créations',
-        description: 'Découvrez les objets UNSI pour un quotidien plus chaleureux.',
-        url: '/products'
+        description: 'Découvrez les objets UNSI pour un quotidien plus chaleureux — céramique, table, déco.',
+        url: '/products',
+        keywords: 'créations UNSI, céramique, déco maison, Maroc',
+        jsonLd: {
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Nos Créations — UNSI',
+          url: 'https://unsi.ma/products',
+          description: 'Objets UNSI pour un quotidien plus chaleureux.'
+        }
       });
     }
-    this.loadProducts();
-    this.productService.getCategories().subscribe(c => this.categories = ['All', ...c]);
+
+    this.productService.getProducts().subscribe((list) => {
+      this.allProducts.set(list);
+      this.categories.set(['All', ...new Set(list.map((p) => p.category).filter(Boolean))]);
+      this.loaded.set(true);
+    });
   }
 
   filterByCategory(category: string): void {
-    this.selectedCategory = category;
-    this.applyFilters();
+    this.selectedCategory.set(category);
   }
 
   onSearch(term: string): void {
-    this.searchTerm = term;
-    this.applyFilters();
-  }
-
-  private applyFilters(): void {
-    if (this.searchTerm) {
-      this.productService.searchProducts(this.searchTerm).subscribe(p => this.products = p);
-    } else if (this.selectedCategory !== 'All') {
-      this.productService.getProductsByCategory(this.selectedCategory).subscribe(p => this.products = p);
-    } else {
-      this.loadProducts();
-    }
-  }
-
-  private loadProducts(): void {
-    this.productService.getProducts().subscribe(p => this.products = p);
+    this.searchTerm.set(term);
   }
 }

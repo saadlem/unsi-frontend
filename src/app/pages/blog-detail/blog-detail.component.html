@@ -1,0 +1,49 @@
+<section class="article-page">
+  <a routerLink="/blog" class="back">← {{ 'blog.back' | t }}</a>
+
+  @if (missing()) {
+    <div class="empty" appReveal>
+      <h1>{{ 'blog.notFound' | t }}</h1>
+      <a routerLink="/blog" class="btn">{{ 'blog.back' | t }}</a>
+    </div>
+  } @else if (post()) {
+    <article class="article" appReveal>
+      <header class="article-header">
+        <span class="chip">{{ post()!.category }}</span>
+        <h1>{{ post()!.title }}</h1>
+        <div class="meta">
+          <time [attr.datetime]="post()!.date">{{ post()!.date | date:'d MMMM yyyy' }}</time>
+          <span>·</span>
+          <span>{{ post()!.readMinutes }} min</span>
+        </div>
+      </header>
+
+      <div class="article-cover">
+        <img [src]="post()!.cover" [alt]="post()!.title" />
+      </div>
+
+      <div class="article-body">
+        @for (para of post()!.content; track $index) {
+          <p>{{ para }}</p>
+        }
+      </div>
+    </article>
+
+    @if (related().length) {
+      <aside class="related" appReveal appRevealDelay="100ms">
+        <h2>{{ 'blog.related' | t }}</h2>
+        <div class="related-grid">
+          @for (item of related(); track item.slug) {
+            <a class="related-card" [routerLink]="['/blog', item.slug]">
+              <img [src]="item.cover" [alt]="item.title" loading="lazy" />
+              <div>
+                <span class="chip">{{ item.category }}</span>
+                <h3>{{ item.title }}</h3>
+              </div>
+            </a>
+          }
+        </div>
+      </aside>
+    }
+  }
+</section>

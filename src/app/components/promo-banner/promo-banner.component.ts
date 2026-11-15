@@ -21,7 +21,7 @@ export class PromoBannerComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    if (localStorage.getItem('promo-banner-closed') === 'true') {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('promo-banner-closed') === 'true') {
       this.visible = false;
     }
     this.http.get<any>('/api/banner').subscribe({
@@ -36,6 +36,8 @@ export class PromoBannerComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     this.visible = false;
-    localStorage.setItem('promo-banner-closed', 'true');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('promo-banner-closed', 'true');
+    }
   }
 }

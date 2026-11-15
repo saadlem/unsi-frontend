@@ -9,6 +9,9 @@ export const authGuard: CanActivateFn = () => {
   }
 
   const router = inject(Router);
+  if (typeof localStorage === 'undefined') {
+    return router.createUrlTree(['/account']);
+  }
   const token = localStorage.getItem('unsi_customer_token') || localStorage.getItem('unsi_token');
   if (token) return true;
   return router.createUrlTree(['/account']);

@@ -25,12 +25,16 @@ export class HeaderComponent {
     if (this.mobileMenuOpen) {
       this.langOpen = false;
     }
-    document.body.style.overflow = this.mobileMenuOpen ? 'hidden' : '';
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = this.mobileMenuOpen ? 'hidden' : '';
+    }
   }
 
   closeMenu(): void {
     this.mobileMenuOpen = false;
-    document.body.style.overflow = '';
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = '';
+    }
   }
 
   toggleLang(): void {

@@ -1,0 +1,332 @@
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map, shareReplay } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+
+export interface BlogPost {
+  id?: number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string[];
+  cover: string;
+  category: string;
+  date: string;
+  readMinutes: number;
+  featured?: boolean;
+}
+
+export interface BlogCategoryGroup {
+  category: string;
+  posts: BlogPost[];
+}
+
+export const BLOG_CATEGORIES = [
+  'Quotidien',
+  'Table',
+  'Déco',
+  'Maison',
+  'Inspiration'
+] as const;
+
+const POSTS: BlogPost[] = [
+  {
+    slug: 'petits-moments-du-matin',
+    title: 'Les petits moments du matin',
+    excerpt: 'Un café, une jolie tasse, et le temps de respirer avant que la journée commence.',
+    content: [
+      'Il y a ces matins où l’on prend enfin le temps. Pas pour tout faire. Juste pour savourer. La lumière est encore douce, le monde un peu silencieux, et quelque chose dans l’air invite à ralentir.',
+      'Chez UNSI, on croit que le quotidien mérite aussi d’être célébré — une tasse choisie avec amour, une lumière douce, un geste simple. Rien d’extraordinaire, en apparence. Et pourtant, ce sont souvent ces instants que l’on garde.',
+      'Le matin n’est pas seulement le début d’une journée productive. C’est aussi un espace fragile, une parenthèse avant que les notifications, les trajets et les listes de tâches ne reprennent le dessus. Ce que l’on y place compte plus qu’on ne le croit.',
+      'Commencer par une table claire, même petite. Une tasse qui plaît vraiment — pas celle « qui fait l’affaire », mais celle dont la forme, la couleur ou le grain vous font sourire. Un café ou un thé versé sans précipitation. Peut-être une assiette avec un fruit, du pain, un peu de miel.',
+      'Ces détails ne rendent pas la vie parfaite. Ils la rendent un peu plus douce. Ils signalent à votre corps et à votre esprit que vous avez le droit d’occuper ce moment, pleinement, avant d’offrir le reste de la journée au monde extérieur.',
+      'Beaucoup de gens pensent qu’il faut une grande maison, un brunch interminable ou un dimanche entier pour créer de la beauté. Nous pensons l’inverse. Cinq minutes bien choisies, avec les bons objets et une intention claire, suffisent souvent à changer le ton d’une matinée entière.',
+      'Choisissez une lumière douce plutôt qu’un néon agressif. Ouvrez une fenêtre si le temps le permet. Posez votre téléphone un peu plus loin. Laissez le mug rester dans vos mains un instant de plus. Ces gestes semblent minuscules — et c’est précisément pour cela qu’ils sont accessibles, tous les jours.',
+      'Avec le temps, un rituel se forme. Pas une routine rigide, mais une habitude tendre : la même tasse, le même coin de table, le même souffle avant de commencer. C’est ainsi que le quotidien devient un lieu où l’on se reconnaît.',
+      'UNSI est née de cette idée simple : les objets du matin — tasses, bols, plateaux, petites assiettes — ne sont pas de simples ustensiles. Ce sont des compagnons. Ils portent la mémoire des jours calmes autant que celle des matins pressés.',
+      'Alors demain, avant de courir, prenez ce petit moment. Non pas pour être plus productif. Juste pour être un peu plus présent. C’est souvent là que commence une journée plus belle.'
+    ],
+    cover: 'assets/story/bd/panel-01.jpg',
+    category: 'Quotidien',
+    date: '2026-11-02',
+    readMinutes: 9,
+    featured: true
+  },
+  {
+    slug: 'rituel-du-cafe',
+    title: 'Le rituel du café, version douce',
+    excerpt: 'Transformer la pause café en vrai moment pour soi — sans cérémonie excessive.',
+    content: [
+      'Le café est souvent avalé entre deux portes. Debout, devant l’ordinateur, dans la voiture, en répondant à un message. Pourtant, ce même café peut devenir un ancrage — un vrai rituel, simple et réparateur.',
+      'Il ne s’agit pas de transformer votre cuisine en café italien. Il s’agit de ralentir juste assez pour que le geste compte. Choisir une tasse. Sentir la chaleur. Regarder la vapeur. Boire sans scroller.',
+      'Commencez par le contenant. Une tasse trop grande, trop fine, trop banale peut gâcher l’expérience sans qu’on sache pourquoi. Une bonne tasse tient bien en main, garde la chaleur, et a une présence — une couleur, un éclat, une courbe.',
+      'Préparez ensuite un petit plateau : la tasse, une petite assiette, peut-être une cuillère et un biscuit. Même si vous êtes seule ou seul. Le plateau dit : « ceci est un moment ». Il cadre l’attention.',
+      'Choisissez un endroit. Toujours le même si possible — le rebord d’une fenêtre, un fauteuil, le bout de la table. La répétition crée la sécurité. Le corps apprend que, ici, on peut souffler.',
+      'Cinq minutes suffisent. Pas besoin d’une demi-heure libre. Cinq minutes sans écran, avec le café encore trop chaud pour être bu d’un trait. Cinq minutes où l’on regarde vraiment ce qui nous entoure.',
+      'Avec le temps, ce rituel devient une forme de soin. Moins spectaculaire qu’un spa, plus durable qu’une résolution du lundi. Il s’inscrit dans le tissu du jour.',
+      'Chez UNSI, nous aimons les objets qui soutiennent ces gestes-là : mugs généreux, petites tasses espresso, plateaux doux, jarres pour le sucre ou le cacao. Des pièces qui rendent le rituel plus beau — et donc plus enviable à répéter.',
+      'Le soir aussi, d’ailleurs, le même esprit peut s’appliquer : une tisane, une lumière basse, une tasse différente. Ce n’est pas le café qui compte. C’est la permission de s’arrêter.',
+      'Alors la prochaine fois que l’eau chauffe, offrez-vous ce cadre. Pas pour impressionner personne. Juste pour vous rappeler que votre journée mérite aussi des pauses tendres.'
+    ],
+    cover: 'assets/products/espresso.jpg',
+    category: 'Quotidien',
+    date: '2026-10-22',
+    readMinutes: 8
+  },
+  {
+    slug: 'dresser-une-table-chaleureuse',
+    title: 'Dresser une table chaleureuse',
+    excerpt: 'Assiettes, couleurs et détails : comment rendre un repas ordinaire un peu plus beau.',
+    content: [
+      'Les belles assiettes ne sont pas réservées aux grandes occasions. Une table chaleureuse n’attend pas un anniversaire, un invité important ou un dimanche de fête. Elle peut apparaître un mardi soir, pour deux, ou même pour une seule personne.',
+      'Tout commence par une intention : « ce repas mérite un peu plus d’attention ». Pas une production. Une attention. Une nappe ou un chemin de table, des assiettes qui se parlent, des verres alignés sans rigidité.',
+      'Choisissez une palette simple. Crème, blush, terracotta doux, un touché de vert. Trop de couleurs différentes créent du bruit. Deux ou trois tons qui s’accordent suffisent à créer une ambiance cohérente et apaisante.',
+      'Pensez en couches. Une base (nappe, set ou bois nu), une assiette principale, éventuellement une assiette à dessert ou un bol, puis les détails : couverts, verre, serviette. Chaque couche ajoute de la profondeur sans surcharger.',
+      'Les fleurs, même très modestes, changent tout. Un petit vase solitaire, trois tiges coupées dans le jardin, un bouquet du marché posé sans cérémonie. Elles rappellent que la table est vivante.',
+      'Un pichet d’eau sur la table, une bougie basse si le soir tombe, du pain dans un joli bol : ces éléments disent l’abondance simple. Pas le luxe. La générosité du quotidien.',
+      'Invitez l’asymétrie. Une table trop parfaite peut paraître froide. Laissez une serviette un peu libre, un objet décalé, une chaise légèrement tournée. La chaleur naît souvent de l’imperfection assumée.',
+      'Et surtout : utilisez ce que vous avez. La plus belle table n’est pas celle des catalogues. C’est celle qui rassemble vos pièces préférées — même si elles ne matchent pas parfaitement — et les met au service d’un vrai moment partagé.',
+      'Chez UNSI, nous imaginons des assiettes, bols et pichets pour ces tables-là : belles assez pour les fêtes, douces assez pour le quotidien. Des pièces que l’on ose sortir le lundi autant que le samedi.',
+      'Ce soir, dressez la table un peu plus lentement. Allumez une lumière. Posez quelque chose de joli au centre. Vous verrez : le repas change de goût quand le cadre change d’intention.'
+    ],
+    cover: 'assets/products/plates.jpg',
+    category: 'Table',
+    date: '2026-10-28',
+    readMinutes: 9
+  },
+  {
+    slug: 'recevoir-sans-pression',
+    title: 'Recevoir sans pression',
+    excerpt: 'Des idées concrètes pour accueillir sans transformer sa maison en restaurant.',
+    content: [
+      'Recevoir peut vite devenir source de stress : le menu, le ménage, l’impression de devoir tout maîtriser. Pourtant, les meilleurs moments autour d’une table naissent souvent d’une hospitalité simple, presque improvisée.',
+      'La première règle : réduire la liste. Un plat principal généreux, une salade, du pain, un dessert déjà prêt. C’est largement suffisant. Vos invités viennent pour vous, pas pour un spectacle culinaire.',
+      'Préparez la table en avance — même la veille. C’est le geste qui soulage le plus. Quand la table est déjà belle, le reste de la soirée respire. Vous n’êtes plus en mode « urgence », mais en mode « accueil ».',
+      'Créez une ambiance avant le premier coup de sonnette. Lumière tamisée, une playlist douce, une bougie allumée, un pichet d’eau prêt. L’atmosphère accueille autant que vous.',
+      'Laissez des zones un peu imparfaites. Une cuisine en cours, un salon vivant : cela rassure. Une maison trop figée peut mettre mal à l’aise. La chaleur passe par le vécu.',
+      'Pensez aux petits gestes qui font sentir qu’on est attendu : une serviette pliée avec soin, un verre déjà sorti, un siège confortable. Rien de coûteux. Tout est attention.',
+      'Si le temps manque, misez sur le partage : une grande planche, des bols à disposer au centre, des assiettes empilées pour que chacun se serve. Le buffet intimiste crée du mouvement et de la conversation.',
+      'Et si quelque chose ne se passe pas comme prévu — un plat en retard, une tache, un oubli — riez-en. L’élégance vraie, c’est la légèreté. Vos invités la sentiront mieux qu’une décoration parfaite.',
+      'UNSI aime les pièces qui aident à recevoir sans rigidité : grands bols à partager, plateaux, assiettes empilables, carafes. Des objets qui circulent, qui se passent de main en main, qui racontent une soirée.',
+      'Recevoir, au fond, c’est offrir un cadre où l’on se sent bien. Pas une performance. Une parenthèse. Et cette parenthèse commence souvent par une table simple, belle, et sincère.'
+    ],
+    cover: 'assets/products/tray.jpg',
+    category: 'Table',
+    date: '2026-09-30',
+    readMinutes: 8
+  },
+  {
+    slug: 'objets-qui-font-sourire',
+    title: 'Ces objets qui font sourire',
+    excerpt: 'Pourquoi un mug, un vase ou une bougie peuvent changer l’ambiance d’une pièce.',
+    content: [
+      'Un objet choisi avec amour peut rendre un espace plus vivant, plus chaleureux, plus personnel. Ce n’est pas une question de prix. C’est une question de présence : quelque chose qui attire le regard et réchauffe l’humeur.',
+      'Le mug du matin, le vase solitaire, la bougie du soir : ce sont de petites présences qui nous accompagnent. On les touche, on les déplace, on les range — et à chaque contact, ils rappellent une intention.',
+      'Nous sous-estimons souvent le pouvoir émotionnel du décor. Une pièce peut être fonctionnelle et rester froide. Ajoutez un objet juste — une couleur, une texture, une forme inattendue — et soudain l’espace respire autrement.',
+      'Cherchez les objets qui ont une histoire, même courte : un mug trouvé en voyage, un vase offert, une bougie dont le parfum vous ramène quelque part. L’histoire multiplie la beauté.',
+      'Alternez le durable et l’éphémère. Une céramique solide reste. Des fleurs passent. Une bougie se consume. Ce dialogue entre ce qui dure et ce qui change donne du rythme à une pièce.',
+      'Évitez d’accumuler pour remplir. Trop d’objets tue l’effet. Mieux vaut trois pièces fortes, bien placées, que vingt souvenirs noyés dans le bruit visuel.',
+      'Placez-les là où le quotidien les croise : près de la cafetière, sur la table de chevet, sur le rebord de la fenêtre que vous regardez en travaillant. La beauté doit croiser la vie réelle.',
+      'Changez parfois de place. Un vase déplacé dans une autre pièce redonne de la fraîcheur sans rien acheter. Vos objets aiment circuler — et votre regard aussi.',
+      'Chez UNSI, chaque pièce est pensée pour ce rôle discret : faire sourire en passant. Une courbe, une teinte rose poudrée, un émail légèrement irrégulier. Des détails qui parlent bas, mais clairement.',
+      'Alors regardez autour de vous. Quel objet vous fait déjà sourire ? Et lequel manque encore — non pas pour « décorer », mais pour accompagner vos jours avec un peu plus de joie ?'
+    ],
+    cover: 'assets/products/mug.jpg',
+    category: 'Déco',
+    date: '2026-10-18',
+    readMinutes: 8
+  },
+  {
+    slug: 'palette-douce-a-la-maison',
+    title: 'Composer une palette douce à la maison',
+    excerpt: 'Rose, crème, terracotta : comment marier les tons sans alourdir l’espace.',
+    content: [
+      'Une palette douce ne signifie pas une maison fade. Elle signifie une harmonie : des couleurs qui se parlent, qui calment le regard, qui laissent de la place aux textures et à la lumière.',
+      'Commencez par un neutre chaleureux — crème, ivoire, beige sable. C’est le fond sur lequel tout le reste pourra vibrer sans crier. Les murs, les grands textiles, les surfaces principales aiment ces tons-là.',
+      'Ajoutez ensuite une couleur signature. Chez UNSI, on aime le rose poudré, le blush, le bordeaux tendre. Une seule teinte forte, répétée avec mesure, crée une identité sans saturer.',
+      'Introduisez un contraste doux : terracotta, ocre léger, vert sauge. Ces tons ancrent la palette, l’empêchent de flotter, et rappellent la matière — terre, feuille, soleil filtré.',
+      'Pensez texture autant que couleur. Un plaid bouclé, une céramique mate, un verre légèrement teinté, un bois brut. La douceur se ressent aussi sous les doigts.',
+      'Limitez les accents brillants. Un peu de lumière réfléchie suffit. Trop de brillance casse la sensation cosy. Préférez les émaux satins, les métaux discrets, les surfaces qui absorbent la lumière.',
+      'Testez à petite échelle avant de tout peindre. Un vase, un coussin, une nappe. Observez comment la couleur réagit le matin et le soir. La lumière change tout.',
+      'Laissez des zones de repos. Une palette douce a besoin de blancs et de vides. Sans eux, même les tons pastels deviennent bruyants.',
+      'Nos pièces UNSI sont conçues pour s’inscrire dans ces ambiances : roses tendres, crèmes, bruns chauds. Elles se mélangent entre elles, et avec ce que vous avez déjà.',
+      'Une belle palette, ce n’est pas une règle stricte. C’est une conversation entre vos goûts, votre lumière, et les objets que vous aimez vraiment vivre au quotidien.'
+    ],
+    cover: 'assets/products/bowl.jpg',
+    category: 'Déco',
+    date: '2026-09-20',
+    readMinutes: 8
+  },
+  {
+    slug: 'coin-cosy-a-la-maison',
+    title: 'Créer un coin cosy à la maison',
+    excerpt: 'Plaid, lumière douce et détails soft pour un espace rien qu’à soi.',
+    content: [
+      'Parfois, on cherche juste un espace personnel — un coin plus doux, plus calme, où l’on peut lire, rêver, téléphoner, ou simplement ne rien faire. Ce coin n’a pas besoin d’une pièce entière. Un angle suffit.',
+      'Un plaid blush, une bougie, une lumière basse… et la pièce respire autrement. Ce n’est pas une transformation totale. C’est une série de petits choix, faits avec intention.',
+      'Choisissez d’abord le lieu. Près d’une fenêtre, dans un renfoncement, au bout du canapé, dans une chambre trop grande. Le coin cosy aime les limites douces : un mur, une étagère, un rideau léger.',
+      'Installez un siège vraiment confortable. Pas forcément un fauteuil design. Un coussin épais, une chaise avec un bon dossier, un pouf. Le confort prime sur la pose Instagram.',
+      'Ajoutez une lumière dédiée. Une lampe à poser, une guirlande discrète, une bougie. La lumière générale du plafond tue souvent l’intimité. Une source basse crée la bulle.',
+      'Gardez à portée de main ce qui nourrit le moment : un livre, une tasse, un plaid, un petit plateau. Si vous devez vous lever sans cesse, le coin perd sa magie.',
+      'Parfumez légèrement si vous aimez ça. Une bougie, un diffuseur discret. L’odorat ancre le souvenir d’un lieu autant que la vue.',
+      'Protégez ce coin des écrans si possible — ou du moins des notifications. Un cosy qui vibre toutes les trois minutes n’est plus un refuge.',
+      'Chez UNSI, nous imaginons des plaids, bougies et petits objets pour ces bulles-là. Des pièces qui disent : « ici, tu peux t’arrêter ».',
+      'Créez le vôtre cette semaine. Même minuscule. Même imparfait. Vous verrez à quelle vitesse il devient le lieu le plus important de la maison.'
+    ],
+    cover: 'assets/products/throw.jpg',
+    category: 'Maison',
+    date: '2026-10-08',
+    readMinutes: 8
+  },
+  {
+    slug: 'ame-dunsi',
+    title: 'L’âme d’UNSI',
+    excerpt: 'La vie est faite de petits moments. Rendons-les beaux.',
+    content: [
+      'Chez UNSI, nous croyons que le quotidien mérite lui aussi d’être célébré. Que les belles assiettes ne sont pas réservées aux grandes occasions, que les couleurs ont le pouvoir de changer une ambiance, et qu’un objet choisi avec amour peut rendre un espace plus vivant.',
+      'Nous ne cherchons pas à créer des maisons parfaites. Nous voulons donner envie de créer des maisons dans lesquelles on se sent bien — où les couleurs se mélangent, où les objets ont du caractère, et où les petits moments trouvent naturellement leur place.',
+      'Il y a ces matins où l’on prend enfin le temps de savourer son petit-déjeuner. Ces déjeuners qui s’éternisent autour d’une table, les discussions qui n’en finissent pas, les dîners improvisés, les fleurs qu’on achète sans raison particulière.',
+      'Ce sont des moments simples. Rien d’extraordinaire, en apparence. Et pourtant, ce sont souvent eux que l’on garde en mémoire. UNSI est née de ce constat tendre : la beauté du jour à jour compte autant que celle des fêtes.',
+      'Nos pièces sont pensées comme des compagnons de vie. Elles doivent plaire au regard, tenir dans la main, survivre aux usages réels — le café trop chaud, le repas improvisé, le déménagement, le cadeau passé de main en main.',
+      'Nous aimons les teintes douces, les formes accueillantes, les détails qui se révèlent avec le temps. Pas le spectacle. La présence. Une présence qui rend le quotidien un peu plus joyeux.',
+      'UNSI, c’est aussi une invitation à ralentir sans culpabilité. À sortir la belle assiette un mercredi. À allumer une bougie sans attendre le week-end. À offrir de la beauté à des gestes que l’on répète sans y penser.',
+      'Nous rêvons de maisons marocaines et d’ailleurs où se mêlent héritage et modernité douce — des espaces personnels, chaleureux, un peu poétiques, jamais figés.',
+      'Si vous êtes ici, c’est peut-être que vous partagez cette intuition : la vie mérite d’être embellie par petits touches. Pas demain. Pas pour une occasion. Maintenant.',
+      'Bienvenue dans l’univers UNSI. La vie est faite de petits moments. Rendons-les beaux.'
+    ],
+    cover: 'assets/story/bd/panel-05.jpg',
+    category: 'Maison',
+    date: '2026-09-12',
+    readMinutes: 9
+  },
+  {
+    slug: 'fleurs-sans-raison',
+    title: 'Les fleurs qu’on achète sans raison',
+    excerpt: 'Parce que parfois, la douceur n’a pas besoin d’excuse.',
+    content: [
+      'Les fleurs qu’on achète sans raison particulière ont quelque chose de magique. Elles ne célèbrent rien d’officiel — seulement l’envie de rendre le jour un peu plus beau.',
+      'Un petit vase solitaire suffit. Le geste compte autant que le bouquet. Couper les tiges, changer l’eau, choisir l’endroit : autant de mini-rituels qui recentrent.',
+      'Il n’est pas nécessaire d’attendre une invitation, un compliment à se faire pardonner, ou une fête. S’offrir des fleurs, c’est reconnaître que votre espace — et votre humeur — méritent de la grâce sans justification.',
+      'Choisissez selon la saison et selon ce qui vous attire vraiment. Les tulipes droites d’un marché, les roses un peu imparfaites, les eucalyptus qui tiennent longtemps. La « bonne » fleur est celle que vous avez envie de regarder.',
+      'Variez les contenants. Un grand vase pour un geste généreux. Un tout petit pour une seule tige sur le bureau. Une jarre improvisée. Le contenant change le caractère du bouquet.',
+      'Placez les fleurs là où vous passez vraiment : cuisine, entrée, table de travail. Une composition cachée dans le salon « pour les invités » rate l’essentiel : vous faire du bien à vous.',
+      'Acceptez leur durée courte. Les fleurs rappellent que la beauté peut être temporaire — et que c’est précisément pour cela qu’elle est précieuse. Leur fanaison fait partie du cycle, pas d’un échec.',
+      'Si le budget est serré, une seule fleur bien choisie suffit. Ou des branches, des herbes du marché, des feuilles. La nature offerte n’a pas besoin d’être spectaculaire.',
+      'Chez UNSI, nos vases sont pensés pour ces gestes spontanés : stables, beaux seuls ou garnis, assez doux pour vivre sur une table tous les jours.',
+      'Cette semaine, achetez des fleurs sans raison. Posez-les. Regardez-les. Et remarquez comme la pièce — et peut-être vous — se mettent à respirer autrement.'
+    ],
+    cover: 'assets/products/vase.jpg',
+    category: 'Inspiration',
+    date: '2026-09-26',
+    readMinutes: 8
+  },
+  {
+    slug: 'lumiere-du-soir',
+    title: 'La lumière du soir',
+    excerpt: 'Comment la lumière transforme une pièce — et l’humeur — quand la journée s’achève.',
+    content: [
+      'Le soir change tout. Les mêmes murs, la même table, les mêmes objets deviennent autre chose dès que la lumière baisse. Apprendre à accompagner ce passage, c’est offrir à la maison une deuxième vie chaque jour.',
+      'Éteignez le plafond dès que possible. La lumière zénithale est efficace le jour ; le soir, elle aplatit et fatigue. Préférez des sources basses : lampes, appliques, bougies, guirlandes discrètes.',
+      'Créez des îlots de lumière. Un coin lecture, la table du dîner, le plan de travail de la cuisine. Plusieurs petites lumières valent mieux qu’un seul projecteur.',
+      'Jouez avec la chaleur des tons. Les blancs froids évoquent le bureau ; les ampoules chaudes évoquent le refuge. Pour un soir cosy, restez dans les jaunes doux.',
+      'La bougie n’est pas réservée aux occasions. Une seule, allumée près du lavabo ou sur la table, suffit à signaler : la journée active est terminée. Le corps comprend vite ce signal.',
+      'Pensez aux reflets. Un vase brillant, un pichet, un miroir, une surface satinée captent et renvoient la lumière. Ils multiplient la douceur sans watt supplémentaire.',
+      'Réduisez les écrans dans le champ de vision. Une télévision allumée en fond écrase souvent tous les efforts d’ambiance. Si elle reste, baissez la luminosité et ajoutez d’autres sources autour.',
+      'Le soir est aussi le moment des textures : plaid sorti, coussins ramassés, tasse de tisane. La lumière révèle ces matières mieux que le jour cru.',
+      'Nos bougies et objets UNSI aiment précisément cette heure-là — celle où la maison se recueille, où l’on pose la journée, où l’on se prépare à dormir un peu plus en paix.',
+      'Ce soir, avant de scroller, allumez une lumière douce. Asseyez-vous dans son cercle. Laissez la journée se déposer. C’est un geste simple — et profondément civilisé.'
+    ],
+    cover: 'assets/products/candle.jpg',
+    category: 'Inspiration',
+    date: '2026-09-05',
+    readMinutes: 8
+  }
+];
+
+@Injectable({
+  providedIn: 'root'
+})
+export class BlogService {
+  private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
+  readonly categories = [...BLOG_CATEGORIES];
+  private posts$?: Observable<BlogPost[]>;
+
+  /** Force next getPosts() to hit the network (after admin CRUD). */
+  invalidate(): void {
+    this.posts$ = undefined;
+  }
+
+  getPosts(): Observable<BlogPost[]> {
+    if (!this.posts$) {
+      this.posts$ = this.http.get<BlogPost[]>(`${this.apiUrl}/blog`).pipe(
+        map((posts) =>
+          [...posts].sort((a, b) => String(b.date).localeCompare(String(a.date)))
+        ),
+        catchError(() =>
+          of([...POSTS].sort((a, b) => b.date.localeCompare(a.date)))
+        ),
+        shareReplay({ bufferSize: 1, refCount: false })
+      );
+    }
+    return this.posts$;
+  }
+
+  getPost(slug: string): Observable<BlogPost | undefined> {
+    return this.getPosts().pipe(map((posts) => posts.find((p) => p.slug === slug)));
+  }
+
+  getFeatured(): Observable<BlogPost | undefined> {
+    return this.getPosts().pipe(map((posts) => posts.find((p) => p.featured) || posts[0]));
+  }
+
+  getCategories(): Observable<string[]> {
+    return this.getPosts().pipe(
+      map((posts) => {
+        const present = [...new Set(posts.map((p) => p.category).filter(Boolean))];
+        return [
+          ...this.categories.filter((c) => present.includes(c)),
+          ...present.filter((c) => !this.categories.includes(c as typeof BLOG_CATEGORIES[number]))
+        ];
+      })
+    );
+  }
+
+  getByCategory(category: string): Observable<BlogPost[]> {
+    return this.getPosts().pipe(
+      map((posts) => posts.filter((p) => p.category === category))
+    );
+  }
+
+  getGroupedByCategory(): Observable<BlogCategoryGroup[]> {
+    return this.getPosts().pipe(
+      map((posts) => {
+        const cats = [
+          ...this.categories,
+          ...posts
+            .map((p) => p.category)
+            .filter((c) => !this.categories.includes(c as typeof BLOG_CATEGORIES[number]))
+        ];
+        return [...new Set(cats)]
+          .map((category) => ({
+            category,
+            posts: posts.filter((p) => p.category === category)
+          }))
+          .filter((group) => group.posts.length > 0);
+      })
+    );
+  }
+
+  getRelated(slug: string, limit = 3): Observable<BlogPost[]> {
+    return this.getPosts().pipe(
+      map((posts) => {
+        const current = posts.find((p) => p.slug === slug);
+        if (!current) return posts.slice(0, limit);
+        const same = posts.filter((p) => p.slug !== slug && p.category === current.category);
+        const others = posts.filter((p) => p.slug !== slug && p.category !== current.category);
+        return [...same, ...others].slice(0, limit);
+      })
+    );
+  }
+}

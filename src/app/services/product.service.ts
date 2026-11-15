@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, map, of, shareReplay } from 'rxjs';
 
 export interface Product {
   id: number;
@@ -83,11 +83,11 @@ const MOCK_PRODUCTS: Product[] = [
   },
   {
     id: 7,
-    name: 'Plateau service',
-    description: 'Plateau bois clair avec tasses céramique pour les pauses thé improvisées.',
-    price: 279,
+    name: 'Plateau céramique',
+    description: 'Plateau ovale pour le café du matin ou l’apéritif improvisé.',
+    price: 219,
     category: 'Table',
-    stock: 11,
+    stock: 16,
     image: 'assets/products/tray.jpg',
     rating: 4.7,
     inStock: true
@@ -95,54 +95,54 @@ const MOCK_PRODUCTS: Product[] = [
   {
     id: 8,
     name: 'Pichet rose',
-    description: 'Pichet céramique pour l’eau, le jus ou simplement comme pièce déco.',
-    price: 219,
-    category: 'Table',
-    stock: 10,
+    description: 'Pichet tout en douceur pour l’eau, le jus ou les fleurs coupées.',
+    price: 199,
+    category: 'Cuisine',
+    stock: 11,
     image: 'assets/products/pitcher.jpg',
     rating: 4.8,
     inStock: true
   },
   {
     id: 9,
-    name: 'Tasse espresso & soucoupe',
-    description: 'Duo espresso blush pour les moments courts mais précieux.',
-    price: 119,
+    name: 'Tasse espresso',
+    description: 'Petite tasse pour le café serré, le moment court et précieux.',
+    price: 89,
     category: 'Table',
-    stock: 22,
+    stock: 40,
     image: 'assets/products/espresso.jpg',
     rating: 4.9,
     inStock: true
   },
   {
     id: 10,
-    name: 'Bocal cuisine',
-    description: 'Bocal céramique à couvercle pour le sucre, le café, ou ce que vous aimez.',
-    price: 169,
+    name: 'Bocal hermétique',
+    description: 'Bocal en verre et céramique pour ranger avec style.',
+    price: 139,
     category: 'Cuisine',
-    stock: 16,
+    stock: 22,
     image: 'assets/products/jar.jpg',
-    rating: 4.7,
+    rating: 4.5,
     inStock: true
   },
   {
     id: 11,
-    name: 'Mug édition limitée',
-    description: 'Petite série du mug blush — stock volontairement limité.',
-    price: 139,
+    name: 'Mug nuage',
+    description: 'Grand mug crémeux pour le thé du soir et les pauses douces.',
+    price: 129,
     category: 'Table',
-    stock: 4,
+    stock: 20,
     image: 'assets/products/mug.jpg',
-    rating: 5,
+    rating: 4.8,
     inStock: true
   },
   {
     id: 12,
-    name: 'Vase & bougie duo',
-    description: 'Ambiance douce : vase solitaire et bougie céramique pour un coin plus vivant.',
-    price: 299,
+    name: 'Bougie soir',
+    description: 'Parfum doux pour accompagner la lumière basse du soir.',
+    price: 149,
     category: 'Ambiance',
-    stock: 7,
+    stock: 25,
     image: 'assets/products/candle.jpg',
     rating: 4.8,
     inStock: true
@@ -155,45 +155,50 @@ const MOCK_PRODUCTS: Product[] = [
 export class ProductService {
   private http = inject(HttpClient);
   private apiUrl = '/api/products';
+  private products$?: Observable<Product[]>;
+
+  /** Clear cache after admin product CRUD. */
+  invalidate(): void {
+    this.products$ = undefined;
+  }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<any[]>(this.apiUrl).pipe(
-      map((list) => list.map((p) => this.normalize(p))),
-      catchError(() => of(MOCK_PRODUCTS))
-    );
+    if (!this.products$) {
+      this.products$ = this.http.get<any[]>(this.apiUrl).pipe(
+        map((list) => list.map((p) => this.normalize(p))),
+        catchError(() => of(MOCK_PRODUCTS)),
+        shareReplay({ bufferSize: 1, refCount: false })
+      );
+    }
+    return this.products$;
   }
 
   getProductById(id: number): Observable<Product | undefined> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`).pipe(
-      map((p) => this.normalize(p)),
-      catchError(() => of(MOCK_PRODUCTS.find((p) => p.id === id)))
-    );
+    return this.getProducts().pipe(map((list) => list.find((p) => p.id === id)));
   }
 
   getCategories(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/categories`).pipe(
-      catchError(() => of([...new Set(MOCK_PRODUCTS.map((p) => p.category))]))
+    return this.getProducts().pipe(
+      map((list) => [...new Set(list.map((p) => p.category).filter(Boolean))])
     );
   }
 
   getProductsByCategory(category: string): Observable<Product[]> {
-    return this.http.get<any[]>(this.apiUrl, { params: { category } }).pipe(
-      map((list) => list.map((p) => this.normalize(p))),
-      catchError(() => of(MOCK_PRODUCTS.filter((p) => p.category === category)))
+    return this.getProducts().pipe(
+      map((list) => list.filter((p) => p.category === category))
     );
   }
 
   searchProducts(term: string): Observable<Product[]> {
-    return this.http.get<any[]>(this.apiUrl, { params: { search: term } }).pipe(
-      map((list) => list.map((p) => this.normalize(p))),
-      catchError(() => {
-        const q = term.toLowerCase();
-        return of(
-          MOCK_PRODUCTS.filter(
-            (p) =>
-              p.name.toLowerCase().includes(q) ||
-              p.description.toLowerCase().includes(q)
-          )
+    const q = term.trim().toLowerCase();
+    return this.getProducts().pipe(
+      map((list) => {
+        if (!q) return list;
+        return list.filter(
+          (p) =>
+            p.name.toLowerCase().includes(q) ||
+            p.description.toLowerCase().includes(q) ||
+            p.category.toLowerCase().includes(q)
         );
       })
     );

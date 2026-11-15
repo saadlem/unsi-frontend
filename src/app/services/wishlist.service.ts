@@ -7,6 +7,7 @@ export class WishlistService {
   count = computed(() => this.items().length);
 
   private load(): number[] {
+    if (typeof localStorage === 'undefined') return [];
     try { return JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '[]'); }
     catch { return []; }
   }
@@ -18,7 +19,9 @@ export class WishlistService {
     } else {
       this.items.set([...current, productId]);
     }
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.items()));
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.items()));
+    }
   }
 
   isWishlisted(productId: number): boolean {

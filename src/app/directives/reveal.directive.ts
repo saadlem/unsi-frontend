@@ -57,6 +57,10 @@ export class RevealDirective implements AfterViewInit, OnDestroy {
     if (this.shown) return;
     this.shown = true;
     const node = this.el.nativeElement;
+    if (typeof requestAnimationFrame === 'undefined') {
+      node.classList.add('is-inview');
+      return;
+    }
     // Two frames so the browser paints the hidden state before animating in
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {

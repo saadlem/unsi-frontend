@@ -109,19 +109,30 @@ export class HomeComponent implements OnInit {
   constructor(private api: ApiService) {}
 
   ngOnInit() {
-    const w = window as any;
-    if (w.__SITE_STATUS) {
-      this.status.set(w.__SITE_STATUS);
-      return;
-    }
-    this.api.getSiteStatus().subscribe((res: any) => {
-      if (res && res.mode !== 'live') {
-        const cfg = MODE_CONFIG[res.mode];
-        if (cfg) {
-          this.status.set({ mode: res.mode, title: res.title || cfg.title, message: res.message || cfg.subtitle, icon: cfg.icon, color: cfg.color });
-          this.bg.set(cfg.bg);
-        }
+    if (typeof window !== 'undefined') {
+      const w = window as any;
+      if (w.__SITE_STATUS) {
+        this.status.set(w.__SITE_STATUS);
+        return;
       }
+    }
+    this.api.getSiteStatus().subscribe({
+      next: (res: any) => {
+        if (res && res.mode !== 'live') {
+          const cfg = MODE_CONFIG[res.mode];
+          if (cfg) {
+            this.status.set({
+              mode: res.mode,
+              title: res.title || cfg.title,
+              message: res.message || cfg.subtitle,
+              icon: cfg.icon,
+              color: cfg.color
+            });
+            this.bg.set(cfg.bg);
+          }
+        }
+      },
+      error: () => undefined
     });
   }
 

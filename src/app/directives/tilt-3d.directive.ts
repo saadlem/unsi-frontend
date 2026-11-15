@@ -41,6 +41,11 @@ export class Tilt3dDirective implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const node = this.el.nativeElement;
+    if (typeof window === 'undefined') {
+      this.reduced = true;
+      node.classList.add('tilt-3d');
+      return;
+    }
     this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       || window.matchMedia('(pointer: coarse)').matches;
 

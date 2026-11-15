@@ -1,57 +1,80 @@
-<section class="hero" aria-roledescription="carousel" aria-label="L’âme d’UNSI">
-  <div class="hero-media depth-stage">
-    <div class="hero-frame" appTilt3d [appTilt3dMax]="8" [appTilt3dGlare]="true">
-      <div class="hero-track" [style.transform]="'translateX(-' + (active() * 100) + '%)'">
-        @for (slide of slides; track slide.src; let i = $index) {
-          <figure class="hero-slide" [attr.aria-hidden]="active() !== i">
-            <img class="hero-image" [src]="slide.src" [alt]="slide.titleKey | t" />
+<section class="hero" aria-label="L’âme d’UNSI">
+  <div class="scrapbook">
+    <div class="floaters" aria-hidden="true">
+      @for (slide of slides; track slide.src; let i = $index) {
+        @if (i !== active()) {
+          <figure
+            class="floater"
+            [class]="'floater-' + i"
+            (click)="goTo(i)"
+          >
+            <img [src]="slide.src" [alt]="slide.titleKey | t" />
           </figure>
         }
-      </div>
-      <div class="hero-veil"></div>
-
-      <div class="hero-stamp" aria-label="UNSI 2026">
-        <span class="stamp-ring" aria-hidden="true"></span>
-        <div class="stamp-inner">
-          <img
-            class="stamp-logo"
-            src="assets/brand/unsi-logo-mark.png"
-            width="88"
-            height="40"
-            alt="UNSI"
-          />
-          <span class="stamp-year">2026</span>
-        </div>
-      </div>
+      }
+      <span class="spark spark-a"></span>
+      <span class="spark spark-b"></span>
+      <span class="spark spark-c"></span>
     </div>
 
-    <button type="button" class="nav-btn prev" (click)="prev()" aria-label="Précédent">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-    </button>
-    <button type="button" class="nav-btn next" (click)="next()" aria-label="Suivant">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-    </button>
+    <div class="polaroid-wrap depth-stage">
+      <article class="polaroid" appTilt3d [appTilt3dMax]="7" [appTilt3dGlare]="true">
+        <div class="polaroid-photo">
+          @for (slide of slides; track slide.src; let i = $index) {
+            <img
+              class="polaroid-img"
+              [class.is-active]="active() === i"
+              [src]="slide.src"
+              [alt]="slide.titleKey | t"
+            />
+          }
+
+          <div class="hero-stamp" aria-label="UNSI 2026">
+            <span class="stamp-ring" aria-hidden="true"></span>
+            <div class="stamp-inner">
+              <img
+                class="stamp-logo"
+                src="assets/brand/unsi-logo-mark.png"
+                width="88"
+                height="40"
+                alt="UNSI"
+              />
+              <span class="stamp-year">2026</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="polaroid-caption">
+          <span class="polaroid-index">{{ slides[active()].label }} / 05</span>
+          <p>{{ slides[active()].titleKey | t }}</p>
+        </div>
+      </article>
+
+      <div class="tape tape-left" aria-hidden="true"></div>
+      <div class="tape tape-right" aria-hidden="true"></div>
+    </div>
   </div>
 
   <div class="hero-copy">
-    <div class="story">
-      <div class="story-meta">
-        <span class="story-index">{{ slides[active()].label }}</span>
-        <span class="story-sep" aria-hidden="true"></span>
-        <span class="story-total">05</span>
+    <div class="diary" appReveal>
+      <div class="diary-meta">
+        <span class="diary-heart" aria-hidden="true"></span>
+        <span>{{ slides[active()].label }}</span>
+        <span class="diary-sep" aria-hidden="true"></span>
+        <span>05</span>
       </div>
 
       @for (slide of slides; track slide.src; let i = $index) {
         @if (active() === i) {
-          <div class="story-block">
-            <h1 class="story-title">{{ slide.titleKey | t }}</h1>
-            <p class="story-text">{{ slide.captionKey | t }}</p>
+          <div class="diary-block">
+            <h1 class="diary-title">{{ slide.titleKey | t }}</h1>
+            <p class="diary-text">{{ slide.captionKey | t }}</p>
           </div>
         }
       }
 
-      <div class="story-progress" aria-hidden="true">
-        <div class="story-progress-bar" [style.width.%]="((active() + 1) / slides.length) * 100"></div>
+      <div class="diary-progress" aria-hidden="true">
+        <div class="diary-progress-bar" [style.width.%]="((active() + 1) / slides.length) * 100"></div>
       </div>
     </div>
 
@@ -59,17 +82,26 @@
       <a routerLink="/products" class="btn-primary">{{ 'hero.cta' | t }}</a>
     </div>
 
-    <div class="hero-dots" role="tablist" aria-label="L’âme d’UNSI">
+    <div class="heart-nav" role="tablist" aria-label="L’âme d’UNSI">
       @for (slide of slides; track slide.src; let i = $index) {
         <button
           type="button"
-          class="hero-dot"
+          class="heart-dot"
           [class.is-active]="active() === i"
           [attr.aria-label]="slide.titleKey | t"
           [attr.aria-selected]="active() === i"
           (click)="goTo(i)"
-        ></button>
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21s-6.7-4.4-9.3-7.8C.4 10.3 1.1 6.7 4.2 5.2c2-.9 4.2-.2 5.5 1.5C11 5 13.2 4.3 15.2 5.2c3.1 1.5 3.8 5.1 1.5 8C18.7 16.6 12 21 12 21z"/>
+          </svg>
+        </button>
       }
+    </div>
+
+    <div class="story-controls">
+      <button type="button" class="soft-nav" (click)="prev()" aria-label="Précédent">←</button>
+      <button type="button" class="soft-nav" (click)="next()" aria-label="Suivant">→</button>
     </div>
   </div>
 </section>

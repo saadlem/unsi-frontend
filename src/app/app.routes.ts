@@ -9,6 +9,7 @@ import { AdminCategoriesComponent } from './admin/admin-categories/admin-categor
 import { AdminInstagramComponent } from './admin/admin-instagram/admin-instagram.component';
 import { AdminSiteStatusComponent } from './admin/admin-site-status/admin-site-status.component';
 import { AdminBannerComponent } from './admin/admin-banner/admin-banner.component';
+import { AdminBlogComponent } from './admin/admin-blog/admin-blog.component';
 import { authGuard } from './guards/auth.guard';
 import { siteStatusGuard } from './guards/site-status.guard';
 
@@ -24,6 +25,8 @@ export const routes: Routes = [
   { path: 'livraison', canActivate: [siteStatusGuard], loadComponent: () => import('./pages/livraison/livraison.component').then(m => m.LivraisonComponent) },
   { path: 'paiement', canActivate: [siteStatusGuard], loadComponent: () => import('./pages/paiement/paiement.component').then(m => m.PaiementComponent) },
   { path: 'faq', canActivate: [siteStatusGuard], loadComponent: () => import('./pages/faq/faq.component').then(m => m.FaqComponent) },
+  { path: 'blog', canActivate: [siteStatusGuard], loadComponent: () => import('./pages/blog/blog.component').then(m => m.BlogComponent) },
+  { path: 'blog/:slug', canActivate: [siteStatusGuard], loadComponent: () => import('./pages/blog-detail/blog-detail.component').then(m => m.BlogDetailComponent) },
   { path: 'wishlist', canActivate: [authGuard, siteStatusGuard], loadComponent: () => import('./pages/wishlist/wishlist.component').then(m => m.WishlistComponent) },
   { path: 'suivi', canActivate: [siteStatusGuard], loadComponent: () => import('./pages/tracking/tracking.component').then(m => m.TrackingComponent) },
   { path: 'admin/login', redirectTo: 'account', pathMatch: 'full' },
@@ -35,6 +38,7 @@ export const routes: Routes = [
       { path: 'dashboard', component: AdminDashboardComponent },
       { path: 'products', component: AdminProductsComponent },
       { path: 'categories', component: AdminCategoriesComponent },
+      { path: 'blog', component: AdminBlogComponent },
       { path: 'orders', component: AdminOrdersComponent },
       { path: 'orders/:id', component: AdminOrderDetailComponent },
       { path: 'discounts', component: AdminDiscountsComponent },

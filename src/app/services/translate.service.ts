@@ -7,6 +7,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
     // Nav
     'nav.home': 'Accueil',
     'nav.products': 'Nos Créations',
+    'nav.blog': 'Journal',
     'nav.cart': 'Panier',
     'nav.wishlist': 'Favoris',
     'nav.account': 'Mon compte',
@@ -122,8 +123,22 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'footer.faq': 'FAQ',
     'footer.contact': 'Contact',
     'footer.aboutUs': 'À propos',
+    'footer.blog': 'Journal',
     'footer.rights': 'Tous droits réservés.',
     'footer.codBadge': 'Paiement à la livraison',
+
+    // Blog
+    'blog.tag': 'Journal',
+    'blog.title': 'Le journal UNSI',
+    'blog.subtitle': 'Articles longs sur le quotidien, la table, la déco et la maison.',
+    'blog.read': 'Lire',
+    'blog.back': 'Retour au journal',
+    'blog.related': 'À lire aussi',
+    'blog.notFound': 'Article introuvable',
+    'blog.all': 'Toutes',
+    'blog.categories': 'Catégories',
+    'blog.seeAll': 'Voir tout',
+    'blog.articles': 'articles',
 
     // Infos
     'infos.title': 'À propos d\'UNSI',
@@ -201,6 +216,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
   en: {
     'nav.home': 'Home',
     'nav.products': 'Our Creations',
+    'nav.blog': 'Journal',
     'nav.cart': 'Cart',
     'nav.wishlist': 'Wishlist',
     'nav.account': 'My account',
@@ -302,8 +318,20 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'footer.faq': 'FAQ',
     'footer.contact': 'Contact',
     'footer.aboutUs': 'About Us',
+    'footer.blog': 'Journal',
     'footer.rights': 'All rights reserved.',
     'footer.codBadge': 'Cash on delivery',
+    'blog.tag': 'Journal',
+    'blog.title': 'The UNSI journal',
+    'blog.subtitle': 'Long reads on everyday life, the table, décor, and home.',
+    'blog.read': 'Read',
+    'blog.back': 'Back to journal',
+    'blog.related': 'You may also like',
+    'blog.notFound': 'Article not found',
+    'blog.all': 'All',
+    'blog.categories': 'Categories',
+    'blog.seeAll': 'See all',
+    'blog.articles': 'articles',
 
     // Infos
     'infos.title': 'About UNSI',
@@ -381,6 +409,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
   ar: {
     'nav.home': 'الرئيسية',
     'nav.products': 'إبداعاتنا',
+    'nav.blog': 'المدونة',
     'nav.cart': 'السلة',
     'nav.wishlist': 'المفضلة',
     'nav.account': 'حسابي',
@@ -482,7 +511,19 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'footer.faq': 'الأسئلة الشائعة',
     'footer.contact': 'اتصل بنا',
     'footer.aboutUs': 'من نحن',
+    'footer.blog': 'المدونة',
     'footer.rights': 'جميع الحقوق محفوظة.',
+    'blog.tag': 'المدونة',
+    'blog.title': 'مدونة أونسي',
+    'blog.subtitle': 'مقالات مطوّلة عن الحياة اليومية والمائدة والديكور والمنزل.',
+    'blog.read': 'اقرأ',
+    'blog.back': 'العودة للمدونة',
+    'blog.related': 'اقرأ أيضاً',
+    'blog.notFound': 'المقال غير موجود',
+    'blog.all': 'الكل',
+    'blog.categories': 'التصنيفات',
+    'blog.seeAll': 'عرض الكل',
+    'blog.articles': 'مقالات',
     'footer.codBadge': 'الدفع عند الاستلام',
 
     // Infos
@@ -561,6 +602,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
   es: {
     'nav.home': 'Inicio',
     'nav.products': 'Nuestras Creaciones',
+    'nav.blog': 'Diario',
     'nav.cart': 'Carrito',
     'nav.wishlist': 'Favoritos',
     'nav.account': 'Mi cuenta',
@@ -662,7 +704,19 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'footer.faq': 'FAQ',
     'footer.contact': 'Contacto',
     'footer.aboutUs': 'Sobre Nosotros',
+    'footer.blog': 'Diario',
     'footer.rights': 'Todos los derechos reservados.',
+    'blog.tag': 'Diario',
+    'blog.title': 'El diario UNSI',
+    'blog.subtitle': 'Artículos largos sobre lo cotidiano, la mesa, la deco y el hogar.',
+    'blog.read': 'Leer',
+    'blog.back': 'Volver al diario',
+    'blog.related': 'También te puede gustar',
+    'blog.notFound': 'Artículo no encontrado',
+    'blog.all': 'Todas',
+    'blog.categories': 'Categorías',
+    'blog.seeAll': 'Ver todo',
+    'blog.articles': 'artículos',
     'footer.codBadge': 'Pago contra reembolso',
 
     // Infos
@@ -745,6 +799,7 @@ export class TranslateService {
   lang = signal<Lang>('fr');
 
   constructor() {
+    if (typeof localStorage === 'undefined') return;
     const saved = localStorage.getItem('unsi_lang') as Lang;
     if (saved && LABELS[saved]) {
       this.lang.set(saved);
@@ -754,11 +809,14 @@ export class TranslateService {
 
   setLang(l: Lang) {
     this.lang.set(l);
-    localStorage.setItem('unsi_lang', l);
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('unsi_lang', l);
+    }
     this.applyDir(l);
   }
 
   private applyDir(l: Lang) {
+    if (typeof document === 'undefined') return;
     document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = l;
   }

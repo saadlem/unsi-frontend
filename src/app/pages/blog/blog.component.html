@@ -1,0 +1,122 @@
+<section class="blog-page">
+  <header class="blog-hero" appReveal>
+    <p class="eyebrow">{{ 'blog.tag' | t }}</p>
+    <h1>{{ 'blog.title' | t }}</h1>
+    <p class="lead">{{ 'blog.subtitle' | t }}</p>
+  </header>
+
+  <div class="filters" role="tablist" [attr.aria-label]="'blog.categories' | t">
+    <button
+      type="button"
+      class="filter-chip"
+      role="tab"
+      [class.active]="isActive(null)"
+      [attr.aria-selected]="isActive(null)"
+      (click)="setCategory(null)"
+    >
+      {{ 'blog.all' | t }}
+    </button>
+    @for (cat of categories(); track cat) {
+      <button
+        type="button"
+        class="filter-chip"
+        role="tab"
+        [class.active]="isActive(cat)"
+        [attr.aria-selected]="isActive(cat)"
+        (click)="setCategory(cat)"
+      >
+        {{ cat }}
+      </button>
+    }
+  </div>
+
+  @if (!loaded()) {
+    <div class="blog-skeleton" aria-hidden="true">
+      <div class="sk sk-hero"></div>
+      <div class="sk-grid">
+        <div class="sk sk-card"></div>
+        <div class="sk sk-card"></div>
+        <div class="sk sk-card"></div>
+      </div>
+    </div>
+  } @else {
+    @if (!activeCategory() && featured(); as feature) {
+      <a class="featured" [routerLink]="['/blog', feature.slug]">
+        <div class="featured-media">
+          <img [src]="feature.cover" [alt]="feature.title" />
+        </div>
+        <div class="featured-body">
+          <span class="chip">{{ feature.category }}</span>
+          <h2>{{ feature.title }}</h2>
+          <p>{{ feature.excerpt }}</p>
+          <div class="meta">
+            <time [attr.datetime]="feature.date">{{ feature.date | date:'d MMMM yyyy' }}</time>
+            <span>·</span>
+            <span>{{ feature.readMinutes }} min</span>
+          </div>
+          <span class="read-link">{{ 'blog.read' | t }} →</span>
+        </div>
+      </a>
+    }
+
+    <div class="blog-results">
+      @if (activeCategory()) {
+        <div class="category-head">
+          <h2>{{ activeCategory() }}</h2>
+          <p>{{ filteredPosts().length }} {{ 'blog.articles' | t }}</p>
+        </div>
+
+        <div class="blog-grid">
+          @for (post of filteredPosts(); track post.slug) {
+            <a class="post-card" [routerLink]="['/blog', post.slug]">
+              <div class="post-media">
+                <img [src]="post.cover" [alt]="post.title" loading="lazy" decoding="async" />
+              </div>
+              <div class="post-body">
+                <span class="chip">{{ post.category }}</span>
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.excerpt }}</p>
+                <div class="meta">
+                  <time [attr.datetime]="post.date">{{ post.date | date:'d MMM yyyy' }}</time>
+                  <span>·</span>
+                  <span>{{ post.readMinutes }} min</span>
+                </div>
+              </div>
+            </a>
+          }
+        </div>
+      } @else {
+        @for (group of groups(); track group.category) {
+          <section class="category-block">
+            <div class="category-head">
+              <h2>{{ group.category }}</h2>
+              <button type="button" class="see-all" (click)="setCategory(group.category)">
+                {{ 'blog.seeAll' | t }} →
+              </button>
+            </div>
+
+            <div class="blog-grid">
+              @for (post of group.posts; track post.slug) {
+                <a class="post-card" [routerLink]="['/blog', post.slug]">
+                  <div class="post-media">
+                    <img [src]="post.cover" [alt]="post.title" loading="lazy" decoding="async" />
+                  </div>
+                  <div class="post-body">
+                    <span class="chip">{{ post.category }}</span>
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.excerpt }}</p>
+                    <div class="meta">
+                      <time [attr.datetime]="post.date">{{ post.date | date:'d MMM yyyy' }}</time>
+                      <span>·</span>
+                      <span>{{ post.readMinutes }} min</span>
+                    </div>
+                  </div>
+                </a>
+              }
+            </div>
+          </section>
+        }
+      }
+    </div>
+  }
+</section>
