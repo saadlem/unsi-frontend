@@ -1,0 +1,82 @@
+<div class="admin-pages">
+  <div class="page-header">
+    <div>
+      <h1>Pages du site</h1>
+      <p class="subtitle">Affichez ou masquez les pages, et contrôlez leur présence dans le menu / footer</p>
+    </div>
+    <button class="btn-save" type="button" (click)="save()" [disabled]="saving || loading || !pages.length">
+      {{ saving ? 'Enregistrement…' : 'Enregistrer' }}
+    </button>
+  </div>
+
+  @if (loading) {
+    <p class="state-msg">Chargement…</p>
+  } @else {
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Page</th>
+            <th>Chemin</th>
+            <th>Visible</th>
+            <th>Menu</th>
+            <th>Footer</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (page of pages; track page.slug) {
+            <tr [class.disabled-row]="!page.enabled">
+              <td>
+                <strong>{{ page.label }}</strong>
+                <span class="slug">{{ page.slug }}</span>
+              </td>
+              <td class="mono">{{ page.path }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="toggle"
+                  [class.on]="page.enabled"
+                  (click)="toggle(page, 'enabled')"
+                  [attr.aria-pressed]="page.enabled"
+                >
+                  <span class="knob"></span>
+                </button>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  class="toggle"
+                  [class.on]="page.showInNav"
+                  [disabled]="!page.enabled"
+                  (click)="toggle(page, 'showInNav')"
+                  [attr.aria-pressed]="page.showInNav"
+                >
+                  <span class="knob"></span>
+                </button>
+              </td>
+              <td>
+                <button
+                  type="button"
+                  class="toggle"
+                  [class.on]="page.showInFooter"
+                  [disabled]="!page.enabled"
+                  (click)="toggle(page, 'showInFooter')"
+                  [attr.aria-pressed]="page.showInFooter"
+                >
+                  <span class="knob"></span>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (saved) {
+      <div class="save-success">✓ Pages mises à jour</div>
+    }
+    @if (error) {
+      <div class="save-error">{{ error }}</div>
+    }
+  }
+</div>

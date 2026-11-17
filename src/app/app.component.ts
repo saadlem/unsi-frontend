@@ -3,13 +3,14 @@ import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { PromoBannerComponent } from './components/promo-banner/promo-banner.component';
 import { filter, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, CommonModule],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, PromoBannerComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

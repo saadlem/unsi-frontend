@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { PagesService } from '../../services/pages.service';
 
 @Component({
   selector: 'app-footer',
@@ -9,4 +10,14 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.css'
 })
-export class FooterComponent {}
+export class FooterComponent implements OnInit {
+  pagesService = inject(PagesService);
+
+  ngOnInit(): void {
+    this.pagesService.ensureLoaded().subscribe();
+  }
+
+  isOn(slug: string): boolean {
+    return this.pagesService.isEnabled(slug);
+  }
+}

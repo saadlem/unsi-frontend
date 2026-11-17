@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -9,24 +9,28 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './promo-banner.component.css'
 })
 export class PromoBannerComponent implements OnInit {
+  private http = inject(HttpClient);
+
   banner: any = {
-    enabled: 1,
-    message: 'Objets pour un quotidien plus chaleureux — UNSI',
-    link: '/products',
+    enabled: false,
+    message: '',
+    link: '',
     text_color: '#FFF7FB',
-    background: 'linear-gradient(90deg, #E85A7A, #B83258)'
+    background: '#B83258'
   };
   visible = true;
 
-  constructor(private http: HttpClient) {}
-
   ngOnInit(): void {
-    if (typeof localStorage !== 'undefined' && localStorage.getItem('promo-banner-closed') === 'true') {
-      this.visible = false;
-    }
     this.http.get<any>('/api/banner').subscribe({
       next: (data) => {
-        if (data?.message) this.banner = { ...this.banner, ...data };
+        if (!data) return;
+        this.banner = {
+          ...this.banner,
+          ...data,
+          enabled: data.enabled === true || data.enabled === 1 || data.enabled === '1',
+          message: (data.message || '').trim()
+        };
+        this.visible = !this.isDismissed(this.banner.message);
       },
       error: () => undefined
     });
@@ -36,8 +40,13 @@ export class PromoBannerComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     this.visible = false;
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('promo-banner-closed', 'true');
+    if (typeof localStorage !== 'undefined' && this.banner.message) {
+      localStorage.setItem('promo-banner-closed', this.banner.message);
     }
+  }
+
+  private isDismissed(message: string): boolean {
+    if (typeof localStorage === 'undefined' || !message) return false;
+    return localStorage.getItem('promo-banner-closed') === message;
   }
 }

@@ -1,10 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { UpperCasePipe } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { TranslateService, Lang } from '../../services/translate.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
+import { PagesService } from '../../services/pages.service';
 
 @Component({
   selector: 'app-header',
@@ -13,12 +14,17 @@ import { TranslatePipe } from '../../pipes/translate.pipe';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   cartService = inject(CartService);
   wishlistService = inject(WishlistService);
   ts = inject(TranslateService);
+  pagesService = inject(PagesService);
   mobileMenuOpen = false;
   langOpen = false;
+
+  ngOnInit(): void {
+    this.pagesService.ensureLoaded().subscribe();
+  }
 
   toggleMenu(): void {
     this.mobileMenuOpen = !this.mobileMenuOpen;
@@ -44,5 +50,9 @@ export class HeaderComponent {
   setLang(l: Lang): void {
     this.ts.setLang(l);
     this.langOpen = false;
+  }
+
+  isOn(slug: string): boolean {
+    return this.pagesService.isEnabled(slug);
   }
 }

@@ -1,0 +1,195 @@
+.page-header {
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: #1A1D26;
+}
+
+.subtitle {
+  margin-top: 4px;
+  color: #8B90A0;
+  font-size: 14px;
+}
+
+.state-msg,
+.empty {
+  color: #8B90A0;
+  font-size: 14px;
+}
+
+.quote-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quote-card {
+  appearance: none;
+  width: 100%;
+  text-align: left;
+  border: 1px solid #EDE7EA;
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+}
+
+.quote-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.quote-main strong {
+  color: #1A1D26;
+}
+
+.quote-main span,
+.quote-side .date {
+  color: #8B90A0;
+  font-size: 13px;
+}
+
+.quote-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.status {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #F3E7EB;
+  color: #B83258;
+}
+
+.status.contacted {
+  background: #EAF4EE;
+  color: #2F7D4A;
+}
+
+.status.closed {
+  background: #EEF0F4;
+  color: #6B7280;
+}
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 29, 38, 0.35);
+  z-index: 40;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(420px, 100%);
+  height: 100%;
+  background: #fff;
+  z-index: 50;
+  padding: 24px;
+  overflow: auto;
+  box-shadow: -12px 0 32px rgba(0, 0, 0, 0.12);
+}
+
+.drawer-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.drawer-head h2 {
+  margin: 0 0 4px;
+  font-size: 22px;
+}
+
+.drawer-head p {
+  margin: 0;
+  color: #8B90A0;
+  font-size: 13px;
+}
+
+.close-btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  color: #8B90A0;
+}
+
+.drawer-body p,
+.drawer-body li {
+  font-size: 14px;
+  color: #4A4E5A;
+  line-height: 1.5;
+}
+
+.drawer-body h3 {
+  margin: 18px 0 8px;
+  font-size: 15px;
+}
+
+.drawer-body ul {
+  margin: 0 0 12px;
+  padding-left: 18px;
+}
+
+.total {
+  font-weight: 700;
+  color: #B83258 !important;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.actions button {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 9px 16px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.actions button:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+.actions .btn-new {
+  background: #3B82F6;
+}
+
+.actions .btn-contacted {
+  background: #16A34A;
+}
+
+.actions .btn-closed {
+  background: #6B7280;
+}
+
+.actions .btn-danger {
+  background: #B83258;
+}

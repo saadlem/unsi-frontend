@@ -21,23 +21,45 @@ export class AdminBannerComponent implements OnInit {
   }
 
   load(): void {
-    this.http.get<any>('/api/admin/banner').subscribe(data => {
-      this.banner = { ...this.banner, ...data };
+    // Public read — avoids 401 with a stale admin JWT
+    this.http.get<any>('/api/banner').subscribe({
+      next: (data) => {
+        this.banner = {
+          ...this.banner,
+          ...data,
+          enabled: data?.enabled === true || data?.enabled === 1 || data?.enabled === '1' ? 1 : 0
+        };
+      }
     });
   }
 
   save(): void {
     this.saving = true;
     this.saved = false;
-    this.http.put<any>('/api/admin/banner', this.banner).subscribe({
+    const payload = {
+      ...this.banner,
+      enabled: this.banner.enabled ? 1 : 0
+    };
+    this.http.put<any>('/api/admin/banner', payload).subscribe({
       next: (data) => {
-        this.banner = { ...this.banner, ...data };
+        this.banner = {
+          ...this.banner,
+          ...data,
+          enabled: data?.enabled === true || data?.enabled === 1 || data?.enabled === '1' ? 1 : 0
+        };
         this.saving = false;
         this.saved = true;
-        setTimeout(() => this.saved = false, 3000);
+        // Allow storefront to show the banner again after an admin update
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem('promo-banner-closed');
+        }
+        setTimeout(() => (this.saved = false), 3000);
       },
-      error: () => {
+      error: (err) => {
         this.saving = false;
+        if (err?.status === 401) {
+          alert('Session expirée. Reconnectez-vous (admin / admin123), puis réessayez.');
+        }
       }
     });
   }

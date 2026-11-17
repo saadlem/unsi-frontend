@@ -1,0 +1,140 @@
+<section class="b2b-page">
+  <header class="b2b-hero">
+    <p class="eyebrow">{{ 'b2b.tag' | t }}</p>
+    <h1>{{ 'b2b.title' | t }}</h1>
+    <p class="lead">{{ 'b2b.subtitle' | t }}</p>
+  </header>
+
+  <div class="b2b-layout">
+    <section class="panel simulator" aria-labelledby="sim-title">
+      <div class="panel-head">
+        <h2 id="sim-title">{{ 'b2b.simTitle' | t }}</h2>
+        <p>{{ 'b2b.simLead' | t }}</p>
+      </div>
+
+      <div class="lines">
+        @for (line of lines(); track $index; let i = $index) {
+          <div class="line-row">
+            <label class="field grow">
+              <span>{{ 'b2b.piece' | t }}</span>
+              <select
+                [ngModel]="line.shapeId"
+                (ngModelChange)="updateLine(i, { shapeId: $event })"
+                [name]="'shape-' + i"
+              >
+                @for (s of shapes(); track s.id) {
+                  <option [value]="s.id">{{ s.label }} — {{ s.price }} MAD</option>
+                }
+              </select>
+            </label>
+
+            <label class="field qty">
+              <span>{{ 'b2b.qty' | t }}</span>
+              <input
+                type="number"
+                min="1"
+                step="1"
+                [ngModel]="line.quantity"
+                (ngModelChange)="updateLine(i, { quantity: +$event || 0 })"
+                [name]="'qty-' + i"
+              />
+            </label>
+
+            <div class="line-total">
+              <span class="muted">{{ 'b2b.lineTotal' | t }}</span>
+              <strong>{{ lineTotal(line) | number:'1.0-0' }} MAD</strong>
+            </div>
+
+            <button
+              type="button"
+              class="icon-remove"
+              (click)="removeLine(i)"
+              [disabled]="lines().length <= 1"
+              [attr.aria-label]="'b2b.removeLine' | t"
+            >
+              ×
+            </button>
+          </div>
+        }
+      </div>
+
+      <button type="button" class="ghost-btn" (click)="addLine()">{{ 'b2b.addLine' | t }}</button>
+
+      <div class="estimate">
+        <div class="estimate-row">
+          <span>{{ 'b2b.subtotal' | t }}</span>
+          <span>{{ subtotal() | number:'1.0-0' }} MAD</span>
+        </div>
+        <div class="estimate-row accent">
+          <span>{{ activeTier().labelKey | t }}</span>
+          <span>− {{ discountAmount() | number:'1.0-0' }} MAD</span>
+        </div>
+        <div class="estimate-row total">
+          <span>{{ 'b2b.estimate' | t }}</span>
+          <strong>{{ total() | number:'1.0-0' }} MAD</strong>
+        </div>
+        <p class="note">{{ 'b2b.simNote' | t }}</p>
+      </div>
+    </section>
+
+    <section class="panel contact" aria-labelledby="contact-title">
+      <div class="panel-head">
+        <h2 id="contact-title">{{ 'b2b.contactTitle' | t }}</h2>
+        <p>{{ 'b2b.contactLead' | t }}</p>
+      </div>
+
+      @if (sent()) {
+        <div class="success-box" role="status">
+          <h3>{{ 'b2b.successTitle' | t }}</h3>
+          <p>{{ 'b2b.successText' | t }}</p>
+        </div>
+      } @else {
+        <form class="form" (ngSubmit)="submit()" novalidate>
+          <label class="field">
+            <span>{{ 'b2b.company' | t }} *</span>
+            <input type="text" name="company" [(ngModel)]="company" required autocomplete="organization" />
+          </label>
+
+          <label class="field">
+            <span>{{ 'b2b.contactName' | t }} *</span>
+            <input type="text" name="contactName" [(ngModel)]="contactName" required autocomplete="name" />
+          </label>
+
+          <div class="form-row">
+            <label class="field">
+              <span>{{ 'b2b.email' | t }} *</span>
+              <input type="email" name="email" [(ngModel)]="email" required autocomplete="email" />
+            </label>
+            <label class="field">
+              <span>{{ 'b2b.phone' | t }}</span>
+              <input type="tel" name="phone" [(ngModel)]="phone" autocomplete="tel" />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>{{ 'b2b.city' | t }}</span>
+            <input type="text" name="city" [(ngModel)]="city" autocomplete="address-level2" />
+          </label>
+
+          <label class="field">
+            <span>{{ 'b2b.message' | t }}</span>
+            <textarea name="message" rows="4" [(ngModel)]="message" [placeholder]="'b2b.messagePlaceholder' | t"></textarea>
+          </label>
+
+          @if (error()) {
+            <p class="form-error">{{ error() | t }}</p>
+          }
+
+          <button type="submit" class="submit-btn" [disabled]="sending()">
+            {{ sending() ? ('b2b.sending' | t) : ('b2b.submit' | t) }}
+          </button>
+        </form>
+      }
+
+      <div class="direct-contact">
+        <p>{{ 'b2b.orWrite' | t }}</p>
+        <a href="mailto:hello&#64;unsi.ma">hello&#64;unsi.ma</a>
+      </div>
+    </section>
+  </div>
+</section>

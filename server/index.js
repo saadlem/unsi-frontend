@@ -1,15 +1,82 @@
 /**
  * Lightweight local API for UNSI frontend development.
  * Default admin: admin / admin123
+ *
+ * B2B mail: sent to hello@unsi.ma
+ * Optional SMTP via env: SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_SECURE=1, MAIL_FROM
  */
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const { randomUUID } = require('crypto');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'unsi-dev-secret';
+const B2B_INBOX = process.env.B2B_INBOX || 'hello@unsi.ma';
+const MAIL_FROM = process.env.MAIL_FROM || process.env.SMTP_USER || 'UNSI <noreply@unsi.ma>';
+
+function createMailTransport() {
+  if (process.env.SMTP_HOST) {
+    return nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: Number(process.env.SMTP_PORT || 587),
+      secure: process.env.SMTP_SECURE === '1',
+      auth:
+        process.env.SMTP_USER && process.env.SMTP_PASS
+          ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
+          : undefined
+    });
+  }
+  return nodemailer.createTransport({ jsonTransport: true });
+}
+
+const mailer = createMailTransport();
+
+function formatB2bQuoteEmail(quote) {
+  const lines = (quote.lines || [])
+    .map(
+      (line) =>
+        `- ${line.label || line.shapeId} × ${line.quantity} @ ${line.unitPrice || 0} MAD = ${line.lineTotal || 0} MAD`
+    )
+    .join('\n');
+  const discountPct = Math.round((Number(quote.discountRate) || 0) * 100);
+  return [
+    'Nouvelle demande de devis B2B',
+    '',
+    `Entreprise : ${quote.company}`,
+    `Contact : ${quote.contactName}`,
+    `Email : ${quote.email}`,
+    `Téléphone : ${quote.phone || '—'}`,
+    `Ville : ${quote.city || '—'}`,
+    '',
+    'Simulation :',
+    lines || '- (aucune ligne)',
+    '',
+    `Sous-total : ${quote.subtotal} MAD`,
+    `Remise volume : ${discountPct}% (− ${quote.discountAmount} MAD)`,
+    `Total estimé : ${quote.total} MAD`,
+    `Quantité totale : ${quote.totalQty}`,
+    '',
+    'Message :',
+    quote.message || '—',
+    '',
+    `Réf. devis #${quote.id}`,
+    `Reçu le ${quote.created_at}`
+  ].join('\n');
+}
+
+async function sendB2bQuoteMail(quote) {
+  const info = await mailer.sendMail({
+    from: MAIL_FROM,
+    to: B2B_INBOX,
+    replyTo: quote.email,
+    subject: `[UNSI B2B] Devis — ${quote.company}`,
+    text: formatB2bQuoteEmail(quote)
+  });
+  return info;
+}
 
 const ADMIN = {
   id: '1',
@@ -20,6 +87,14 @@ const ADMIN = {
 
 let siteStatus = { mode: 'live', title: '', message: '', icon: '', color: '' };
 let banner = { enabled: false, text: 'Welcome to UNSI', link: '/products' };
+let customShapes = [
+  { id: 'mug', label: 'Mug', price: 189 },
+  { id: 'coffee', label: 'Tasse & soucoupe', price: 249 },
+  { id: 'espresso', label: 'Espresso', price: 159 },
+  { id: 'bowl', label: 'Bol', price: 199 }
+];
+let b2bQuotes = [];
+let nextB2bQuoteId = 1;
 
 let products = [
   {
@@ -481,6 +556,85 @@ app.put('/api/admin/banner', (req, res) => {
   res.json(banner);
 });
 
+app.get('/api/custom-shapes', (_req, res) => res.json(customShapes));
+app.get('/api/admin/custom-shapes', (_req, res) => res.json(customShapes));
+app.put('/api/admin/custom-shapes', (req, res) => {
+  const incoming = Array.isArray(req.body) ? req.body : req.body?.shapes;
+  if (!Array.isArray(incoming)) {
+    return res.status(400).json({ error: 'shapes array required' });
+  }
+  customShapes = customShapes.map((shape) => {
+    const next = incoming.find((s) => s && String(s.id) === shape.id);
+    if (!next) return shape;
+    const price = Number(next.price);
+    return {
+      ...shape,
+      label: typeof next.label === 'string' && next.label.trim() ? next.label.trim() : shape.label,
+      price: Number.isFinite(price) && price >= 0 ? price : shape.price
+    };
+  });
+  res.json(customShapes);
+});
+
+app.post('/api/b2b/quotes', async (req, res) => {
+  const body = req.body || {};
+  if (!body.company || !body.contactName || !body.email) {
+    return res.status(400).json({ error: 'company, contactName and email required' });
+  }
+  const quote = {
+    id: nextB2bQuoteId++,
+    company: String(body.company).trim(),
+    contactName: String(body.contactName).trim(),
+    email: String(body.email).trim(),
+    phone: String(body.phone || '').trim(),
+    city: String(body.city || '').trim(),
+    message: String(body.message || '').trim(),
+    lines: Array.isArray(body.lines) ? body.lines : [],
+    subtotal: Number(body.subtotal) || 0,
+    discountRate: Number(body.discountRate) || 0,
+    discountAmount: Number(body.discountAmount) || 0,
+    total: Number(body.total) || 0,
+    totalQty: Number(body.totalQty) || 0,
+    status: 'new',
+    created_at: new Date().toISOString(),
+    mailedTo: B2B_INBOX
+  };
+  b2bQuotes.unshift(quote);
+
+  try {
+    const info = await sendB2bQuoteMail(quote);
+    quote.mailSent = true;
+    quote.mailMessageId = info.messageId || null;
+    if (!process.env.SMTP_HOST) {
+      console.log(`[B2B mail → ${B2B_INBOX}] SMTP non configuré — email simulé:`, info.message || info);
+    } else {
+      console.log(`[B2B mail → ${B2B_INBOX}] envoyé:`, info.messageId);
+    }
+    res.status(201).json(quote);
+  } catch (err) {
+    console.error(`[B2B mail → ${B2B_INBOX}] échec:`, err.message);
+    quote.mailSent = false;
+    quote.mailError = err.message;
+    // Keep the lead even if mail fails
+    res.status(201).json(quote);
+  }
+});
+
+app.get('/api/admin/b2b-quotes', (_req, res) => res.json(b2bQuotes));
+app.put('/api/admin/b2b-quotes/:id', (req, res) => {
+  const idx = b2bQuotes.findIndex((q) => String(q.id) === String(req.params.id));
+  if (idx < 0) return res.status(404).json({ error: 'Introuvable' });
+  b2bQuotes[idx] = {
+    ...b2bQuotes[idx],
+    status: req.body?.status || b2bQuotes[idx].status
+  };
+  res.json(b2bQuotes[idx]);
+});
+app.delete('/api/admin/b2b-quotes/:id', (req, res) => {
+  b2bQuotes = b2bQuotes.filter((q) => String(q.id) !== String(req.params.id));
+  res.json({ success: true });
+});
+
 app.get('/api/admin/products', (_req, res) => res.json(products));
 app.post('/api/admin/products', (req, res) => {
   const product = { id: nextProductId++, active: 1, stock: 0, ...req.body };
@@ -700,6 +854,8 @@ app.get('/sitemap.xml', (_req, res) => {
   const urls = [
     { loc: '/', priority: '1.0', changefreq: 'weekly' },
     { loc: '/products', priority: '0.9', changefreq: 'weekly' },
+    { loc: '/sur-mesure', priority: '0.8', changefreq: 'monthly' },
+    { loc: '/b2b', priority: '0.8', changefreq: 'monthly' },
     { loc: '/blog', priority: '0.9', changefreq: 'weekly' },
     { loc: '/infos', priority: '0.6', changefreq: 'monthly' },
     { loc: '/livraison', priority: '0.5', changefreq: 'monthly' },

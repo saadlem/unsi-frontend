@@ -1,0 +1,50 @@
+<div class="admin-sur-mesure">
+  <div class="page-header">
+    <div>
+      <h1>Sur mesure</h1>
+      <p class="subtitle">Définissez les prix des pièces affichées sur la page Sur mesure</p>
+    </div>
+  </div>
+
+  @if (loading) {
+    <p class="state-msg">Chargement…</p>
+  } @else {
+    <div class="settings-form">
+      <div class="shapes-list">
+        @for (shape of shapes; track shape.id) {
+          <div class="shape-row">
+            <div class="shape-meta">
+              <span class="shape-id">{{ shape.id }}</span>
+              <strong>{{ shape.label }}</strong>
+            </div>
+            <div class="price-field">
+              <label [attr.for]="'price-' + shape.id">Prix (MAD)</label>
+              <input
+                class="form-input"
+                type="number"
+                min="0"
+                step="1"
+                [(ngModel)]="shape.price"
+                [name]="'price-' + shape.id"
+                [id]="'price-' + shape.id"
+              />
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-save" type="button" (click)="save()" [disabled]="saving || !shapes.length">
+          {{ saving ? 'Enregistrement…' : 'Enregistrer' }}
+        </button>
+      </div>
+
+      @if (saved) {
+        <div class="save-success">✓ Prix enregistrés — visibles sur /sur-mesure</div>
+      }
+      @if (error) {
+        <div class="save-error">{{ error }}</div>
+      }
+    </div>
+  }
+</div>

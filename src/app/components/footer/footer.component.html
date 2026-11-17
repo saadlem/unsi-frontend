@@ -21,23 +21,23 @@
     <div class="footer-links">
       <div class="footer-col">
         <h4>{{ 'footer.shop' | t }}</h4>
-        <a routerLink="/" fragment="creations">{{ 'footer.allPieces' | t }}</a>
-        <a routerLink="/products">{{ 'footer.coffrets' | t }}</a>
-        <a routerLink="/products">{{ 'footer.newArrivals' | t }}</a>
+        @if (isOn('products')) {
+          <a routerLink="/" fragment="creations">{{ 'footer.allPieces' | t }}</a>
+          <a routerLink="/products">{{ 'footer.coffrets' | t }}</a>
+          <a routerLink="/products">{{ 'footer.newArrivals' | t }}</a>
+        }
       </div>
       <div class="footer-col">
         <h4>{{ 'footer.info' | t }}</h4>
-        <a routerLink="/infos">{{ 'footer.aboutUs' | t }}</a>
-        <a routerLink="/blog">{{ 'footer.blog' | t }}</a>
-        <a routerLink="/livraison">{{ 'footer.delivery' | t }}</a>
-        <a routerLink="/paiement">{{ 'footer.payment' | t }}</a>
-        <a routerLink="/faq">{{ 'footer.faq' | t }}</a>
+        @for (page of pagesService.footerPages(); track page.slug) {
+          <a [routerLink]="page.path">{{ page.label }}</a>
+        }
       </div>
       <div class="footer-col">
         <h4>{{ 'footer.contact' | t }}</h4>
         <a href="mailto:hello&#64;unsi.ma">hello&#64;unsi.ma</a>
         <a href="tel:+212600000000">+212 6 00 00 00 00</a>
-        <a routerLink="/" fragment="instagram">Instagram</a>
+        <a href="https://instagram.com/unsi.home" target="_blank" rel="noopener">Instagram</a>
         <span class="address">Casablanca, Maroc</span>
       </div>
     </div>

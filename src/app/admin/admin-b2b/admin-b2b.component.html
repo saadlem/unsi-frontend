@@ -1,0 +1,70 @@
+<div class="admin-b2b">
+  <div class="page-header">
+    <div>
+      <h1>Demandes B2B</h1>
+      <p class="subtitle">Devis simulés et messages professionnels</p>
+    </div>
+  </div>
+
+  @if (loading) {
+    <p class="state-msg">Chargement…</p>
+  } @else if (!quotes.length) {
+    <div class="empty">Aucune demande B2B pour le moment.</div>
+  } @else {
+    <div class="quote-list">
+      @for (q of quotes; track q.id) {
+        <button type="button" class="quote-card" (click)="open(q)">
+          <div class="quote-main">
+            <strong>{{ q.company }}</strong>
+            <span>{{ q.contactName }} · {{ q.email }}</span>
+          </div>
+          <div class="quote-side">
+            <span class="status" [class]="q.status">{{ q.status }}</span>
+            <strong>{{ q.total | number:'1.0-0' }} MAD</strong>
+            <span class="date">{{ q.created_at | date:'dd MMM yyyy' }}</span>
+          </div>
+        </button>
+      }
+    </div>
+  }
+
+  @if (selected) {
+    <div class="drawer-backdrop" (click)="close()"></div>
+    <aside class="drawer" role="dialog" aria-label="Détail devis B2B">
+      <div class="drawer-head">
+        <div>
+          <h2>{{ selected.company }}</h2>
+          <p>{{ selected.contactName }} · {{ selected.email }}</p>
+        </div>
+        <button type="button" class="close-btn" (click)="close()">×</button>
+      </div>
+
+      <div class="drawer-body">
+        <p><strong>Téléphone :</strong> {{ selected.phone || '—' }}</p>
+        <p><strong>Ville :</strong> {{ selected.city || '—' }}</p>
+        <p><strong>Message :</strong> {{ selected.message || '—' }}</p>
+
+        <h3>Lignes</h3>
+        <ul>
+          @for (line of selected.lines; track $index) {
+            <li>
+              {{ line.label }} × {{ line.quantity }}
+              — {{ line.lineTotal | number:'1.0-0' }} MAD
+            </li>
+          }
+        </ul>
+
+        <p>Sous-total : {{ selected.subtotal | number:'1.0-0' }} MAD</p>
+        <p>Remise : {{ (selected.discountRate * 100) | number:'1.0-0' }}% (− {{ selected.discountAmount | number:'1.0-0' }} MAD)</p>
+        <p class="total">Total estimé : {{ selected.total | number:'1.0-0' }} MAD</p>
+
+        <div class="actions">
+          <button type="button" class="btn-new" (click)="setStatus(selected, 'new')">Nouveau</button>
+          <button type="button" class="btn-contacted" (click)="setStatus(selected, 'contacted')">Contacté</button>
+          <button type="button" class="btn-closed" (click)="setStatus(selected, 'closed')">Clos</button>
+          <button type="button" class="btn-danger" (click)="remove(selected)">Supprimer</button>
+        </div>
+      </div>
+    </aside>
+  }
+</div>

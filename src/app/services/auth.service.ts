@@ -82,8 +82,8 @@ export class AuthService {
     return this.http.get<{ admin: Admin }>(`${this.apiUrl}/me`).pipe(
       tap(res => this.currentAdmin.set(res.admin)),
       catchError(() => {
-        // Dev: keep local session if already hydrated (avoid bounce to login)
-        if (!environment.production && environment.skipAuth && this.currentAdmin()) {
+        // Dev bypass only when there is no JWT at all (local mock). Invalid tokens must be cleared.
+        if (!environment.production && environment.skipAuth && !this.getToken() && this.currentAdmin()) {
           return of({ admin: this.currentAdmin()! });
         }
         this.logout();
