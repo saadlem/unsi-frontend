@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "https://unsi-backend-production.up.railway.app/$1",
+      "destination": "https://unsi-backend.onrender.com/$1",
       "has": [
         {
           "type": "host",
@@ -16,11 +16,15 @@
     },
     {
       "source": "/api/:path*",
-      "destination": "https://unsi-backend-production.up.railway.app/api/:path*"
+      "destination": "https://unsi-backend.onrender.com/api/:path*"
     },
     {
       "source": "/uploads/:path*",
-      "destination": "https://unsi-backend-production.up.railway.app/uploads/:path*"
+      "destination": "https://unsi-backend.onrender.com/uploads/:path*"
+    },
+    {
+      "source": "/((?!api/|uploads/).*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
