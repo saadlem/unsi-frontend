@@ -5,7 +5,6 @@ import { RouterLink, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { SeoService } from '../../services/seo.service';
 import { AuthService } from '../../services/auth.service';
-import { environment } from '../../../environments/environment';
 
 interface Customer {
   id: number;
@@ -94,19 +93,10 @@ export class AccountComponent {
     this.loading.set(true);
     this.error.set('');
 
-    const defaults = environment.defaultAdmin;
-    let username = this.loginForm.email.trim();
-    let password = this.loginForm.password;
+    const username = this.loginForm.email.trim();
+    const password = this.loginForm.password;
 
-    // Dev: empty form → default admin
-    if (!environment.production && environment.skipAuth && defaults && !username && !password) {
-      username = defaults.username;
-      password = defaults.password;
-      this.loginForm.email = username;
-      this.loginForm.password = password;
-    }
-
-    // Try admin login first (real JWT from local API)
+    // Try admin login first (real JWT from API)
     this.http.post<{ token: string; admin: any }>('/api/auth/login', {
       username,
       password
@@ -117,24 +107,6 @@ export class AccountComponent {
         this.router.navigate(['/admin']);
       },
       error: () => {
-        // Dev fallback if API briefly fails
-        if (
-          !environment.production &&
-          environment.skipAuth &&
-          defaults &&
-          username === defaults.username &&
-          password === defaults.password
-        ) {
-          this.authService.setSession('dev-token', {
-            id: 'dev-admin',
-            username: defaults.username,
-            name: defaults.name
-          });
-          this.loading.set(false);
-          this.router.navigate(['/admin']);
-          return;
-        }
-
         // Not an admin → try customer login
         this.http.post<{ token: string; customer: Customer }>('/api/customers/login', {
           email: username,
@@ -155,24 +127,13 @@ export class AccountComponent {
   }
 
   onRegister(): void {
-    if (
-      !(environment.skipAuth && !environment.production) &&
-      this.registerForm.password !== this.registerForm.confirmPassword
-    ) {
+    if (this.registerForm.password !== this.registerForm.confirmPassword) {
       this.error.set('Les mots de passe ne correspondent pas');
       return;
     }
 
     this.loading.set(true);
     this.error.set('');
-
-    // Dev: fake customer session without API
-    if (!environment.production && environment.skipAuth) {
-      localStorage.setItem('unsi_customer_token', 'dev-customer-token');
-      this.loading.set(false);
-      this.router.navigate(['/products']);
-      return;
-    }
 
     this.http.post<{ token: string; customer: Customer }>('/api/customers/register', {
       name: this.registerForm.name,

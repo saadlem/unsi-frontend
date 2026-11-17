@@ -58,7 +58,7 @@ export class AdminBannerComponent implements OnInit {
       error: (err) => {
         this.saving = false;
         if (err?.status === 401) {
-          alert('Session expirée. Reconnectez-vous (admin / admin123), puis réessayez.');
+          alert('Session expirée. Reconnectez-vous, puis réessayez.');
         }
       }
     });

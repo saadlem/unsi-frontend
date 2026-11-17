@@ -71,7 +71,7 @@ export class AdminSurMesureComponent implements OnInit {
       error: (err) => {
         this.saving = false;
         if (err?.status === 401) {
-          this.error = 'Session expirée. Reconnectez-vous (admin / admin123), puis réessayez.';
+          this.error = 'Session expirée. Reconnectez-vous, puis réessayez.';
         } else {
           this.error = 'Enregistrement impossible.';
         }

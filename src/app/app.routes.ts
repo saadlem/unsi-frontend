@@ -13,6 +13,7 @@ import { AdminSurMesureComponent } from './admin/admin-sur-mesure/admin-sur-mesu
 import { AdminB2bComponent } from './admin/admin-b2b/admin-b2b.component';
 import { AdminPagesComponent } from './admin/admin-pages/admin-pages.component';
 import { authGuard } from './guards/auth.guard';
+import { adminGuard } from './guards/admin.guard';
 import { siteStatusGuard } from './guards/site-status.guard';
 import { pageVisibilityGuard } from './guards/page-visibility.guard';
 
@@ -40,6 +41,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayoutComponent,
+    canActivate: [adminGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboardComponent },

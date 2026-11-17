@@ -27,7 +27,7 @@
         </div>
         <div class="field">
           <label for="login-password">Mot de passe</label>
-          <input id="login-password" type="password" [(ngModel)]="loginForm.password" name="password" placeholder="admin123" autocomplete="current-password">
+          <input id="login-password" type="password" [(ngModel)]="loginForm.password" name="password" placeholder="Mot de passe" autocomplete="current-password">
         </div>
         <button type="submit" class="btn-primary" [disabled]="loading()">
           @if (loading()) { Connexion... } @else { Se connecter }
