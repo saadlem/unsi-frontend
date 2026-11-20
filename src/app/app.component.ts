@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
@@ -6,6 +6,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { PromoBannerComponent } from './components/promo-banner/promo-banner.component';
 import { filter, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
+
+declare global {
+  interface Window {
+    adsbygoogle: Record<string, unknown>[];
+  }
+}
 
 @Component({
   selector: 'app-root',
@@ -26,6 +32,20 @@ export class AppComponent implements OnInit {
     ),
     { initialValue: this.router.url.startsWith('/admin') || this.router.url.startsWith('/account') }
   );
+
+  constructor() {
+    effect(() => {
+      if (this.hideLayout()) return;
+      // Angular strips <script> in templates; push after the <ins> is in the DOM.
+      setTimeout(() => {
+        try {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch {
+          // AdSense may throw if the slot is already filled.
+        }
+      });
+    });
+  }
 
   ngOnInit(): void {
     this.router.events
