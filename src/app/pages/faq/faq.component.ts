@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SeoService } from '../../services/seo.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-faq',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './faq.component.html',
   styleUrls: ['./faq.component.css']
 })
@@ -22,30 +23,12 @@ export class FaqComponent implements OnInit {
   openIndex: number | null = null;
 
   faqItems = [
-    {
-      question: 'Comment passer une commande ?',
-      answer: 'Ajoutez vos produits au panier, remplissez vos informations et confirmez. Vous recevrez un email de confirmation.'
-    },
-    {
-      question: 'Quels sont les délais de livraison ?',
-      answer: '2-4 jours pour Casablanca, 4-7 jours pour les autres villes du Maroc.'
-    },
-    {
-      question: 'Comment puis-je payer ?',
-      answer: 'Nous acceptons le paiement à la livraison uniquement. Payez en espèces lors de la réception.'
-    },
-    {
-      question: 'Puis-je retourner un produit ?',
-      answer: 'Oui, sous 14 jours si le produit est dans son état d\'origine. Contactez-nous à hello@unsi.ma.'
-    },
-    {
-      question: 'Que propose UNSI ?',
-      answer: 'Des objets pour un quotidien plus chaleureux — détails pensés, vie joyeuse. Bientôt disponible depuis le Maroc.'
-    },
-    {
-      question: 'Livrez-vous en dehors du Maroc ?',
-      answer: 'Pour l\'instant, nous livrons uniquement au Maroc. Contactez-nous pour les commandes internationales.'
-    }
+    { question: 'faq.q1', answer: 'faq.a1' },
+    { question: 'faq.q2', answer: 'faq.a2' },
+    { question: 'faq.q3', answer: 'faq.a3' },
+    { question: 'faq.q4', answer: 'faq.a4' },
+    { question: 'faq.q5', answer: 'faq.a5' },
+    { question: 'faq.q6', answer: 'faq.a6' }
   ];
 
   toggle(index: number) {

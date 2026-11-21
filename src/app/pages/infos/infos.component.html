@@ -1,48 +1,45 @@
 <div class="page-container">
-  <h1>À propos d'UNSI</h1>
+  <h1>{{ 'infos.title' | t }}</h1>
 
   <section class="story-section">
-    <p class="story-text">
-      UNSI conçoit des objets pour un quotidien plus chaleureux — des détails pensés pour une vie joyeuse.
-      Une signature douce pour vos moments du jour, depuis le Maroc.
-    </p>
+    <p class="story-text">{{ 'infos.p1' | t }}</p>
   </section>
 
   <section class="values-section">
-    <h2>Nos Valeurs</h2>
+    <h2>{{ 'infos.values' | t }}</h2>
     <div class="values-grid">
       <div class="value-card">
         <div class="value-icon">◆</div>
-        <h3>Authenticité</h3>
-        <p>Chaque pièce est unique, avec ses imperfections naturelles qui font son caractère et son authenticité.</p>
+        <h3>{{ 'infos.auth' | t }}</h3>
+        <p>{{ 'infos.authDesc' | t }}</p>
       </div>
       <div class="value-card">
         <div class="value-icon">◆</div>
-        <h3>Artisanat</h3>
-        <p>Fait main avec amour par nos artisans qualifiés, perpétuant un savoir-faire transmis de génération en génération.</p>
+        <h3>{{ 'infos.artisanat' | t }}</h3>
+        <p>{{ 'infos.artisanatDesc' | t }}</p>
       </div>
       <div class="value-card">
         <div class="value-icon">◆</div>
-        <h3>Maroc</h3>
-        <p>Origine garantie. Nos pièces proviennent directement des ateliers artisanaux de Safi et Fès.</p>
+        <h3>{{ 'infos.maroc' | t }}</h3>
+        <p>{{ 'infos.marocDesc' | t }}</p>
       </div>
     </div>
   </section>
 
   <section class="contact-section">
-    <h2>Nous Contacter</h2>
+    <h2>{{ 'infos.contact' | t }}</h2>
     <div class="contact-list">
       <div class="contact-item">
-        <span class="contact-label">Email</span>
+        <span class="contact-label">{{ 'infos.email' | t }}</span>
         <a href="mailto:hello@unsi.ma">hello&#64;unsi.ma</a>
       </div>
       <div class="contact-item">
-        <span class="contact-label">Téléphone</span>
+        <span class="contact-label">{{ 'infos.phone' | t }}</span>
         <a href="tel:+212708871937">+212 7 08 87 19 37</a>
       </div>
       <div class="contact-item">
-        <span class="contact-label">Adresse</span>
-        <span>Rabat, Maroc</span>
+        <span class="contact-label">{{ 'infos.address' | t }}</span>
+        <span>{{ 'infos.addressValue' | t }}</span>
       </div>
     </div>
   </section>

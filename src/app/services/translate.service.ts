@@ -267,6 +267,32 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'faq.q6': 'Livrez-vous en dehors du Maroc ?',
     'faq.a6': 'Pour l\'instant, nous livrons uniquement au Maroc. Contactez-nous pour les commandes internationales.',
 
+    // Tracking
+    'tracking.title': 'Suivi de commande',
+    'tracking.desc': 'Entrez votre numéro de commande pour suivre son statut.',
+    'tracking.placeholder': 'N° de commande',
+    'tracking.track': 'Suivre',
+    'tracking.total': 'Total',
+    'tracking.notFound': 'Commande introuvable. Vérifiez le numéro et réessayez.',
+    'tracking.status_pending': 'En préparation',
+    'tracking.status_shipped': 'Expédié',
+    'tracking.status_delivered': 'Livré',
+
+    // Infos contact labels
+    'infos.email': 'Email',
+    'infos.phone': 'Téléphone',
+    'infos.address': 'Adresse',
+    'infos.addressValue': 'Rabat, Maroc',
+
+    // Livraison badges
+    'livraison.casablanca': 'Casablanca',
+    'livraison.otherCities': 'Autres villes',
+
+    // Paiement extras
+    'paiement.methods': 'Moyens de paiement acceptés',
+    'paiement.cash': 'Espèces',
+    'paiement.cashOnly': 'MAD uniquement',
+
     // Promo Banner
     'promo.freeShipping': 'Livraison gratuite pour les commandes de plus de 600 MAD',
 
@@ -525,6 +551,32 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'faq.a5': 'UNSI offers objects made to warm everyday life — thoughtful details for joyful living.',
     'faq.q6': 'Do you deliver outside Morocco?',
     'faq.a6': 'For now, we only deliver within Morocco. Contact us for international orders.',
+
+    // Tracking
+    'tracking.title': 'Order tracking',
+    'tracking.desc': 'Enter your order number to check its status.',
+    'tracking.placeholder': 'Order number',
+    'tracking.track': 'Track',
+    'tracking.total': 'Total',
+    'tracking.notFound': 'Order not found. Check the number and try again.',
+    'tracking.status_pending': 'Preparing',
+    'tracking.status_shipped': 'Shipped',
+    'tracking.status_delivered': 'Delivered',
+
+    // Infos contact labels
+    'infos.email': 'Email',
+    'infos.phone': 'Phone',
+    'infos.address': 'Address',
+    'infos.addressValue': 'Rabat, Morocco',
+
+    // Livraison badges
+    'livraison.casablanca': 'Casablanca',
+    'livraison.otherCities': 'Other cities',
+
+    // Paiement extras
+    'paiement.methods': 'Accepted payment methods',
+    'paiement.cash': 'Cash',
+    'paiement.cashOnly': 'MAD only',
 
     // Promo Banner
     'promo.freeShipping': 'Free shipping for orders over 600 MAD',
@@ -786,6 +838,32 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'faq.q6': 'هل توصّلون خارج المغرب؟',
     'faq.a6': 'حالياً، نوصّل فقط داخل المغرب. اتصل بنا للطلبات الدولية.',
 
+    // Tracking
+    'tracking.title': 'تتبع الطلب',
+    'tracking.desc': 'أدخل رقم طلبك لمعرفة حالته.',
+    'tracking.placeholder': 'رقم الطلب',
+    'tracking.track': 'تتبع',
+    'tracking.total': 'المجموع',
+    'tracking.notFound': 'الطلب غير موجود. تحقق من الرقم وحاول مرة أخرى.',
+    'tracking.status_pending': 'قيد التحضير',
+    'tracking.status_shipped': 'تم الشحن',
+    'tracking.status_delivered': 'تم التسليم',
+
+    // Infos contact labels
+    'infos.email': 'البريد الإلكتروني',
+    'infos.phone': 'الهاتف',
+    'infos.address': 'العنوان',
+    'infos.addressValue': 'الرباط، المغرب',
+
+    // Livraison badges
+    'livraison.casablanca': 'الدار البيضاء',
+    'livraison.otherCities': 'مدن أخرى',
+
+    // Paiement extras
+    'paiement.methods': 'طرق الدفع المقبولة',
+    'paiement.cash': 'نقداً',
+    'paiement.cashOnly': 'درهم فقط',
+
     // Promo Banner
     'promo.freeShipping': 'توصيل مجاني للطلبات التي تزيد عن 600 درهم',
 
@@ -1045,6 +1123,32 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'faq.a5': 'UNSI ofrece objetos pensados para calentar el día a día — detalles cuidados para una vida más alegre.',
     'faq.q6': '¿Envían fuera de Marruecos?',
     'faq.a6': 'Por ahora, solo enviamos dentro de Marruecos. Contáctanos para pedidos internacionales.',
+
+    // Tracking
+    'tracking.title': 'Seguimiento del pedido',
+    'tracking.desc': 'Introduce tu número de pedido para ver su estado.',
+    'tracking.placeholder': 'N.º de pedido',
+    'tracking.track': 'Seguir',
+    'tracking.total': 'Total',
+    'tracking.notFound': 'Pedido no encontrado. Verifica el número e inténtalo de nuevo.',
+    'tracking.status_pending': 'En preparación',
+    'tracking.status_shipped': 'Enviado',
+    'tracking.status_delivered': 'Entregado',
+
+    // Infos contact labels
+    'infos.email': 'Email',
+    'infos.phone': 'Teléfono',
+    'infos.address': 'Dirección',
+    'infos.addressValue': 'Rabat, Marruecos',
+
+    // Livraison badges
+    'livraison.casablanca': 'Casablanca',
+    'livraison.otherCities': 'Otras ciudades',
+
+    // Paiement extras
+    'paiement.methods': 'Medios de pago aceptados',
+    'paiement.cash': 'Efectivo',
+    'paiement.cashOnly': 'Solo MAD',
 
     // Promo Banner
     'promo.freeShipping': 'Envío gratuito para pedidos superiores a 600 MAD',

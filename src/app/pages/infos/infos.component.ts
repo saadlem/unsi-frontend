@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SeoService } from '../../services/seo.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-infos',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './infos.component.html',
   styleUrls: ['./infos.component.css']
 })

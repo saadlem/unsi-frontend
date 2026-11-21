@@ -1,51 +1,52 @@
 <div class="page-container">
-  <h1>Paiement à la Livraison</h1>
+  <h1>{{ 'paiement.title' | t }}</h1>
 
   <section class="section">
-    <h2>Comment ça marche</h2>
+    <h2>{{ 'paiement.how' | t }}</h2>
     <div class="steps">
       <div class="step">
         <span class="step-number">1</span>
         <div class="step-content">
-          <h3>Commandez en ligne</h3>
-          <p>Ajoutez vos produits au panier et confirmez votre commande.</p>
+          <h3>{{ 'paiement.step1' | t }}</h3>
+          <p>{{ 'paiement.step1Desc' | t }}</p>
         </div>
       </div>
       <div class="step">
         <span class="step-number">2</span>
         <div class="step-content">
-          <h3>Recevez votre colis</h3>
-          <p>Votre commande est livrée directement chez vous.</p>
+          <h3>{{ 'paiement.step2' | t }}</h3>
+          <p>{{ 'paiement.step2Desc' | t }}</p>
         </div>
       </div>
       <div class="step">
         <span class="step-number">3</span>
         <div class="step-content">
-          <h3>Payez en espèces</h3>
-          <p>Reglez le montant total lors de la réception.</p>
+          <h3>{{ 'paiement.step3' | t }}</h3>
+          <p>{{ 'paiement.step3Desc' | t }}</p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="section">
-    <h2>Sécurité</h2>
-    <p>Aucune information bancaire requise. Vos données restent privées.</p>
+    <h2>{{ 'paiement.secure' | t }}</h2>
+    <p>{{ 'paiement.secureDesc' | t }}</p>
   </section>
 
   <section class="section">
-    <h2>Avantages</h2>
+    <h2>{{ 'paiement.advantages' | t }}</h2>
     <div class="benefits-list">
-      <div class="benefit-item">Payez uniquement quand vous recevez</div>
-      <div class="benefit-item">Vérifiez votre commande avant de payer</div>
+      <div class="benefit-item">{{ 'paiement.adv1' | t }}</div>
+      <div class="benefit-item">{{ 'paiement.adv2' | t }}</div>
+      <div class="benefit-item">{{ 'paiement.adv3' | t }}</div>
     </div>
   </section>
 
   <section class="section">
-    <h2>Moyens de Paiement Acceptés</h2>
+    <h2>{{ 'paiement.methods' | t }}</h2>
     <div class="payment-badge">
-      <span class="badge">Espèces</span>
-      <span class="badge-sub">MAD uniquement</span>
+      <span class="badge">{{ 'paiement.cash' | t }}</span>
+      <span class="badge-sub">{{ 'paiement.cashOnly' | t }}</span>
     </div>
   </section>
 </div>

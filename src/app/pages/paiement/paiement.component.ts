@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SeoService } from '../../services/seo.service';
+import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
   selector: 'app-paiement',
   standalone: true,
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './paiement.component.html',
   styleUrls: ['./paiement.component.css']
 })
