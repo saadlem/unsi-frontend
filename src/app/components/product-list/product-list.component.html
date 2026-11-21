@@ -1,8 +1,8 @@
 <section class="products-section">
   <div class="products-header" appReveal>
-    <span class="section-tag">Notre Collection</span>
+    <span class="section-tag">{{ 'products.tag' | t }}</span>
     <h2>{{ 'products.title' | t }}</h2>
-    <p>Des objets pensés pour réchauffer le quotidien</p>
+    <p>{{ 'products.subtitle' | t }}</p>
   </div>
 
   <div class="products-toolbar">
@@ -22,7 +22,7 @@
           class="cat-btn"
           [class.active]="selectedCategory() === cat"
           (click)="filterByCategory(cat)"
-        >{{ cat }}</button>
+        >{{ cat === 'All' ? ('products.all' | t) : cat }}</button>
       }
     </div>
   </div>

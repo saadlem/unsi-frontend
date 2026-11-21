@@ -80,9 +80,12 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'hero.eachpiece': 'Chaque pièce',
 
     // Products
+    'products.tag': 'Notre Collection',
     'products.title': 'Nos Créations',
+    'products.subtitle': 'Des objets pensés pour réchauffer le quotidien',
     'products.search': 'Rechercher une pièce...',
     'products.empty': 'Aucune pièce trouvée',
+    'products.all': 'Tous',
     'products.addToCart': 'Ajouter au panier',
     'products.inStock': 'En stock',
     'products.outOfStock': 'Rupture de stock',
@@ -297,6 +300,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'promo.freeShipping': 'Livraison gratuite pour les commandes de plus de 600 MAD',
 
     // Testimonials
+    'testimonials.tag': 'Avis Clients',
     'testimonials.title': 'Ce que disent nos clients',
 
     // Instagram
@@ -379,9 +383,12 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'hero.reviews': 'Customer reviews',
     'hero.madepiece': 'Handmade',
     'hero.eachpiece': 'Each piece',
+    'products.tag': 'Our Collection',
     'products.title': 'Our Creations',
+    'products.subtitle': 'Objects made to warm everyday life',
     'products.search': 'Search a piece...',
     'products.empty': 'No pieces found',
+    'products.all': 'All',
     'products.addToCart': 'Add to cart',
     'products.inStock': 'In stock',
     'products.outOfStock': 'Out of stock',
@@ -582,6 +589,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'promo.freeShipping': 'Free shipping for orders over 600 MAD',
 
     // Testimonials
+    'testimonials.tag': 'Customer Reviews',
     'testimonials.title': 'What our customers say',
 
     // Instagram
@@ -665,9 +673,12 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'hero.reviews': 'تقييمات العملاء',
     'hero.madepiece': 'محضّر يدوياً',
     'hero.eachpiece': 'كل قطعة',
+    'products.tag': 'مجموعتنا',
     'products.title': 'إبداعاتنا',
+    'products.subtitle': 'أشياء صُمّمت لتدفئة الحياة اليومية',
     'products.search': 'ابحث عن قطعة...',
     'products.empty': 'لم يتم العثور على قطع',
+    'products.all': 'الكل',
     'products.addToCart': 'أضف إلى السلة',
     'products.inStock': 'متوفر',
     'products.outOfStock': 'غير متوفر',
@@ -868,6 +879,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'promo.freeShipping': 'توصيل مجاني للطلبات التي تزيد عن 600 درهم',
 
     // Testimonials
+    'testimonials.tag': 'آراء العملاء',
     'testimonials.title': 'ماذا يقول عملاؤنا',
 
     // Instagram
@@ -951,9 +963,12 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'hero.reviews': 'Reseñas de clientes',
     'hero.madepiece': 'Hecho a Mano',
     'hero.eachpiece': 'Cada pieza',
+    'products.tag': 'Nuestra Colección',
     'products.title': 'Nuestras Creaciones',
+    'products.subtitle': 'Objetos pensados para calentar el día a día',
     'products.search': 'Buscar una pieza...',
     'products.empty': 'No se encontraron piezas',
+    'products.all': 'Todas',
     'products.addToCart': 'Añadir al carrito',
     'products.inStock': 'En stock',
     'products.outOfStock': 'Agotado',
@@ -1154,6 +1169,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
     'promo.freeShipping': 'Envío gratuito para pedidos superiores a 600 MAD',
 
     // Testimonials
+    'testimonials.tag': 'Opiniones',
     'testimonials.title': 'Lo que dicen nuestros clientes',
 
     // Instagram
