@@ -16,7 +16,7 @@
           [routerLink]="page.path"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: page.path === '/' }"
-        >{{ page.label }}</a>
+        >{{ pageLabel(page.slug, page.label) | t }}</a>
       }
     </nav>
 
@@ -76,7 +76,7 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: page.path === '/' }"
           (click)="closeMenu()"
-        >{{ page.label }}</a>
+        >{{ pageLabel(page.slug, page.label) | t }}</a>
       }
       @if (isOn('wishlist')) {
         <a routerLink="/wishlist" (click)="closeMenu()">
@@ -92,7 +92,7 @@
     </nav>
 
     <div class="sheet-lang">
-      <span class="sheet-label">Langue</span>
+      <span class="sheet-label">{{ 'common.language' | t }}</span>
       <div class="sheet-langs">
         <button type="button" (click)="setLang('fr')" [class.active]="ts.lang() === 'fr'">FR</button>
         <button type="button" (click)="setLang('en')" [class.active]="ts.lang() === 'en'">EN</button>

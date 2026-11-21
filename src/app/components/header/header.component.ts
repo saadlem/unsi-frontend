@@ -55,4 +55,9 @@ export class HeaderComponent implements OnInit {
   isOn(slug: string): boolean {
     return this.pagesService.isEnabled(slug);
   }
+
+  /** Prefer i18n key for API page labels (API stores French only). */
+  pageLabel(slug: string, fallback: string): string {
+    return this.ts.pageKey(slug) || fallback;
+  }
 }

@@ -310,6 +310,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
     // Common
     'common.mad': 'MAD',
     'common.loading': 'Chargement...',
+    'common.language': 'Langue',
   },
   en: {
     'nav.home': 'Home',
@@ -599,6 +600,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
     // Common
     'common.mad': 'MAD',
     'common.loading': 'Loading...',
+    'common.language': 'Language',
   },
   ar: {
     'nav.home': 'الرئيسية',
@@ -889,6 +891,7 @@ const LABELS: Record<Lang, Record<string, string>> = {
     // Common
     'common.mad': 'درهم',
     'common.loading': 'جارٍ التحميل...',
+    'common.language': 'اللغة',
   },
   es: {
     'nav.home': 'Inicio',
@@ -1179,7 +1182,25 @@ const LABELS: Record<Lang, Record<string, string>> = {
     // Common
     'common.mad': 'MAD',
     'common.loading': 'Cargando...',
+    'common.language': 'Idioma',
   }
+};
+
+/** Map API page slugs → i18n keys (API labels are French-only). */
+const PAGE_LABEL_KEYS: Record<string, string> = {
+  home: 'nav.home',
+  products: 'nav.products',
+  'sur-mesure': 'nav.custom',
+  b2b: 'nav.b2b',
+  blog: 'nav.blog',
+  infos: 'footer.aboutUs',
+  livraison: 'footer.delivery',
+  paiement: 'footer.payment',
+  faq: 'footer.faq',
+  suivi: 'tracking.title',
+  wishlist: 'nav.wishlist',
+  account: 'nav.account',
+  cart: 'nav.cart',
 };
 
 @Injectable({ providedIn: 'root' })
@@ -1207,6 +1228,11 @@ export class TranslateService {
     if (typeof document === 'undefined') return;
     document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = l;
+  }
+
+  /** i18n key for a CMS/API page slug, or empty if unknown. */
+  pageKey(slug: string): string {
+    return PAGE_LABEL_KEYS[slug] ?? '';
   }
 
   t(key: string): string {

@@ -25,7 +25,7 @@
       <div class="footer-col">
         <h4>{{ 'footer.info' | t }}</h4>
         @for (page of pagesService.footerPages(); track page.slug) {
-          <a [routerLink]="page.path">{{ page.label }}</a>
+          <a [routerLink]="page.path">{{ pageLabel(page.slug, page.label) | t }}</a>
         }
       </div>
       <div class="footer-col">
