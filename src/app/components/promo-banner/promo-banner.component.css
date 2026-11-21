@@ -1,20 +1,64 @@
 .promo-banner {
+  --banner-bg: #A00812;
+  --banner-fg: #FFF7FB;
   position: relative;
-  height: 40px;
+  height: 42px;
   display: flex;
   align-items: center;
   overflow: hidden;
-  font-family: 'Outfit', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  isolation: isolate;
+  color: var(--banner-fg);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, transparent 42%),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--banner-bg) 82%, #1a0508) 0%,
+      var(--banner-bg) 28%,
+      color-mix(in srgb, var(--banner-bg) 88%, #fff) 52%,
+      var(--banner-bg) 72%,
+      color-mix(in srgb, var(--banner-bg) 82%, #1a0508) 100%
+    );
+  box-shadow:
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 8px 22px rgba(74, 42, 53, 0.12);
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
+.promo-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 38%,
+    rgba(255, 255, 255, 0.18) 48%,
+    rgba(255, 255, 255, 0.05) 54%,
+    transparent 64%,
+    transparent 100%
+  );
+  background-size: 220% 100%;
+  animation: motionShimmer 7.5s ease-in-out infinite;
+  opacity: 0.7;
+}
+
 .promo-track {
+  position: relative;
+  z-index: 1;
   display: flex;
   width: max-content;
-  animation: motionMarquee 28s linear infinite;
+  animation: motionMarquee 32s linear infinite;
+  padding-right: 44px;
+}
+
+.promo-banner:hover .promo-track {
+  animation-play-state: paused;
 }
 
 .promo-group {
@@ -24,23 +68,25 @@
 }
 
 .promo-item {
-  padding: 0 28px;
+  padding: 0 22px;
   white-space: nowrap;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
 }
 
-.promo-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: currentColor;
-  opacity: 0.45;
+.promo-sep {
+  position: relative;
+  width: 5px;
+  height: 5px;
   flex-shrink: 0;
+  transform: rotate(45deg);
+  border: 1px solid currentColor;
+  opacity: 0.55;
 }
 
 .promo-link {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 .promo-close {
@@ -48,38 +94,50 @@
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 2;
-  background: rgba(0, 0, 0, 0.12);
-  border: none;
-  color: currentColor;
-  opacity: 0.85;
-  cursor: pointer;
-  width: 28px;
-  height: 28px;
+  z-index: 3;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s ease, background 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.18);
+  color: currentColor;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .promo-close:hover {
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.22);
+  background: rgba(0, 0, 0, 0.32);
+  border-color: rgba(255, 255, 255, 0.45);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.promo-close:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 2px;
 }
 
 @media (max-width: 768px) {
   .promo-banner {
+    height: 40px;
     font-size: 11px;
-    min-height: 40px;
+    letter-spacing: 0.1em;
   }
 
   .promo-item {
-    padding: 0 20px;
+    padding: 0 16px;
+  }
+
+  .promo-track {
+    padding-right: 48px;
   }
 
   .promo-close {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     right: 6px;
   }
 }
@@ -89,10 +147,16 @@
     animation: none;
     width: 100%;
     justify-content: center;
+    padding-right: 40px;
+  }
+
+  .promo-sheen {
+    animation: none;
+    opacity: 0.25;
   }
 
   .promo-group:last-child,
-  .promo-dot {
+  .promo-sep {
     display: none;
   }
 }
